@@ -2,7 +2,7 @@
 
 accountInfo accounts[] = {
 // store as user, password, accountType
-    {"pat", "obama", PATRON},
-    {"lib", "obama", LIBRARIAN},
-    {"adm", "obama", ADMIN}
+    {"pat", "obama", 0},
+    {"lib", "obama", 1},
+    {"adm", "obama", 2}
 };
