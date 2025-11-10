@@ -12,6 +12,7 @@ SOURCES += \
     Account.cpp \
     AccountDatabase.cpp \
     Authenticator.cpp \
+    adminwindow.cpp \
     book.cpp \
     date.cpp \
     fictionBook.cpp \
@@ -30,11 +31,13 @@ HEADERS += \
     Account.h \
     AccountDatabase.h \
     Authenticator.h \
+    adminwindow.h \
     book.h \
     date.h \
     fictionBook.h \
     item.h \
     loan.h \
+    librarianwindow.h \
     magazine.h \
     mainwindow.h \
     movie.h \
@@ -43,6 +46,8 @@ HEADERS += \
     videoGame.h
 
 FORMS += \
+    adminwindow.ui \
+    librarianwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.

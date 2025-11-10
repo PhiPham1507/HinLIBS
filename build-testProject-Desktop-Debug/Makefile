@@ -52,24 +52,32 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../testProject/book.cpp \
+SOURCES       = ../testProject/adminwindow.cpp \
+		../testProject/book.cpp \
 		../testProject/fictionBook.cpp \
 		../testProject/item.cpp \
+		../testProject/librarianwindow.cpp \
 		../testProject/magazine.cpp \
 		../testProject/main.cpp \
 		../testProject/mainwindow.cpp \
 		../testProject/movie.cpp \
 		../testProject/nonFictionBook.cpp \
-		../testProject/videoGame.cpp moc_mainwindow.cpp
-OBJECTS       = book.o \
+		../testProject/videoGame.cpp moc_adminwindow.cpp \
+		moc_librarianwindow.cpp \
+		moc_mainwindow.cpp
+OBJECTS       = adminwindow.o \
+		book.o \
 		fictionBook.o \
 		item.o \
+		librarianwindow.o \
 		magazine.o \
 		main.o \
 		mainwindow.o \
 		movie.o \
 		nonFictionBook.o \
 		videoGame.o \
+		moc_adminwindow.o \
+		moc_librarianwindow.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -149,16 +157,20 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../testProject/testProject.pro ../testProject/book.h \
+		../testProject/testProject.pro ../testProject/adminwindow.h \
+		../testProject/book.h \
 		../testProject/fictionBook.h \
 		../testProject/item.h \
+		../testProject/librarianwindow.h \
 		../testProject/magazine.h \
 		../testProject/mainwindow.h \
 		../testProject/movie.h \
 		../testProject/nonFictionBook.h \
-		../testProject/videoGame.h ../testProject/book.cpp \
+		../testProject/videoGame.h ../testProject/adminwindow.cpp \
+		../testProject/book.cpp \
 		../testProject/fictionBook.cpp \
 		../testProject/item.cpp \
+		../testProject/librarianwindow.cpp \
 		../testProject/magazine.cpp \
 		../testProject/main.cpp \
 		../testProject/mainwindow.cpp \
@@ -173,7 +185,7 @@ TARGET        = testProject
 first: all
 ####### Build rules
 
-testProject: ui_mainwindow.h $(OBJECTS)  
+testProject: ui_adminwindow.h ui_librarianwindow.h ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../testProject/testProject.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -350,9 +362,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../testProject/book.h ../testProject/fictionBook.h ../testProject/item.h ../testProject/magazine.h ../testProject/mainwindow.h ../testProject/movie.h ../testProject/nonFictionBook.h ../testProject/videoGame.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../testProject/book.cpp ../testProject/fictionBook.cpp ../testProject/item.cpp ../testProject/magazine.cpp ../testProject/main.cpp ../testProject/mainwindow.cpp ../testProject/movie.cpp ../testProject/nonFictionBook.cpp ../testProject/videoGame.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../testProject/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../testProject/adminwindow.h ../testProject/book.h ../testProject/fictionBook.h ../testProject/item.h ../testProject/librarianwindow.h ../testProject/magazine.h ../testProject/mainwindow.h ../testProject/movie.h ../testProject/nonFictionBook.h ../testProject/videoGame.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../testProject/adminwindow.cpp ../testProject/book.cpp ../testProject/fictionBook.cpp ../testProject/item.cpp ../testProject/librarianwindow.cpp ../testProject/magazine.cpp ../testProject/main.cpp ../testProject/mainwindow.cpp ../testProject/movie.cpp ../testProject/nonFictionBook.cpp ../testProject/videoGame.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../testProject/adminwindow.ui ../testProject/librarianwindow.ui ../testProject/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -383,9 +395,19 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_adminwindow.cpp moc_librarianwindow.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_adminwindow.cpp moc_librarianwindow.cpp moc_mainwindow.cpp
+moc_adminwindow.cpp: ../testProject/adminwindow.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/test/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/test/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/adminwindow.h -o moc_adminwindow.cpp
+
+moc_librarianwindow.cpp: ../testProject/librarianwindow.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/test/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/test/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/librarianwindow.h -o moc_librarianwindow.cpp
+
 moc_mainwindow.cpp: ../testProject/mainwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -395,9 +417,17 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_adminwindow.h ui_librarianwindow.h ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_adminwindow.h ui_librarianwindow.h ui_mainwindow.h
+ui_adminwindow.h: ../testProject/adminwindow.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../testProject/adminwindow.ui -o ui_adminwindow.h
+
+ui_librarianwindow.h: ../testProject/librarianwindow.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../testProject/librarianwindow.ui -o ui_librarianwindow.h
+
 ui_mainwindow.h: ../testProject/mainwindow.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../testProject/mainwindow.ui -o ui_mainwindow.h
@@ -412,6 +442,10 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+adminwindow.o: ../testProject/adminwindow.cpp ../testProject/adminwindow.h \
+		ui_adminwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o adminwindow.o ../testProject/adminwindow.cpp
+
 book.o: ../testProject/book.cpp ../testProject/book.h \
 		../testProject/item.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o book.o ../testProject/book.cpp
@@ -424,11 +458,17 @@ fictionBook.o: ../testProject/fictionBook.cpp ../testProject/book.h \
 item.o: ../testProject/item.cpp ../testProject/item.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o item.o ../testProject/item.cpp
 
+librarianwindow.o: ../testProject/librarianwindow.cpp ../testProject/librarianwindow.h \
+		ui_librarianwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o librarianwindow.o ../testProject/librarianwindow.cpp
+
 magazine.o: ../testProject/magazine.cpp ../testProject/item.h \
 		../testProject/magazine.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o magazine.o ../testProject/magazine.cpp
 
-main.o: ../testProject/main.cpp ../testProject/mainwindow.h
+main.o: ../testProject/main.cpp ../testProject/mainwindow.h \
+		../testProject/librarianwindow.h \
+		../testProject/adminwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../testProject/main.cpp
 
 mainwindow.o: ../testProject/mainwindow.cpp ../testProject/mainwindow.h \
@@ -447,6 +487,12 @@ nonFictionBook.o: ../testProject/nonFictionBook.cpp ../testProject/book.h \
 videoGame.o: ../testProject/videoGame.cpp ../testProject/videoGame.h \
 		../testProject/item.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o videoGame.o ../testProject/videoGame.cpp
+
+moc_adminwindow.o: moc_adminwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_adminwindow.o moc_adminwindow.cpp
+
+moc_librarianwindow.o: moc_librarianwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_librarianwindow.o moc_librarianwindow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
