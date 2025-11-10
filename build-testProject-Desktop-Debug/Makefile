@@ -52,10 +52,28 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../testProject/main.cpp \
-		../testProject/mainwindow.cpp moc_mainwindow.cpp
-OBJECTS       = main.o \
+SOURCES       = account.cpp \
+		../testProject/book.cpp \
+		date.cpp \
+		../testProject/fictionBook.cpp \
+		../testProject/item.cpp \
+		../testProject/magazine.cpp \
+		../testProject/main.cpp \
+		../testProject/mainwindow.cpp \
+		../testProject/movie.cpp \
+		../testProject/nonFictionBook.cpp \
+		../testProject/videoGame.cpp moc_mainwindow.cpp
+OBJECTS       = account.o \
+		book.o \
+		date.o \
+		fictionBook.o \
+		item.o \
+		magazine.o \
+		main.o \
 		mainwindow.o \
+		movie.o \
+		nonFictionBook.o \
+		videoGame.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -135,8 +153,26 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../testProject/testProject.pro ../testProject/mainwindow.h ../testProject/main.cpp \
-		../testProject/mainwindow.cpp
+		../testProject/testProject.pro account.h \
+		../testProject/book.h \
+		date.h \
+		../testProject/fictionBook.h \
+		../testProject/item.h \
+		../testProject/magazine.h \
+		../testProject/mainwindow.h \
+		../testProject/movie.h \
+		../testProject/nonFictionBook.h \
+		../testProject/videoGame.h account.cpp \
+		../testProject/book.cpp \
+		date.cpp \
+		../testProject/fictionBook.cpp \
+		../testProject/item.cpp \
+		../testProject/magazine.cpp \
+		../testProject/main.cpp \
+		../testProject/mainwindow.cpp \
+		../testProject/movie.cpp \
+		../testProject/nonFictionBook.cpp \
+		../testProject/videoGame.cpp
 QMAKE_TARGET  = testProject
 DESTDIR       = 
 TARGET        = testProject
@@ -322,8 +358,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../testProject/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../testProject/main.cpp ../testProject/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents account.h ../testProject/book.h date.h ../testProject/fictionBook.h ../testProject/item.h ../testProject/magazine.h ../testProject/mainwindow.h ../testProject/movie.h ../testProject/nonFictionBook.h ../testProject/videoGame.h $(DISTDIR)/
+	$(COPY_FILE) --parents account.cpp ../testProject/book.cpp date.cpp ../testProject/fictionBook.cpp ../testProject/item.cpp ../testProject/magazine.cpp ../testProject/main.cpp ../testProject/mainwindow.cpp ../testProject/movie.cpp ../testProject/nonFictionBook.cpp ../testProject/videoGame.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../testProject/mainwindow.ui $(DISTDIR)/
 
 
@@ -384,12 +420,47 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+account.o: account.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o account.o account.cpp
+
+book.o: ../testProject/book.cpp ../testProject/book.h \
+		../testProject/item.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o book.o ../testProject/book.cpp
+
+date.o: date.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o date.o date.cpp
+
+fictionBook.o: ../testProject/fictionBook.cpp ../testProject/book.h \
+		../testProject/item.h \
+		../testProject/fictionBook.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fictionBook.o ../testProject/fictionBook.cpp
+
+item.o: ../testProject/item.cpp ../testProject/item.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o item.o ../testProject/item.cpp
+
+magazine.o: ../testProject/magazine.cpp ../testProject/item.h \
+		../testProject/magazine.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o magazine.o ../testProject/magazine.cpp
+
 main.o: ../testProject/main.cpp ../testProject/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../testProject/main.cpp
 
 mainwindow.o: ../testProject/mainwindow.cpp ../testProject/mainwindow.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../testProject/mainwindow.cpp
+
+movie.o: ../testProject/movie.cpp ../testProject/movie.h \
+		../testProject/item.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o movie.o ../testProject/movie.cpp
+
+nonFictionBook.o: ../testProject/nonFictionBook.cpp ../testProject/book.h \
+		../testProject/item.h \
+		../testProject/nonFictionBook.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nonFictionBook.o ../testProject/nonFictionBook.cpp
+
+videoGame.o: ../testProject/videoGame.cpp ../testProject/videoGame.h \
+		../testProject/item.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o videoGame.o ../testProject/videoGame.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
