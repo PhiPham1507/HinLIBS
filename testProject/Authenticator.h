@@ -1,7 +1,6 @@
 #ifndef AUTHENTICATOR_H
 #define AUTHENTICATOR_H
 
-#include "Account.h"
 #include "AccountDatabase.h"
 
 class Authenticator

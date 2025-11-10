@@ -1,6 +1,8 @@
 #ifndef ACCOUNTDATABASE_H
 #define ACCOUNTDATABASE_H
 
+#include "Account.h"
+
 // Very simple hard coded database for deliverable 1
 struct accountInfo {
     char user[32];
