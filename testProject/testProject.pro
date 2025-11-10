@@ -12,6 +12,7 @@ SOURCES += \
     book.cpp \
     fictionBook.cpp \
     item.cpp \
+    libriarianwindow.cpp \
     magazine.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     book.h \
     fictionBook.h \
     item.h \
+    libriarianwindow.h \
     magazine.h \
     mainwindow.h \
     movie.h \
