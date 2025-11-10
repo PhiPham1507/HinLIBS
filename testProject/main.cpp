@@ -8,6 +8,7 @@ void authenticate(const QString& user, const QString& pass){
 
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
     MainWindow window;
     window.show();
