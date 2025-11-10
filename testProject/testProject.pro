@@ -13,13 +13,16 @@ SOURCES += \
     AccountDatabase.cpp \
     Authenticator.cpp \
     book.cpp \
+    date.cpp \
     fictionBook.cpp \
     item.cpp \
+    loan.cpp \
     magazine.cpp \
     main.cpp \
     mainwindow.cpp \
     movie.cpp \
     nonFictionBook.cpp \
+    patron.cpp \
     videoGame.cpp
 
 HEADERS += \
@@ -27,12 +30,15 @@ HEADERS += \
     AccountDatabase.h \
     Authenticator.h \
     book.h \
+    date.h \
     fictionBook.h \
     item.h \
+    loan.h \
     magazine.h \
     mainwindow.h \
     movie.h \
     nonFictionBook.h \
+    patron.h \
     videoGame.h
 
 FORMS += \
