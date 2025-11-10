@@ -9,26 +9,37 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Account.cpp \
+    AccountDatabase.cpp \
+    Authenticator.cpp \
     book.cpp \
+    date.cpp \
     fictionBook.cpp \
     item.cpp \
     libriarianwindow.cpp \
+    loan.cpp \
     magazine.cpp \
     main.cpp \
     mainwindow.cpp \
     movie.cpp \
     nonFictionBook.cpp \
+    patron.cpp \
     videoGame.cpp
 
 HEADERS += \
+    Account.h \
+    AccountDatabase.h \
+    Authenticator.h \
     book.h \
+    date.h \
     fictionBook.h \
     item.h \
-    libriarianwindow.h \
+    loan.h \
     magazine.h \
     mainwindow.h \
     movie.h \
     nonFictionBook.h \
+    patron.h \
     videoGame.h
 
 FORMS += \
