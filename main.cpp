@@ -4,6 +4,12 @@
 #include <QLocale>
 #include <QTranslator>
 
+// This is called before program exit to clean up class memory
+void cleanupClassDebris()
+{
+    Authenticator::cleanup();
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -19,5 +25,9 @@ int main(int argc, char *argv[])
     }
     AuthenticateWindow w;
     w.show();
-    return a.exec();
+
+    int authenticateWindowLoop = a.exec();
+
+    cleanupClassDebris();
+    return authenticateWindowLoop;
 }

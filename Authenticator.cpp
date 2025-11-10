@@ -1,14 +1,6 @@
 #include "Authenticator.h"
 
-Authenticator::Authenticator()
-{
-    currentAccount = nullptr;
-}
-
-Authenticator::~Authenticator()
-{
-    delete currentAccount;
-}
+Account* Authenticator::currentAccount = nullptr;
 
 // Checks the in-memory database to validate user credientials
 Account* Authenticator::requestSignIn(string username, string password)
@@ -34,4 +26,9 @@ Account* Authenticator::requestSignIn(string username, string password)
     currentAccount = new Account(accounts[accountIndex].user, accounts[accountIndex].type);
     return currentAccount;
 
+}
+
+void Authenticator::cleanup()
+{
+    delete Authenticator::currentAccount;
 }

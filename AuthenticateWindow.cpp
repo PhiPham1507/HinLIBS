@@ -11,8 +11,6 @@ AuthenticateWindow::AuthenticateWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    authenticator = new Authenticator();
-
     // Bind the login button
     connect(ui->loginButton, &QPushButton::clicked, this, &AuthenticateWindow::handleLoginClick);
 }
@@ -20,17 +18,15 @@ AuthenticateWindow::AuthenticateWindow(QWidget *parent)
 AuthenticateWindow::~AuthenticateWindow()
 {
     delete ui;
-    delete authenticator;
 }
 
+// Fired when the log in butto is clicked
 void AuthenticateWindow::handleLoginClick()
 {
 
-    qDebug() << "Log in clicked!";
-
     ui->statusLabel->setText("Status: loading...");
 
-    Account* account = authenticator->requestSignIn(ui->usernameField->text().toStdString(), ui->passwordField->text().toStdString());
+    Account* account = Authenticator::requestSignIn(ui->usernameField->text().toStdString(), ui->passwordField->text().toStdString());
 
     if (account == nullptr)
     {

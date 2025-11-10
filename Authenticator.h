@@ -7,14 +7,13 @@
 class Authenticator
 {
 public:
-    Authenticator();
-    ~Authenticator();
 
-    Account* requestSignIn(string username, string password);
+    static Account* requestSignIn(string username, string password);
+    static void cleanup();
 
 private:
 
-    Account* currentAccount;
+    static Account* currentAccount;
 };
 
 #endif // AUTHENTICATOR_H

@@ -21,6 +21,5 @@ public:
 
 private:
     Ui::MainWindow* ui;
-    Authenticator* authenticator; // this ABSOLUTELY shouldn't be a member of the window, but its the case for now.
 };
 #endif // AUTHENTICATEWINDOW_H
