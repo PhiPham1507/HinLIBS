@@ -52,9 +52,7 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = account.cpp \
-		../testProject/book.cpp \
-		date.cpp \
+SOURCES       = ../testProject/book.cpp \
 		../testProject/fictionBook.cpp \
 		../testProject/item.cpp \
 		../testProject/magazine.cpp \
@@ -63,9 +61,7 @@ SOURCES       = account.cpp \
 		../testProject/movie.cpp \
 		../testProject/nonFictionBook.cpp \
 		../testProject/videoGame.cpp moc_mainwindow.cpp
-OBJECTS       = account.o \
-		book.o \
-		date.o \
+OBJECTS       = book.o \
 		fictionBook.o \
 		item.o \
 		magazine.o \
@@ -153,18 +149,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../testProject/testProject.pro account.h \
-		../testProject/book.h \
-		date.h \
+		../testProject/testProject.pro ../testProject/book.h \
 		../testProject/fictionBook.h \
 		../testProject/item.h \
 		../testProject/magazine.h \
 		../testProject/mainwindow.h \
 		../testProject/movie.h \
 		../testProject/nonFictionBook.h \
-		../testProject/videoGame.h account.cpp \
-		../testProject/book.cpp \
-		date.cpp \
+		../testProject/videoGame.h ../testProject/book.cpp \
 		../testProject/fictionBook.cpp \
 		../testProject/item.cpp \
 		../testProject/magazine.cpp \
@@ -358,8 +350,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents account.h ../testProject/book.h date.h ../testProject/fictionBook.h ../testProject/item.h ../testProject/magazine.h ../testProject/mainwindow.h ../testProject/movie.h ../testProject/nonFictionBook.h ../testProject/videoGame.h $(DISTDIR)/
-	$(COPY_FILE) --parents account.cpp ../testProject/book.cpp date.cpp ../testProject/fictionBook.cpp ../testProject/item.cpp ../testProject/magazine.cpp ../testProject/main.cpp ../testProject/mainwindow.cpp ../testProject/movie.cpp ../testProject/nonFictionBook.cpp ../testProject/videoGame.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../testProject/book.h ../testProject/fictionBook.h ../testProject/item.h ../testProject/magazine.h ../testProject/mainwindow.h ../testProject/movie.h ../testProject/nonFictionBook.h ../testProject/videoGame.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../testProject/book.cpp ../testProject/fictionBook.cpp ../testProject/item.cpp ../testProject/magazine.cpp ../testProject/main.cpp ../testProject/mainwindow.cpp ../testProject/movie.cpp ../testProject/nonFictionBook.cpp ../testProject/videoGame.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../testProject/mainwindow.ui $(DISTDIR)/
 
 
@@ -420,15 +412,9 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-account.o: account.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o account.o account.cpp
-
 book.o: ../testProject/book.cpp ../testProject/book.h \
 		../testProject/item.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o book.o ../testProject/book.cpp
-
-date.o: date.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o date.o date.cpp
 
 fictionBook.o: ../testProject/fictionBook.cpp ../testProject/book.h \
 		../testProject/item.h \
