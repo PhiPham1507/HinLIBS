@@ -30,18 +30,22 @@ public:
     QWidget *centralwidget;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
-    QPushButton *catalogButton;
     QPushButton *viewAccButton;
+    QPushButton *catalogButton;
     QLabel *userDisplay;
     QLabel *roleDisplay;
     QLabel *userOutput;
     QStackedWidget *bigWidget;
+    QWidget *page;
     QWidget *accountPage;
     QWidget *horizontalLayoutWidget_2;
     QHBoxLayout *accountLayout;
+    QPushButton *infoButton;
     QPushButton *loanButton;
     QPushButton *holdButton;
     QStackedWidget *smallWidget;
+    QWidget *page_2;
+    QLabel *label;
     QWidget *loanPage;
     QTableWidget *tableWidget;
     QLabel *swL;
@@ -74,15 +78,15 @@ public:
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        catalogButton = new QPushButton(horizontalLayoutWidget);
-        catalogButton->setObjectName(QString::fromUtf8("catalogButton"));
-
-        horizontalLayout->addWidget(catalogButton);
-
         viewAccButton = new QPushButton(horizontalLayoutWidget);
         viewAccButton->setObjectName(QString::fromUtf8("viewAccButton"));
 
         horizontalLayout->addWidget(viewAccButton);
+
+        catalogButton = new QPushButton(horizontalLayoutWidget);
+        catalogButton->setObjectName(QString::fromUtf8("catalogButton"));
+
+        horizontalLayout->addWidget(catalogButton);
 
         userDisplay = new QLabel(centralwidget);
         userDisplay->setObjectName(QString::fromUtf8("userDisplay"));
@@ -98,6 +102,9 @@ public:
         bigWidget->setGeometry(QRect(0, 100, 811, 421));
         bigWidget->setMouseTracking(false);
         bigWidget->setFrameShape(QFrame::Box);
+        page = new QWidget();
+        page->setObjectName(QString::fromUtf8("page"));
+        bigWidget->addWidget(page);
         accountPage = new QWidget();
         accountPage->setObjectName(QString::fromUtf8("accountPage"));
         horizontalLayoutWidget_2 = new QWidget(accountPage);
@@ -106,6 +113,11 @@ public:
         accountLayout = new QHBoxLayout(horizontalLayoutWidget_2);
         accountLayout->setObjectName(QString::fromUtf8("accountLayout"));
         accountLayout->setContentsMargins(0, 0, 0, 0);
+        infoButton = new QPushButton(horizontalLayoutWidget_2);
+        infoButton->setObjectName(QString::fromUtf8("infoButton"));
+
+        accountLayout->addWidget(infoButton);
+
         loanButton = new QPushButton(horizontalLayoutWidget_2);
         loanButton->setObjectName(QString::fromUtf8("loanButton"));
 
@@ -120,6 +132,12 @@ public:
         smallWidget->setObjectName(QString::fromUtf8("smallWidget"));
         smallWidget->setGeometry(QRect(0, 60, 801, 351));
         smallWidget->setFrameShape(QFrame::Box);
+        page_2 = new QWidget();
+        page_2->setObjectName(QString::fromUtf8("page_2"));
+        label = new QLabel(page_2);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(190, 170, 401, 21));
+        smallWidget->addWidget(page_2);
         loanPage = new QWidget();
         loanPage->setObjectName(QString::fromUtf8("loanPage"));
         tableWidget = new QTableWidget(loanPage);
@@ -190,7 +208,7 @@ public:
         retranslateUi(PatronWindow);
 
         bigWidget->setCurrentIndex(0);
-        smallWidget->setCurrentIndex(1);
+        smallWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(PatronWindow);
@@ -199,13 +217,15 @@ public:
     void retranslateUi(QMainWindow *PatronWindow)
     {
         PatronWindow->setWindowTitle(QCoreApplication::translate("PatronWindow", "Patron Window", nullptr));
-        catalogButton->setText(QCoreApplication::translate("PatronWindow", "View Catalogue", nullptr));
         viewAccButton->setText(QCoreApplication::translate("PatronWindow", "View Account Information", nullptr));
+        catalogButton->setText(QCoreApplication::translate("PatronWindow", "View Catalogue", nullptr));
         userDisplay->setText(QCoreApplication::translate("PatronWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Username:</span></p></body></html>", nullptr));
         roleDisplay->setText(QCoreApplication::translate("PatronWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Role: Patron</span></p></body></html>", nullptr));
-        userOutput->setText(QCoreApplication::translate("PatronWindow", "<html><head/><body><p><br/></p></body></html>", nullptr));
+        userOutput->setText(QCoreApplication::translate("PatronWindow", "<html><head/><body><p><span style=\" font-size:12pt;\"><br/></span></p></body></html>", nullptr));
+        infoButton->setText(QCoreApplication::translate("PatronWindow", "View Info", nullptr));
         loanButton->setText(QCoreApplication::translate("PatronWindow", "View Loans", nullptr));
         holdButton->setText(QCoreApplication::translate("PatronWindow", "View Holds", nullptr));
+        label->setText(QCoreApplication::translate("PatronWindow", "Basic Info here", nullptr));
         swL->setText(QCoreApplication::translate("PatronWindow", "LOAN PAGE HERE", nullptr));
         swH->setText(QCoreApplication::translate("PatronWindow", "HOLDS PAGE HERE", nullptr));
         checkoutButton->setText(QCoreApplication::translate("PatronWindow", "Check out", nullptr));

@@ -60,7 +60,7 @@ SOURCES       = ../testProject/Account.cpp \
 		../testProject/date.cpp \
 		../testProject/fictionBook.cpp \
 		../testProject/item.cpp \
-		libriarianwindow.cpp \
+		../testProject/librarianwindow.cpp \
 		../testProject/loan.cpp \
 		../testProject/magazine.cpp \
 		../testProject/main.cpp \
@@ -81,7 +81,7 @@ OBJECTS       = Account.o \
 		date.o \
 		fictionBook.o \
 		item.o \
-		libriarianwindow.o \
+		librarianwindow.o \
 		loan.o \
 		magazine.o \
 		main.o \
@@ -197,7 +197,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../testProject/date.cpp \
 		../testProject/fictionBook.cpp \
 		../testProject/item.cpp \
-		libriarianwindow.cpp \
+		../testProject/librarianwindow.cpp \
 		../testProject/loan.cpp \
 		../testProject/magazine.cpp \
 		../testProject/main.cpp \
@@ -393,7 +393,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../testProject/Account.h ../testProject/AccountDatabase.h ../testProject/Authenticator.h ../testProject/adminwindow.h ../testProject/book.h ../testProject/date.h ../testProject/fictionBook.h ../testProject/item.h ../testProject/loan.h ../testProject/librarianwindow.h ../testProject/magazine.h ../testProject/mainwindow.h ../testProject/movie.h ../testProject/nonFictionBook.h ../testProject/patron.h ../testProject/patronwindow.h ../testProject/videoGame.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../testProject/Account.cpp ../testProject/AccountDatabase.cpp ../testProject/Authenticator.cpp ../testProject/adminwindow.cpp ../testProject/book.cpp ../testProject/date.cpp ../testProject/fictionBook.cpp ../testProject/item.cpp libriarianwindow.cpp ../testProject/loan.cpp ../testProject/magazine.cpp ../testProject/main.cpp ../testProject/mainwindow.cpp ../testProject/movie.cpp ../testProject/nonFictionBook.cpp ../testProject/patron.cpp ../testProject/patronwindow.cpp ../testProject/videoGame.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../testProject/Account.cpp ../testProject/AccountDatabase.cpp ../testProject/Authenticator.cpp ../testProject/adminwindow.cpp ../testProject/book.cpp ../testProject/date.cpp ../testProject/fictionBook.cpp ../testProject/item.cpp ../testProject/librarianwindow.cpp ../testProject/loan.cpp ../testProject/magazine.cpp ../testProject/main.cpp ../testProject/mainwindow.cpp ../testProject/movie.cpp ../testProject/nonFictionBook.cpp ../testProject/patron.cpp ../testProject/patronwindow.cpp ../testProject/videoGame.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../testProject/adminwindow.ui ../testProject/librarianwindow.ui ../testProject/mainwindow.ui ../testProject/patronwindow.ui $(DISTDIR)/
 
 
@@ -511,8 +511,9 @@ fictionBook.o: ../testProject/fictionBook.cpp ../testProject/book.h \
 item.o: ../testProject/item.cpp ../testProject/item.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o item.o ../testProject/item.cpp
 
-libriarianwindow.o: libriarianwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o libriarianwindow.o libriarianwindow.cpp
+librarianwindow.o: ../testProject/librarianwindow.cpp ../testProject/librarianwindow.h \
+		ui_librarianwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o librarianwindow.o ../testProject/librarianwindow.cpp
 
 loan.o: ../testProject/loan.cpp ../testProject/loan.h \
 		../testProject/date.h
@@ -524,7 +525,8 @@ magazine.o: ../testProject/magazine.cpp ../testProject/item.h \
 
 main.o: ../testProject/main.cpp ../testProject/mainwindow.h \
 		../testProject/librarianwindow.h \
-		../testProject/adminwindow.h
+		../testProject/adminwindow.h \
+		../testProject/patronwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../testProject/main.cpp
 
 mainwindow.o: ../testProject/mainwindow.cpp ../testProject/mainwindow.h \
