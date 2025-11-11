@@ -65,7 +65,12 @@ void PatronWindow::signOutRequest(){
     emit signOut();
 }
 
+void PatronWindow::addEntryToCatalogue(const QString& name)
+{
+    QPushButton *newButton = new QPushButton(name, this);
+    ui->catalogueVerticalLayout->addWidget(newButton);
 
+}
 
 
 

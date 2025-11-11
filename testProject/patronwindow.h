@@ -15,6 +15,7 @@ public:
     explicit PatronWindow(QWidget *parent = nullptr);
     ~PatronWindow();
     void setname(const QString& user);
+    void addEntryToCatalogue(const QString& name);
 
 private:
     Ui::PatronWindow *ui;
