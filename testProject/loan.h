@@ -2,15 +2,17 @@
 #define LOAN_H
 
 #include "date.h"
+#include "item.h"
 
 class Loan
 {
     public:
         Loan();
-        Loan(Date date);
 
    private:
-        Date date;
+
+        Item* item;
+        Date loanIssueDate, loanDueDate;
 };
 
 #endif // LOAN_H

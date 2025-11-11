@@ -7,10 +7,11 @@
 class Patron : public Account
 {
 public:
-    Patron() : Account();
+    Patron();
 
 private:
     Loan loans[3];
+
 };
 
 #endif // PATRON_H

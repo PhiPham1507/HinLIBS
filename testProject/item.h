@@ -2,6 +2,7 @@
 #define ITEM_H
 #include <string>
 #include <queue>
+#include "date.h"
 
 class Item
 {
@@ -16,7 +17,7 @@ class Item
         std::string author;
         int publicationYear;
         int isbn;
-        //Date dueDate;
+        Date dueDate;
         //std::queue<Account*> queue;
 
 };

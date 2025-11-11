@@ -14,6 +14,10 @@ class Date {
         int operator>=(Date d);
         int operator>(Date d);
 
+        int getDay() const { return day; };
+        int getMonth() const { return month; };
+        int getYear() const {return year; };
+
    private:
         int day, month, year;
 };

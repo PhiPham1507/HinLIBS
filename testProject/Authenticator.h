@@ -5,14 +5,16 @@
 
 class Authenticator
 {
-public:
+    public:
+        Authenticator();
+        ~Authenticator();
 
-    static Account* requestSignIn(string username, string password);
-    static void cleanup();
+        bool requestSignIn(string username, string password);
+        Account* getCurrentAccount();
 
-private:
 
-    static Account* currentAccount;
+    private:
+        Account* currentAccount;
 };
 
 #endif // AUTHENTICATOR_H
