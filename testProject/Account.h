@@ -12,15 +12,16 @@ using namespace std;
 class Account
 {
 public:
-    Account();
-    Account(const string& username, int accountType) : username(username), accountType(accountType) {};
-    ~Account();
+    Account(const string& username, const string& password);
+    virtual ~Account();
 
     const string& getAccountName() const;
-    int getAccountType() const;
+    const string& getPassword() const;
+    virtual int getAccountType() const = 0;
 
-private:
+protected:
     string username;
+    string password;
     int accountType;
 };
 

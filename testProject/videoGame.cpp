@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-VideoGame::VideoGame(const std::string& name, const std::string& author, int year, const std::string genre, int rating, int isbn) : Item(name, author, year, isbn), genre(genre), rating(rating){
+VideoGame::VideoGame(const std::string& name, const std::string& author, int year, const std::string genre, int rating, long isbn) : Item(name, author, year, isbn), genre(genre), rating(rating){
 
 
 }
@@ -12,6 +12,6 @@ VideoGame::VideoGame(const std::string& name, const std::string& author, int yea
 VideoGame::~VideoGame(){}
 
 void VideoGame::display()const{
-    std::cout << "I am a video game";
+    std::cout << "Title " << title << "\n";
 
 }

@@ -1,6 +1,6 @@
 #include "Account.h"
 
-Account::Account()
+Account::Account(const string& username, const string& password): username(username), password(password)
 {
 
 }
@@ -13,7 +13,6 @@ const string& Account::getAccountName() const
 {
     return username;
 }
-int Account::getAccountType() const
-{
-    return accountType;
+const string& Account::getPassword() const{
+    return password;
 }

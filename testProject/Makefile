@@ -53,13 +53,15 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = Account.cpp \
-		AccountDatabase.cpp \
-		Authenticator.cpp \
+		Database.cpp \
+		admin.cpp \
 		adminwindow.cpp \
 		book.cpp \
+		datacontroller.cpp \
 		date.cpp \
 		fictionBook.cpp \
 		item.cpp \
+		librarian.cpp \
 		librarianwindow.cpp \
 		loan.cpp \
 		magazine.cpp \
@@ -74,13 +76,15 @@ SOURCES       = Account.cpp \
 		moc_mainwindow.cpp \
 		moc_patronwindow.cpp
 OBJECTS       = Account.o \
-		AccountDatabase.o \
-		Authenticator.o \
+		Database.o \
+		admin.o \
 		adminwindow.o \
 		book.o \
+		datacontroller.o \
 		date.o \
 		fictionBook.o \
 		item.o \
+		librarian.o \
 		librarianwindow.o \
 		loan.o \
 		magazine.o \
@@ -173,13 +177,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		testProject.pro Account.h \
-		AccountDatabase.h \
-		Authenticator.h \
+		Database.h \
+		admin.h \
 		adminwindow.h \
 		book.h \
+		datacontroller.h \
 		date.h \
 		fictionBook.h \
 		item.h \
+		librarian.h \
 		loan.h \
 		librarianwindow.h \
 		magazine.h \
@@ -189,13 +195,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		patron.h \
 		patronwindow.h \
 		videoGame.h Account.cpp \
-		AccountDatabase.cpp \
-		Authenticator.cpp \
+		Database.cpp \
+		admin.cpp \
 		adminwindow.cpp \
 		book.cpp \
+		datacontroller.cpp \
 		date.cpp \
 		fictionBook.cpp \
 		item.cpp \
+		librarian.cpp \
 		librarianwindow.cpp \
 		loan.cpp \
 		magazine.cpp \
@@ -389,8 +397,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Account.h AccountDatabase.h Authenticator.h adminwindow.h book.h date.h fictionBook.h item.h loan.h librarianwindow.h magazine.h mainwindow.h movie.h nonFictionBook.h patron.h patronwindow.h videoGame.h $(DISTDIR)/
-	$(COPY_FILE) --parents Account.cpp AccountDatabase.cpp Authenticator.cpp adminwindow.cpp book.cpp date.cpp fictionBook.cpp item.cpp librarianwindow.cpp loan.cpp magazine.cpp main.cpp mainwindow.cpp movie.cpp nonFictionBook.cpp patron.cpp patronwindow.cpp videoGame.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Account.h Database.h admin.h adminwindow.h book.h datacontroller.h date.h fictionBook.h item.h librarian.h loan.h librarianwindow.h magazine.h mainwindow.h movie.h nonFictionBook.h patron.h patronwindow.h videoGame.h $(DISTDIR)/
+	$(COPY_FILE) --parents Account.cpp Database.cpp admin.cpp adminwindow.cpp book.cpp datacontroller.cpp date.cpp fictionBook.cpp item.cpp librarian.cpp librarianwindow.cpp loan.cpp magazine.cpp main.cpp mainwindow.cpp movie.cpp nonFictionBook.cpp patron.cpp patronwindow.cpp videoGame.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents adminwindow.ui librarianwindow.ui mainwindow.ui patronwindow.ui $(DISTDIR)/
 
 
@@ -481,14 +489,25 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 Account.o: Account.cpp Account.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Account.o Account.cpp
 
-AccountDatabase.o: AccountDatabase.cpp AccountDatabase.h \
-		Account.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o AccountDatabase.o AccountDatabase.cpp
+Database.o: Database.cpp Database.h \
+		Account.h \
+		item.h \
+		date.h \
+		fictionBook.h \
+		book.h \
+		nonFictionBook.h \
+		magazine.h \
+		videoGame.h \
+		movie.h \
+		patron.h \
+		loan.h \
+		librarian.h \
+		admin.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Database.o Database.cpp
 
-Authenticator.o: Authenticator.cpp Authenticator.h \
-		AccountDatabase.h \
+admin.o: admin.cpp admin.h \
 		Account.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Authenticator.o Authenticator.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o admin.o admin.cpp
 
 adminwindow.o: adminwindow.cpp adminwindow.h \
 		ui_adminwindow.h
@@ -498,6 +517,13 @@ book.o: book.cpp book.h \
 		item.h \
 		date.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o book.o book.cpp
+
+datacontroller.o: datacontroller.cpp datacontroller.h \
+		Database.h \
+		Account.h \
+		item.h \
+		date.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datacontroller.o datacontroller.cpp
 
 date.o: date.cpp date.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o date.o date.cpp
@@ -511,6 +537,10 @@ fictionBook.o: fictionBook.cpp book.h \
 item.o: item.cpp item.h \
 		date.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o item.o item.cpp
+
+librarian.o: librarian.cpp librarian.h \
+		Account.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o librarian.o librarian.cpp
 
 librarianwindow.o: librarianwindow.cpp librarianwindow.h \
 		ui_librarianwindow.h
@@ -530,9 +560,11 @@ main.o: main.cpp mainwindow.h \
 		librarianwindow.h \
 		adminwindow.h \
 		patronwindow.h \
-		Authenticator.h \
-		AccountDatabase.h \
-		Account.h
+		datacontroller.h \
+		Database.h \
+		Account.h \
+		item.h \
+		date.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \

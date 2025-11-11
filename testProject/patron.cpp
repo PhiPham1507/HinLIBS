@@ -1,6 +1,10 @@
 #include "patron.h"
-
-Patron::Patron() : Account()
+#include <string>
+Patron::Patron(const string& username, const string& password) : Account(username, password)
 {
-
+    accountType = 0;
+}
+int Patron::getAccountType() const
+{
+    return accountType;
 }

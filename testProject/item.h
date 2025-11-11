@@ -7,16 +7,16 @@
 class Item
 {
     public:
-        Item(const std::string& name, const std::string& author, int year, int isbn = 0);
+        Item(const std::string& name, const std::string& author, int year, long isbn = 0);
         virtual ~Item();
 
         virtual void display() const = 0;
 
-    private:
+    protected:
         std::string title;
         std::string author;
         int publicationYear;
-        int isbn;
+        long isbn;
         bool availability;
         Date dueDate;
         //std::queue<Account*> queue;

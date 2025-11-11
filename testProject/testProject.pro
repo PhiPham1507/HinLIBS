@@ -10,13 +10,15 @@ CONFIG += c++11
 
 SOURCES += \
     Account.cpp \
-    AccountDatabase.cpp \
-    Authenticator.cpp \
+    Database.cpp \
+    admin.cpp \
     adminwindow.cpp \
     book.cpp \
+    datacontroller.cpp \
     date.cpp \
     fictionBook.cpp \
     item.cpp \
+    librarian.cpp \
     librarianwindow.cpp \
     loan.cpp \
     magazine.cpp \
@@ -30,13 +32,15 @@ SOURCES += \
 
 HEADERS += \
     Account.h \
-    AccountDatabase.h \
-    Authenticator.h \
+    Database.h \
+    admin.h \
     adminwindow.h \
     book.h \
+    datacontroller.h \
     date.h \
     fictionBook.h \
     item.h \
+    librarian.h \
     loan.h \
     librarianwindow.h \
     magazine.h \

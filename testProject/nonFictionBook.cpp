@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-NonFictionBook::NonFictionBook(const std::string& name, const std::string& author, const std::string& dewyD, int year, int isbn) : Book(name, author, year, isbn), dewy(dewyD){
+NonFictionBook::NonFictionBook(const std::string& name, const std::string& author, const std::string& dewyD, int year, long isbn) : Book(name, author, year, isbn), dewy(dewyD){
 
 
 }
@@ -11,5 +11,5 @@ NonFictionBook::NonFictionBook(const std::string& name, const std::string& autho
 NonFictionBook::~NonFictionBook(){}
 
 void NonFictionBook::display()const{
-    std::cout << "I am a NonFiction Book";
+    std::cout << "Title " << title << "\n";
 }

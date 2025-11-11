@@ -5,12 +5,13 @@
 #include <QDebug>
 
 #include <QApplication>
-#include "Authenticator.h"
+#include "datacontroller.h"
 
 int main(int argc, char *argv[])
 {
 
-    Authenticator authenticator;
+    DataController controller;
+
 
     QApplication a(argc, argv);
     MainWindow window;
@@ -20,22 +21,18 @@ int main(int argc, char *argv[])
 
     QObject::connect(&window, &MainWindow::dataReady, [&](const QString& user, const QString& pass){
 
-//       qDebug() << user;
-//       qDebug() << pass;
 
-       bool signInSuccess = authenticator.requestSignIn(user.toStdString(), pass.toStdString());
-       if (!signInSuccess) return;
+       controller.authenticate(user.toStdString(), pass.toStdString());
+       if (controller.getAccount() == nullptr){
 
-       Account* account = authenticator.getCurrentAccount();
-       if (account == nullptr) return;
 
-       //qDebug() << "Welcome, " << account->getAccountName() << ".";
-
+           return;
+       }
        window.close();
-        if(account->getAccountType() == LIBRARIAN){
+        if(controller.getAccount()->getAccountType() == LIBRARIAN){
            lw.setname(user);
            lw.show();
-        }else if (account->getAccountType() == ADMIN){
+        }else if (controller.getAccount()->getAccountType() == ADMIN){
             aw.setname(user);
             aw.show();
         }else{
@@ -47,19 +44,23 @@ int main(int argc, char *argv[])
     QObject::connect(&lw, &LibrarianWindow::signOut,[&](){
         lw.close();
         window.show();
+        controller.accLoggedOut();
     });
     QObject::connect(&aw, &AdminWindow::signOut,[&](){
         aw.close();
         window.show();
+        controller.accLoggedOut();
     });
 
     QObject::connect(&pw, &PatronWindow::signOut,[&](){
         pw.close();
         window.show();
+        controller.accLoggedOut();
     });
 
     window.show();
 
     return a.exec();
+
 }
 
