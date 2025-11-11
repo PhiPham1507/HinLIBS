@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
         pw.close();
         window.show();
     });
+
     window.show();
 
     return a.exec();

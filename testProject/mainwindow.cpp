@@ -24,9 +24,7 @@ void MainWindow::obtainData(){
     this->ui->usernameEdit->clear();
     const QString password = this->ui->passwordEdit->text();
     this->ui->passwordEdit->clear();
-    //test to see if it's actually obtained
-    //qDebug() << username;
-    //qDebug() << password;
+
     emit dataReady(username, password);
 
 
