@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
 
     QObject::connect(&window, &MainWindow::dataReady, [&](const QString& user, const QString& pass){
 
-       qDebug() << user;
-       qDebug() << pass;
+//       qDebug() << user;
+//       qDebug() << pass;
 
        bool signInSuccess = authenticator.requestSignIn(user.toStdString(), pass.toStdString());
        if (!signInSuccess) return;
@@ -28,7 +28,9 @@ int main(int argc, char *argv[])
        Account* account = authenticator.getCurrentAccount();
        if (account == nullptr) return;
 
-        window.close();
+       //qDebug() << "Welcome, " << account->getAccountName() << ".";
+
+       window.close();
         if(account->getAccountType() == LIBRARIAN){
            lw.setname(user);
            lw.show();
