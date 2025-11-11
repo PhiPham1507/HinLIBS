@@ -10,6 +10,7 @@ class Authenticator
         ~Authenticator();
 
         bool requestSignIn(string username, string password);
+        bool signOut();
         Account* getCurrentAccount();
 
 

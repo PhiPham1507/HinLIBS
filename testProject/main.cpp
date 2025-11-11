@@ -45,15 +45,18 @@ int main(int argc, char *argv[])
     });
 
     QObject::connect(&lw, &LibrarianWindow::signOut,[&](){
+        authenticator.signOut();
         lw.close();
         window.show();
     });
     QObject::connect(&aw, &AdminWindow::signOut,[&](){
+        authenticator.signOut();
         aw.close();
         window.show();
     });
 
     QObject::connect(&pw, &PatronWindow::signOut,[&](){
+        authenticator.signOut();
         pw.close();
         window.show();
     });

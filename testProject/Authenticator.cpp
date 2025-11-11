@@ -42,3 +42,9 @@ bool Authenticator::requestSignIn(string username, string password)
 
 }
 
+bool Authenticator::signOut()
+{
+    if (currentAccount == nullptr) return false;
+    delete currentAccount;
+    return true;
+}
