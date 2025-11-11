@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "librarianwindow.h"
 #include "adminwindow.h"
+#include "patronwindow.h"
 #include <QDebug>
 
 #include <QApplication>
@@ -15,7 +16,7 @@ int main(int argc, char *argv[])
     MainWindow window;
     LibrarianWindow lw;
     AdminWindow aw;
-
+    PatronWindow pw;
 
     QObject::connect(&window, &MainWindow::dataReady, [&](const QString& user, const QString& pass){
 
@@ -37,6 +38,9 @@ int main(int argc, char *argv[])
         }else if (account->getAccountType() == ADMIN){
             aw.setname(user);
             aw.show();
+        }else{
+            pw.setname(user);
+            pw.show();
         }
     });
 
@@ -49,7 +53,10 @@ int main(int argc, char *argv[])
         window.show();
     });
 
-
+    QObject::connect(&pw, &PatronWindow::signOut,[&](){
+        pw.close();
+        window.show();
+    });
     window.show();
 
     return a.exec();

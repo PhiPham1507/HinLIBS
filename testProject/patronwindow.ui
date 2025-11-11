@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PatronWindow</class>
+ <widget class="QMainWindow" name="PatronWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>821</width>
+    <height>606</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Patron Window</string>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>40</y>
+      <width>801</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="viewAccButton">
+       <property name="text">
+        <string>View Account Information</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="catalogButton">
+       <property name="text">
+        <string>View Catalogue</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="userDisplay">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>0</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Username:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="roleDisplay">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Role: Patron&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="userOutput">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>0</y>
+      <width>461</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QStackedWidget" name="bigWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>100</y>
+      <width>811</width>
+      <height>421</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="page"/>
+    <widget class="QWidget" name="accountPage">
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>791</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="accountLayout">
+       <item>
+        <widget class="QPushButton" name="infoButton">
+         <property name="text">
+          <string>View Info</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="loanButton">
+         <property name="text">
+          <string>View Loans</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="holdButton">
+         <property name="text">
+          <string>View Holds</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QStackedWidget" name="smallWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>60</y>
+        <width>801</width>
+        <height>351</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="infoPage">
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>170</y>
+          <width>401</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Basic Info here</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="loanPage">
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>781</width>
+          <height>321</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="swL">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>80</y>
+          <width>271</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>LOAN PAGE HERE</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="holdPage">
+       <widget class="QTableWidget" name="tableWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>781</width>
+          <height>321</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="swH">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>70</y>
+          <width>271</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>HOLDS PAGE HERE</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="cataloguePage">
+     <widget class="QTableWidget" name="catalogueTable">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>791</width>
+        <height>361</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>791</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="catalogueLayout">
+       <item>
+        <widget class="QPushButton" name="checkoutButton">
+         <property name="text">
+          <string>Check out</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="choldButton">
+         <property name="text">
+          <string>Place hold</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pholdButton">
+         <property name="text">
+          <string>Cancel hold</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLabel" name="bwCat">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>140</y>
+        <width>441</width>
+        <height>131</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CATALOGUE LIST DISPLAY HERE</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="signoutButton">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>530</y>
+      <width>83</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sign out</string>
+    </property>
+   </widget>
+   <zorder>bigWidget</zorder>
+   <zorder>horizontalLayoutWidget</zorder>
+   <zorder>userDisplay</zorder>
+   <zorder>roleDisplay</zorder>
+   <zorder>userOutput</zorder>
+   <zorder>signoutButton</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>821</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

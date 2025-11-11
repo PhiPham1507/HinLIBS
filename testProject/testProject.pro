@@ -25,6 +25,7 @@ SOURCES += \
     movie.cpp \
     nonFictionBook.cpp \
     patron.cpp \
+    patronwindow.cpp \
     videoGame.cpp
 
 HEADERS += \
@@ -43,12 +44,14 @@ HEADERS += \
     movie.h \
     nonFictionBook.h \
     patron.h \
+    patronwindow.h \
     videoGame.h
 
 FORMS += \
     adminwindow.ui \
     librarianwindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    patronwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
