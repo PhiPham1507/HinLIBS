@@ -44,7 +44,7 @@ public:
     QPushButton *loanButton;
     QPushButton *holdButton;
     QStackedWidget *smallWidget;
-    QWidget *page_2;
+    QWidget *infoPage;
     QLabel *label;
     QWidget *loanPage;
     QTableWidget *tableWidget;
@@ -132,12 +132,12 @@ public:
         smallWidget->setObjectName(QString::fromUtf8("smallWidget"));
         smallWidget->setGeometry(QRect(0, 60, 801, 351));
         smallWidget->setFrameShape(QFrame::Box);
-        page_2 = new QWidget();
-        page_2->setObjectName(QString::fromUtf8("page_2"));
-        label = new QLabel(page_2);
+        infoPage = new QWidget();
+        infoPage->setObjectName(QString::fromUtf8("infoPage"));
+        label = new QLabel(infoPage);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(190, 170, 401, 21));
-        smallWidget->addWidget(page_2);
+        smallWidget->addWidget(infoPage);
         loanPage = new QWidget();
         loanPage->setObjectName(QString::fromUtf8("loanPage"));
         tableWidget = new QTableWidget(loanPage);

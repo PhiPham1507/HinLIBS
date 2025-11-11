@@ -14,9 +14,17 @@ class PatronWindow : public QMainWindow
 public:
     explicit PatronWindow(QWidget *parent = nullptr);
     ~PatronWindow();
+    void setname(const QString& user);
 
 private:
     Ui::PatronWindow *ui;
+
+signals:
+    void signOut();
+
+private slots:
+    void signOutRequest();
+
 };
 
 #endif // PATRONWINDOW_H

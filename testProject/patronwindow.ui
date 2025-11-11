@@ -28,16 +28,16 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="catalogButton">
+      <widget class="QPushButton" name="viewAccButton">
        <property name="text">
-        <string>View Catalogue</string>
+        <string>View Account Information</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="viewAccButton">
+      <widget class="QPushButton" name="catalogButton">
        <property name="text">
-        <string>View Account Information</string>
+        <string>View Catalogue</string>
        </property>
       </widget>
      </item>
@@ -79,7 +79,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QStackedWidget" name="bigWidget">
@@ -100,6 +100,7 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
+    <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="accountPage">
      <widget class="QWidget" name="horizontalLayoutWidget_2">
       <property name="geometry">
@@ -111,6 +112,13 @@
        </rect>
       </property>
       <layout class="QHBoxLayout" name="accountLayout">
+       <item>
+        <widget class="QPushButton" name="infoButton">
+         <property name="text">
+          <string>View Info</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QPushButton" name="loanButton">
          <property name="text">
@@ -140,8 +148,23 @@
        <enum>QFrame::Box</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
+      <widget class="QWidget" name="infoPage">
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>170</y>
+          <width>401</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Basic Info here</string>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="loanPage">
        <widget class="QTableWidget" name="tableWidget">
         <property name="geometry">

@@ -17,7 +17,7 @@ SOURCES += \
     date.cpp \
     fictionBook.cpp \
     item.cpp \
-    libriarianwindow.cpp \
+    librarianwindow.cpp \
     loan.cpp \
     magazine.cpp \
     main.cpp \

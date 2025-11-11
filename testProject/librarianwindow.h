@@ -24,6 +24,7 @@ signals:
 
 private slots:
     void signOutRequest();
+
 };
 
 #endif // LIBRARIANWINDOW_H
