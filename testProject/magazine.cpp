@@ -3,7 +3,8 @@
 #include <string>
 #include <iostream>
 
-Magazine::Magazine(const std::string& name, const std::string& author, int year, int isbn) : Item(name, author, year, isbn){
+Magazine::Magazine(const std::string& name, const std::string& author, int year, int issue, Date& pub, int isbn) : Item(name, author, year, isbn),
+    issueNumber(issue), publication(pub){
 
 
 }

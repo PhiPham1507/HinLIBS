@@ -17,6 +17,7 @@ class Item
         std::string author;
         int publicationYear;
         int isbn;
+        bool availability;
         Date dueDate;
         //std::queue<Account*> queue;
 
