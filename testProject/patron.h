@@ -3,6 +3,8 @@
 
 #include "Account.h"
 #include "loan.h"
+#include <vector>
+#include "item.h"
 
 class Patron : public Account
 {
@@ -12,6 +14,8 @@ public:
 
 private:
     Loan loans[3];
+    int numLoan;
+    vector<Item*> holds;
 
 };
 

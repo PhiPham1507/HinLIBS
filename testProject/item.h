@@ -1,7 +1,8 @@
 #ifndef ITEM_H
 #define ITEM_H
 #include <string>
-#include <queue>
+#include <vector>
+#include "Account.h"
 #include "date.h"
 
 class Item
@@ -19,7 +20,7 @@ class Item
         long isbn;
         bool availability;
         Date dueDate;
-        //std::queue<Account*> queue;
+        vector<Account*> queue;
 
 };
 
