@@ -64,12 +64,30 @@ void PatronWindow::setname(const QString &user){
     ui->userOutput->setText(user);
 }
 
-void PatronWindow::signOutRequest(){
-    emit signOut();
-}
+
 void PatronWindow::setController(DataController *dc){
     controller = dc;
 }
+
+
+void PatronWindow::signOutRequest(){
+    emit signOut();
+}
+
+void PatronWindow::checkOut(){
+    const string item;
+    //item = grabbing the string from catalogue browse
+    bool success = controller->checkOut(item);
+    if(success){
+        //display notification
+    }else{
+        //display notification
+    }
+}
+
+
+
+
 
 
 

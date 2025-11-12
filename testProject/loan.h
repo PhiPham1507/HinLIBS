@@ -8,6 +8,8 @@ class Loan
 {
     public:
         Loan();
+        Loan(Item*, Date, Date);
+
 
    private:
 

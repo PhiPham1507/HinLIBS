@@ -15,3 +15,7 @@ Item::~Item(){
 string Item::available(bool avail) const{
     return avail ? "Yes" : "No";
 }
+
+bool Item::getAvailability() const{
+    return availability;
+}

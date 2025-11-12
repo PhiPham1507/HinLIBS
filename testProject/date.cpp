@@ -15,6 +15,32 @@ int Date::operator!=(Date d)
     return !this->operator==(d);
 }
 
+Date Date::operator+(int day){
+    Date result = *this;
+    result.day += day;
+    int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (result.year % 4 == 0 && (result.year % 100 != 0 || result.year % 400 == 0)) {
+        daysInMonth[2] = 29;
+    }
+    while (result.day > daysInMonth[result.month]) {
+            result.day -= daysInMonth[result.month];
+            result.month++;
+
+            if (result.month > 12) {
+                result.month = 1;
+                result.year++;
+
+                // Recalculate leap year for new year
+                if (result.year % 4 == 0 && (result.year % 100 != 0 || result.year % 400 == 0)) {
+                    daysInMonth[2] = 29;
+                } else {
+                    daysInMonth[2] = 28;
+                }
+            }
+        }
+    return result;
+}
+
 int Date::operator<(Date d)
 {
     // hahaha

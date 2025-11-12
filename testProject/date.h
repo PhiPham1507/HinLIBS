@@ -22,6 +22,7 @@ class Date {
         int operator<(Date d);
         int operator>=(Date d);
         int operator>(Date d);
+        Date operator+(int day);
         friend ostream& operator<<(ostream& os, const Date& d);
 
         int getDay() const { return day; };

@@ -2,18 +2,20 @@
 #define DATACONTROLLER_H
 
 #include "Database.h"
+#include "patron.h"
 
 class DataController
 {
     public:
         DataController();
         void displayItems();
-        void authenticate(const string& user, const string& pass);
-        Account* getAccount();
+        void setPatron(Patron* patron);
+        Account* authenticate(const string& user, const string& pass);
         void accLoggedOut();
+        bool checkOut(const string& str);
 
     private:
-        Account* currentAccount;
+        Patron* currentAccount;
         int itemSize;
         Database data;
 };

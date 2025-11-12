@@ -6,22 +6,35 @@ DataController::DataController() : currentAccount(nullptr){
     itemSize = data.itemSize();
 }
 
+void DataController::setPatron(Patron *patron){
+    currentAccount = patron;
+}
+
 void DataController::displayItems(){
     for(int i = 0; i < itemSize; i++){
         cout << data.getItem(i)->display();
     }
 }
 
-void DataController::authenticate(const string &user, const string &pass){
+Account* DataController::authenticate(const string &user, const string &pass){
     Account* findAcc = data.findUser(user);
-    if(findAcc == nullptr) return;
+    if(findAcc == nullptr) return nullptr;
     if(findAcc->getPassword() == pass){
-        currentAccount = findAcc;
+        return findAcc;
+    }else{
+        return nullptr;
     }
+
 }
-Account* DataController::getAccount(){
-    return currentAccount;
-}
+
 void DataController::accLoggedOut(){
     currentAccount = nullptr;
+}
+
+bool DataController::checkOut(const string& str){
+    Item* item = data.findItem(str);
+    if(item == nullptr) return false;
+    if(!item->getAvailability()) return false;
+    return currentAccount->checkOut(item);
+
 }

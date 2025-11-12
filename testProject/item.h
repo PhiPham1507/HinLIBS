@@ -11,6 +11,7 @@ class Item
         Item(const std::string& name, const std::string& author, int year, long isbn = 0);
         virtual ~Item();
         string available(bool avail) const;
+        bool getAvailability() const;
 
         virtual string display() const = 0;
 

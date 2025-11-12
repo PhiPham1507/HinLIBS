@@ -23,35 +23,35 @@ int main(int argc, char *argv[])
     QObject::connect(&window, &MainWindow::dataReady, [&](const QString& user, const QString& pass){
 
 
-       controller.authenticate(user.toStdString(), pass.toStdString());
-       if (controller.getAccount() == nullptr){
+       Account* login = controller.authenticate(user.toStdString(), pass.toStdString());
+       if (login == nullptr){
 
 
            return;
        }
        window.close();
-        if(controller.getAccount()->getAccountType() == LIBRARIAN){
+        if(login->getAccountType() == LIBRARIAN){
            lw.setname(user);
            lw.show();
-        }else if (controller.getAccount()->getAccountType() == ADMIN){
-            aw.setname(user);
-            aw.show();
-        }else{
+        }else if (login->getAccountType() == PATRON){
+            Patron* patron = static_cast<Patron*>(login);
+            controller.setPatron(patron);
             pw.setController(&controller);
             pw.setname(user);
             pw.show();
+        }else{
+            aw.setname(user);
+            aw.show();
         }
     });
 
     QObject::connect(&lw, &LibrarianWindow::signOut,[&](){
         lw.close();
         window.show();
-        controller.accLoggedOut();
     });
     QObject::connect(&aw, &AdminWindow::signOut,[&](){
         aw.close();
         window.show();
-        controller.accLoggedOut();
     });
 
     QObject::connect(&pw, &PatronWindow::signOut,[&](){

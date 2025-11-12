@@ -11,6 +11,8 @@ class Patron : public Account
 public:
     Patron(const string& username, const string& password);
     virtual int getAccountType() const;
+    int getNumLoan();
+    bool checkOut(Item* item);
 
 private:
     Loan loans[3];

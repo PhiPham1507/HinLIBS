@@ -12,6 +12,7 @@ public:
     ~Database();
     int itemSize();
     Item* getItem(int i);
+    Item* findItem(const string& str) const;
     Account* findUser(const string& username);
 private:
     vector<Item*> items;
