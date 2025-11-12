@@ -11,7 +11,10 @@ VideoGame::VideoGame(const std::string& name, const std::string& author, int yea
 
 VideoGame::~VideoGame(){}
 
-void VideoGame::display()const{
-    std::cout << "Title " << title << "\n";
+string VideoGame::display()const{
+    return "Title " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
+            + "Genre: " + genre + "Rating: " + std::to_string(rating) + "/10"
+            + "  .Availability: " + available(availability) + "\n";
+
 
 }

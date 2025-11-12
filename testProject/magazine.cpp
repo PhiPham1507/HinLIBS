@@ -10,6 +10,7 @@ Magazine::Magazine(const std::string& name, const std::string& author, int year,
 
 Magazine::~Magazine(){}
 
-void Magazine::display()const{
-    std::cout << "Title: " << title << "\n";
-}
+string Magazine::display()const{
+    return "Title " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
+            + ". Issue Number: " + std::to_string(issueNumber) + publication.getString()
+            + " .Availability: " + available(availability) + "\n";}

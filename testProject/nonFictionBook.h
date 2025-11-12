@@ -7,7 +7,7 @@ class NonFictionBook : public Book{
     public:
         NonFictionBook(const std::string& name, const std::string& author, const std::string& dewyD, int year, long isbn = 0);
         virtual ~NonFictionBook();
-        virtual void display() const;
+        virtual string display() const;
     private:
         std::string dewy;
 

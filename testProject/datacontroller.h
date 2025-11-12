@@ -14,6 +14,7 @@ class DataController
 
     private:
         Account* currentAccount;
+        int itemSize;
         Database data;
 };
 

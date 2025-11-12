@@ -10,7 +10,8 @@ class Database {
 public:
     Database();
     ~Database();
-    void displayItems();
+    int itemSize();
+    Item* getItem(int i);
     Account* findUser(const string& username);
 private:
     vector<Item*> items;

@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     DataController controller;
 
 
+
     QApplication a(argc, argv);
     MainWindow window;
     LibrarianWindow lw;

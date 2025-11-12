@@ -1,6 +1,9 @@
 #include "date.h"
 
-static const string monthNames[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+const std::string Date::monthNames[12] = {
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+};
 
 int Date::operator==(Date d)
 {
@@ -41,8 +44,11 @@ int Date::operator>=(Date d)
 
 ostream& operator<<(ostream& os, const Date& d)
 {
-    os << monthNames[(d.month-1) % 12] << " " << d.day << ", " << d.year;
+    os << Date::monthNames[(d.month-1) % 12] << " " << d.day << ", " << d.year;
     return os;
+}
+std::string Date::getString()const{
+    return Date::monthNames[(this->month - 1) % 12] + " " + std::to_string(this->day) + ", " + std::to_string(this->year);
 }
 
 int Date::getDaysInMonth(int m, int y) const

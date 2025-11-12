@@ -10,6 +10,6 @@ NonFictionBook::NonFictionBook(const std::string& name, const std::string& autho
 
 NonFictionBook::~NonFictionBook(){}
 
-void NonFictionBook::display()const{
-    std::cout << "Title " << title << "\n";
-}
+string NonFictionBook::display()const{
+    return "Title " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
+            + ". Dewy Decimal: " + " .Availability: " + available(availability) + "\n";}

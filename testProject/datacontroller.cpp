@@ -1,12 +1,15 @@
 #include "datacontroller.h"
+#include <iostream>
 
 
 DataController::DataController() : currentAccount(nullptr){
-
+    itemSize = data.itemSize();
 }
 
 void DataController::displayItems(){
-    data.displayItems();
+    for(int i = 0; i < itemSize; i++){
+        cout << data.getItem(i)->display();
+    }
 }
 
 void DataController::authenticate(const string &user, const string &pass){

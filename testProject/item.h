@@ -10,8 +10,9 @@ class Item
     public:
         Item(const std::string& name, const std::string& author, int year, long isbn = 0);
         virtual ~Item();
+        string available(bool avail) const;
 
-        virtual void display() const = 0;
+        virtual string display() const = 0;
 
     protected:
         std::string title;

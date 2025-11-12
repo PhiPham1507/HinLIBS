@@ -30,7 +30,6 @@ Database::Database(){
     items.push_back(new VideoGame("Minecraft", "Mojang Studios", 2011, "Sandbox", 8, 9780692335976));
     items.push_back(new VideoGame("God of War", "Santa Monica Studio", 2018, "Action", 9, 9781506716439));
 
-
     accounts.push_back(new Patron("john323", "littlejohn"));
     accounts.push_back(new Patron("dane113", "dane"));
     accounts.push_back(new Patron("littlehenry", "henry16"));
@@ -49,10 +48,11 @@ Database::~Database(){
     }
 }
 
-void Database::displayItems(){
-    for(Item* item: items){
-        item->display();
-    }
+Item* Database::getItem(int i){
+    return items.at(i);
+}
+int Database::itemSize(){
+    return items.size();
 }
 
 Account* Database::findUser(const string &username){
