@@ -1,6 +1,8 @@
 #include "patronwindow.h"
 #include "ui_patronwindow.h"
 
+#include "QString"
+
 PatronWindow::PatronWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PatronWindow)
@@ -14,18 +16,15 @@ PatronWindow::PatronWindow(QWidget *parent) :
     QObject::connect(ui->viewAccButton,
                          &QPushButton::clicked,
                          this,
-                     [&](){
-        ui->bigWidget->setCurrentIndex(1);
-
-    });
+                         &PatronWindow::viewAccountButtonSelected
+    );
     
     QObject::connect(ui->catalogButton,
                          &QPushButton::clicked,
                          this,
-                     [&](){
-        ui->bigWidget->setCurrentIndex(2);
+                         &PatronWindow::catalogueButtonSelected
 
-    });
+    );
 
     QObject::connect(ui->infoButton,
                          &QPushButton::clicked,
@@ -51,16 +50,15 @@ PatronWindow::PatronWindow(QWidget *parent) :
 
     });
 
-    addEntryToCatalogue("1");
-    addEntryToCatalogue("2");
-    addEntryToCatalogue("3");
+//    addEntryToCatalogue("1");
+//    addEntryToCatalogue("2");
+//    addEntryToCatalogue("3");
 //    addEntryToCatalogue("4");
 //    addEntryToCatalogue("5");
 //    addEntryToCatalogue("6");
 //    addEntryToCatalogue("7");
 //    addEntryToCatalogue("8");
 //    addEntryToCatalogue("9");
-
 }
 
 PatronWindow::~PatronWindow()
@@ -75,6 +73,24 @@ void PatronWindow::signOutRequest(){
     emit signOut();
 }
 
+void PatronWindow::viewAccountButtonSelected()
+{
+    ui->bigWidget->setCurrentIndex(1);
+
+    // refresh the account status page
+    Account* acc = dataController->getAccount();
+    ui->usernameLabel->setText(QString::fromStdString(acc->getAccountName()));
+//    ui->passwordLabel->setText(QString::fromStdString(to_string(acc->getAccountType())));
+    if (acc->getAccountType() == 0) ui->accountTypeLabel->setText("PATRON");
+    if (acc->getAccountType() == 1) ui->accountTypeLabel->setText("LIBRARIAN");
+    if (acc->getAccountType() == 2) ui->accountTypeLabel->setText("ADMINISTRATOR");
+}
+
+void PatronWindow::catalogueButtonSelected()
+{
+    ui->bigWidget->setCurrentIndex(2);
+    refreshCatalogueContents();
+}
 
 void PatronWindow::addEntryToCatalogue(const QString& name)
 {
@@ -84,8 +100,8 @@ void PatronWindow::addEntryToCatalogue(const QString& name)
 }
 
 
+void PatronWindow::refreshCatalogueContents()
+{
 
-
-
-
+}
 
