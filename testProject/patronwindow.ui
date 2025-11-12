@@ -98,7 +98,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="accountPage">
@@ -154,14 +154,92 @@
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>190</x>
-          <y>170</y>
-          <width>401</width>
+          <x>60</x>
+          <y>40</y>
+          <width>81</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>Basic Info here</string>
+         <string>Username:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_1">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>70</y>
+          <width>81</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Password: </string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>100</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Account type: </string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="usernameLabel">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>40</y>
+          <width>241</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>USERNAME_HERE</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="passwordLabel">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>70</y>
+          <width>241</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PASSWORD_HERE</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="accountTypeLabel">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>100</y>
+          <width>241</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ACCOUNT_TYPE_HERE</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>170</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Active loans: </string>
         </property>
        </widget>
       </widget>
@@ -218,16 +296,6 @@
      </widget>
     </widget>
     <widget class="QWidget" name="cataloguePage">
-     <widget class="QTableWidget" name="catalogueTable">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>50</y>
-        <width>791</width>
-        <height>361</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QWidget" name="horizontalLayoutWidget_4">
       <property name="geometry">
        <rect>
@@ -261,18 +329,52 @@
        </item>
       </layout>
      </widget>
-     <widget class="QLabel" name="bwCat">
+     <widget class="QScrollArea" name="catalogueScrollArea">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>140</y>
-        <width>441</width>
-        <height>131</height>
+        <x>20</x>
+        <y>60</y>
+        <width>770</width>
+        <height>330</height>
        </rect>
       </property>
-      <property name="text">
-       <string>CATALOGUE LIST DISPLAY HERE</string>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>754</width>
+         <height>328</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTableView" name="tableView">
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </widget>
