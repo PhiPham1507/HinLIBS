@@ -51,6 +51,9 @@ PatronWindow::PatronWindow(QWidget *parent) :
 
     });
 
+
+
+
 }
 
 PatronWindow::~PatronWindow()
@@ -64,7 +67,9 @@ void PatronWindow::setname(const QString &user){
 void PatronWindow::signOutRequest(){
     emit signOut();
 }
-
+void PatronWindow::setController(DataController *dc){
+    controller = dc;
+}
 
 
 

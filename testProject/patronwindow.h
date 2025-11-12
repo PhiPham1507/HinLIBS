@@ -2,7 +2,7 @@
 #define PATRONWINDOW_H
 
 #include <QMainWindow>
-
+#include "datacontroller.h"
 namespace Ui {
 class PatronWindow;
 }
@@ -15,9 +15,11 @@ public:
     explicit PatronWindow(QWidget *parent = nullptr);
     ~PatronWindow();
     void setname(const QString& user);
+    void setController(DataController* dc);
 
 private:
     Ui::PatronWindow *ui;
+    DataController* controller;
 
 signals:
     void signOut();

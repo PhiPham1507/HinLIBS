@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
             aw.setname(user);
             aw.show();
         }else{
+            pw.setController(&controller);
             pw.setname(user);
             pw.show();
         }
