@@ -51,6 +51,16 @@ PatronWindow::PatronWindow(QWidget *parent) :
 
     });
 
+    addEntryToCatalogue("1");
+    addEntryToCatalogue("2");
+    addEntryToCatalogue("3");
+//    addEntryToCatalogue("4");
+//    addEntryToCatalogue("5");
+//    addEntryToCatalogue("6");
+//    addEntryToCatalogue("7");
+//    addEntryToCatalogue("8");
+//    addEntryToCatalogue("9");
+
 }
 
 PatronWindow::~PatronWindow()
@@ -65,10 +75,11 @@ void PatronWindow::signOutRequest(){
     emit signOut();
 }
 
+
 void PatronWindow::addEntryToCatalogue(const QString& name)
 {
     QPushButton *newButton = new QPushButton(name, this);
-    ui->catalogueVerticalLayout->addWidget(newButton);
+    ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
 
 }
 

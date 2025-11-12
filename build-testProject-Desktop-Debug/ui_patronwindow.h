@@ -20,6 +20,7 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -62,8 +63,8 @@ public:
     QPushButton *pholdButton;
     QScrollArea *catalogueScrollArea;
     QWidget *scrollAreaWidgetContents;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *catalogueVerticalLayout;
+    QVBoxLayout *verticalLayout;
+    QTableView *tableView;
     QPushButton *signoutButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -186,17 +187,27 @@ public:
 
         catalogueScrollArea = new QScrollArea(cataloguePage);
         catalogueScrollArea->setObjectName(QString::fromUtf8("catalogueScrollArea"));
-        catalogueScrollArea->setGeometry(QRect(20, 60, 771, 261));
+        catalogueScrollArea->setGeometry(QRect(20, 60, 770, 330));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(catalogueScrollArea->sizePolicy().hasHeightForWidth());
+        catalogueScrollArea->setSizePolicy(sizePolicy);
+        catalogueScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        catalogueScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         catalogueScrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 769, 259));
-        verticalLayoutWidget = new QWidget(scrollAreaWidgetContents);
-        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 0, 771, 261));
-        catalogueVerticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        catalogueVerticalLayout->setObjectName(QString::fromUtf8("catalogueVerticalLayout"));
-        catalogueVerticalLayout->setContentsMargins(0, 0, 0, 0);
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 754, 328));
+        verticalLayout = new QVBoxLayout(scrollAreaWidgetContents);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        tableView = new QTableView(scrollAreaWidgetContents);
+        tableView->setObjectName(QString::fromUtf8("tableView"));
+        tableView->setAlternatingRowColors(true);
+        tableView->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+        verticalLayout->addWidget(tableView);
+
         catalogueScrollArea->setWidget(scrollAreaWidgetContents);
         bigWidget->addWidget(cataloguePage);
         signoutButton = new QPushButton(centralwidget);
