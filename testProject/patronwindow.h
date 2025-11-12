@@ -3,10 +3,7 @@
 
 #include <QMainWindow>
 #include "datacontroller.h"
-<<<<<<< HEAD
-=======
 
->>>>>>> 10a5ffe33048dce9ca982825974e3d3f3f338556
 namespace Ui {
 class PatronWindow;
 }
@@ -28,11 +25,8 @@ public:
 
 private:
     Ui::PatronWindow *ui;
-<<<<<<< HEAD
     DataController* controller;
-=======
-    DataController* dataController; // TODO: assign this
->>>>>>> 10a5ffe33048dce9ca982825974e3d3f3f338556
+
 
 signals:
     void signOut();

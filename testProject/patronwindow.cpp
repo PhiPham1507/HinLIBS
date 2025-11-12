@@ -50,11 +50,9 @@ PatronWindow::PatronWindow(QWidget *parent) :
 
     });
 
-<<<<<<< HEAD
 
 
 
-=======
 //    addEntryToCatalogue("1");
 //    addEntryToCatalogue("2");
 //    addEntryToCatalogue("3");
@@ -64,7 +62,6 @@ PatronWindow::PatronWindow(QWidget *parent) :
 //    addEntryToCatalogue("7");
 //    addEntryToCatalogue("8");
 //    addEntryToCatalogue("9");
->>>>>>> 10a5ffe33048dce9ca982825974e3d3f3f338556
 }
 
 PatronWindow::~PatronWindow()
@@ -85,7 +82,6 @@ void PatronWindow::signOutRequest(){
     emit signOut();
 }
 
-<<<<<<< HEAD
 void PatronWindow::checkOut(){
     const string item;
     //item = grabbing the string from catalogue browse
@@ -100,19 +96,23 @@ void PatronWindow::checkOut(){
 
 
 
-=======
 void PatronWindow::viewAccountButtonSelected()
+
 {
+    /*
     ui->bigWidget->setCurrentIndex(1);
 
     // refresh the account status page
-    Account* acc = dataController->getAccount();
+    Account* acc = controller->getAccount();
     ui->usernameLabel->setText(QString::fromStdString(acc->getAccountName()));
 //    ui->passwordLabel->setText(QString::fromStdString(to_string(acc->getAccountType())));
     if (acc->getAccountType() == 0) ui->accountTypeLabel->setText("PATRON");
     if (acc->getAccountType() == 1) ui->accountTypeLabel->setText("LIBRARIAN");
     if (acc->getAccountType() == 2) ui->accountTypeLabel->setText("ADMINISTRATOR");
+    */
 }
+
+
 
 void PatronWindow::catalogueButtonSelected()
 {
@@ -123,10 +123,9 @@ void PatronWindow::catalogueButtonSelected()
 void PatronWindow::addEntryToCatalogue(const QString& name)
 {
     QPushButton *newButton = new QPushButton(name, this);
-    ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
+   // ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
 
 }
->>>>>>> 10a5ffe33048dce9ca982825974e3d3f3f338556
 
 
 void PatronWindow::refreshCatalogueContents()

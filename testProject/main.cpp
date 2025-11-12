@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
     });
 
     QObject::connect(&pw, &PatronWindow::signOut,[&](){
+
         pw.close();
         window.show();
         controller.accLoggedOut();
