@@ -133,3 +133,6 @@ void PatronWindow::refreshCatalogueContents()
 
 }
 
+
+
+
