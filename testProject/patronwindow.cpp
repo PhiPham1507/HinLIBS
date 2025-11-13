@@ -114,17 +114,15 @@ void PatronWindow::checkOut(){
 void PatronWindow::viewAccountButtonSelected()
 
 {
-    /*
+
     ui->bigWidget->setCurrentIndex(1);
 
     // refresh the account status page
-    Account* acc = controller->getAccount();
-    ui->usernameLabel->setText(QString::fromStdString(acc->getAccountName()));
-//    ui->passwordLabel->setText(QString::fromStdString(to_string(acc->getAccountType())));
-    if (acc->getAccountType() == 0) ui->accountTypeLabel->setText("PATRON");
-    if (acc->getAccountType() == 1) ui->accountTypeLabel->setText("LIBRARIAN");
-    if (acc->getAccountType() == 2) ui->accountTypeLabel->setText("ADMINISTRATOR");
-    */
+    PatronDetails patDetails = controller->getPatronDetails();
+    ui->usernameLabel->setText(QString::fromStdString(patDetails.username));
+
+    ui->accountTypeLabel->setText("PATRON");
+
 }
 
 
@@ -138,7 +136,7 @@ void PatronWindow::catalogueButtonSelected()
 void PatronWindow::addEntryToCatalogue(const QString& name)
 {
     QPushButton *newButton = new QPushButton(name, this);
-   // ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
+    ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
 
 }
 

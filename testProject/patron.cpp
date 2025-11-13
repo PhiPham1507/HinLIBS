@@ -13,6 +13,17 @@ int Patron::getAccountType() const
 int Patron::getNumLoan(){
     return loans.size();
 }
+
+vector<Loan> Patron::getLoans()
+{
+    return loans;
+}
+
+vector<Item*> Patron::getHolds()
+{
+    return holds;
+}
+
 bool Patron::checkOut(Item *item){
     if(loans.size() >= 3) return false;
     Date checkout = Date();

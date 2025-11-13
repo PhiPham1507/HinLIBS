@@ -10,6 +10,7 @@ class DataController
         DataController();
         void displayItems();
         void setPatron(Patron* patron);
+        PatronDetails getPatronDetails();
         Account* authenticate(const string& user, const string& pass);
         void accLoggedOut();
         bool checkOut(const string& str);

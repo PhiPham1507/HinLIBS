@@ -16,6 +16,16 @@ void DataController::displayItems(){
     }
 }
 
+PatronDetails DataController::getPatronDetails()
+{
+    PatronDetails accDetails;
+    accDetails.username = currentAccount->getAccountName();
+    accDetails.loans = currentAccount->getLoans(); // shallow copy of loans
+    accDetails.holds = currentAccount->getHolds(); // shallow copy of holds
+    return accDetails;
+
+}
+
 Account* DataController::authenticate(const string &user, const string &pass){
     Account* findAcc = data.findUser(user);
     if(findAcc == nullptr) return nullptr;
