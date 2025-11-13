@@ -1,5 +1,6 @@
 #include "patron.h"
 #include <string>
+#include "item.h"
 Patron::Patron(const string& username, const string& password) : Account(username, password)
 {
     accountType = 0;
@@ -25,3 +26,6 @@ bool Patron::placeHold(Item *item){
 }
 
 
+void Patron::addHold(Item *item){
+    holds.push_back(item);
+}

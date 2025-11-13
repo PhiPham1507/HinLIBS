@@ -2,7 +2,7 @@
 #include "ui_patronwindow.h"
 #include "QMessageBox"
 #include "QString"
-
+#include <QMessageBox>
 PatronWindow::PatronWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PatronWindow)
@@ -23,6 +23,18 @@ PatronWindow::PatronWindow(QWidget *parent) :
                          &QPushButton::clicked,
                          this,
                          &PatronWindow::catalogueButtonSelected
+
+    );
+    QObject::connect(ui->checkoutButton,
+                         &QPushButton::clicked,
+                         this,
+                         &PatronWindow::checkOut
+
+    );
+    QObject::connect(ui->choldButton,
+                         &QPushButton::clicked,
+                         this,
+                         &PatronWindow::placeHold
 
     );
 
@@ -84,14 +96,16 @@ void PatronWindow::signOutRequest(){
 }
 
 void PatronWindow::checkOut(){
-    //const string item;
+    const string item;
     //item = grabbing the string from catalogue browse
     //bool success = controller->checkOut(item);
-    bool success = true;
+
+    bool success = controller->checkOut(item);
+
     if(success){
-        QMessageBox::information(this, "Checked Out Succeed", "Successfully checked the item out");
+        QMessageBox::information(this, "Success Checkout", "Successfully check out the item");
     }else{
-        QMessageBox::information(this, "Checked Out Fail", "Failed to check the item out");
+        QMessageBox::information(this, "Failed Checkout", "Failed to check out the item");
     }
 }
 
@@ -137,14 +151,13 @@ void PatronWindow::refreshCatalogueContents()
 
 void PatronWindow::placeHold(){
     const string item;
-    //item = grabbing the string from catalogue browse
-    bool success = controller->placeHold(item);
+
+    bool success = false;
+    int index = controller->placeHold(item, &success);
     if(success){
-        //display notification
+        QString display = QString("Successfully placed hold on the item. Your queue position is: %1").arg(index);
+        QMessageBox::information(this, "Place Hold Succeed", display);
     }else{
-        //display notification
+        QMessageBox::information(this, "Place Hold Failed", "Failed to place hold on the item");
     }
 }
-
-
-

@@ -4,8 +4,9 @@
 #include "Account.h"
 #include "loan.h"
 #include <vector>
-#include "item.h"
 
+
+class Item;
 class Patron : public Account
 {
 public:
@@ -14,6 +15,8 @@ public:
     int getNumLoan();
     bool checkOut(Item* item);
     bool placeHold(Item* item);
+    void addHold(Item* item);
+
 
 
 private:

@@ -2,9 +2,10 @@
 #define ITEM_H
 #include <string>
 #include <vector>
-#include "patron.h"
 #include "date.h"
 
+
+class Patron;
 class Item
 {
     public:
@@ -13,7 +14,9 @@ class Item
         string available(bool avail) const;
         bool getAvailability() const;
         bool placeHold(Patron* patron);
-
+        void addQueue(Patron* patron);
+        void setAvailability(bool b);
+        int findIndex(Patron* patron);
         virtual string display() const = 0;
 
     protected:
