@@ -25,6 +25,18 @@ PatronWindow::PatronWindow(QWidget *parent) :
                          &PatronWindow::catalogueButtonSelected
 
     );
+    QObject::connect(ui->checkoutButton,
+                         &QPushButton::clicked,
+                         this,
+                         &PatronWindow::checkOut
+
+    );
+    QObject::connect(ui->choldButton,
+                         &QPushButton::clicked,
+                         this,
+                         &PatronWindow::placeHold
+
+    );
 
     QObject::connect(ui->infoButton,
                          &QPushButton::clicked,
@@ -133,3 +145,13 @@ void PatronWindow::refreshCatalogueContents()
 
 }
 
+void PatronWindow::placeHold(){
+    const string item;
+    //item = grabbing the string from catalogue browse
+    bool success = controller->placeHold(item);
+    if(success){
+        //display notification
+    }else{
+        //display notification
+    }
+}

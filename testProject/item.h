@@ -2,7 +2,7 @@
 #define ITEM_H
 #include <string>
 #include <vector>
-#include "Account.h"
+#include "patron.h"
 #include "date.h"
 
 class Item
@@ -12,6 +12,8 @@ class Item
         virtual ~Item();
         string available(bool avail) const;
         bool getAvailability() const;
+        void addQueue(Patron* patron);
+        void setAvailability(bool b);
 
         virtual string display() const = 0;
 
@@ -22,7 +24,7 @@ class Item
         long isbn;
         bool availability;
         Date dueDate;
-        vector<Account*> queue;
+        vector<Patron*> queue;
 
 };
 

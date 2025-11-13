@@ -13,6 +13,7 @@ class DataController
         Account* authenticate(const string& user, const string& pass);
         void accLoggedOut();
         bool checkOut(const string& str);
+        bool placeHold(const string& str);
 
     private:
         Patron* currentAccount;

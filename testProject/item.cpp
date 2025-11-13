@@ -19,3 +19,9 @@ string Item::available(bool avail) const{
 bool Item::getAvailability() const{
     return availability;
 }
+void Item::addQueue(Patron *patron){
+    queue.push_back(patron);
+}
+void Item::setAvailability(bool b){
+    availability = b;
+}

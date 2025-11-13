@@ -13,10 +13,9 @@ public:
     virtual int getAccountType() const;
     int getNumLoan();
     bool checkOut(Item* item);
-
+    void addHold(Item* item);
 private:
-    Loan loans[3];
-    int numLoan;
+    vector<Loan> loans;
     vector<Item*> holds;
 
 };

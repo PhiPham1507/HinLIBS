@@ -35,6 +35,19 @@ bool DataController::checkOut(const string& str){
     Item* item = data.findItem(str);
     if(item == nullptr) return false;
     if(!item->getAvailability()) return false;
-    return currentAccount->checkOut(item);
+    bool patronCO = currentAccount->checkOut(item);
+    if(!patronCO) return false;
+    item->setAvailability(false);
+    return true;
 
 }
+
+bool DataController::placeHold(const string& str){
+    Item* item = data.findItem(str);
+    if(item == nullptr) return false;
+    if(!item->getAvailability()) return false;
+    currentAccount->addHold(item);
+    item->addQueue(currentAccount);
+    return true;
+}
+
