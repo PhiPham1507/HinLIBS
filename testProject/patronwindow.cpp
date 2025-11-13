@@ -2,7 +2,7 @@
 #include "ui_patronwindow.h"
 
 #include "QString"
-
+#include <QMessageBox>
 PatronWindow::PatronWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PatronWindow)
@@ -98,10 +98,11 @@ void PatronWindow::checkOut(){
     const string item;
     //item = grabbing the string from catalogue browse
     bool success = controller->checkOut(item);
+
     if(success){
-        //display notification
+        QMessageBox::information(this, "Success Checkout", "Successfully check out the item");
     }else{
-        //display notification
+        QMessageBox::information(this, "Failed Checkout", "Failed to check out the item");
     }
 }
 
@@ -148,10 +149,12 @@ void PatronWindow::refreshCatalogueContents()
 void PatronWindow::placeHold(){
     const string item;
     //item = grabbing the string from catalogue browse
-    bool success = controller->placeHold(item);
+    bool success = false;
+    int index = controller->placeHold(item, &success);
     if(success){
-        //display notification
+        QString display = QString("Successfully placed hold on the item. Your queue position is: %1").arg(index);
+        QMessageBox::information(this, "Place Hold Succeed", display);
     }else{
-        //display notification
+        QMessageBox::information(this, "Place Hold Failed", "Failed to place hold on the item");
     }
 }

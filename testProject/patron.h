@@ -4,8 +4,9 @@
 #include "Account.h"
 #include "loan.h"
 #include <vector>
-#include "item.h"
 
+
+class Item;
 class Patron : public Account
 {
 public:

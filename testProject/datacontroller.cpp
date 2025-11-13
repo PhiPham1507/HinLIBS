@@ -42,12 +42,14 @@ bool DataController::checkOut(const string& str){
 
 }
 
-bool DataController::placeHold(const string& str){
+int DataController::placeHold(const string& str, bool* b){
     Item* item = data.findItem(str);
     if(item == nullptr) return false;
     if(!item->getAvailability()) return false;
     currentAccount->addHold(item);
     item->addQueue(currentAccount);
-    return true;
+    *b = true;
+    return item->findIndex(currentAccount);
 }
+
 
