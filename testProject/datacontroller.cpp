@@ -38,3 +38,11 @@ bool DataController::checkOut(const string& str){
     return currentAccount->checkOut(item);
 
 }
+
+bool DataController::placeHold(const string &str){
+    Item* item = data.findItem(str);
+    if(item == nullptr) return false;
+    if(item->getAvailability()) return false;
+    return currentAccount->placeHold(item);
+}
+

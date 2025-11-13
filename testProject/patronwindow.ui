@@ -98,7 +98,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="accountPage">
@@ -314,14 +314,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="choldButton">
+        <widget class="QPushButton" name="pholdButton">
          <property name="text">
           <string>Place hold</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pholdButton">
+        <widget class="QPushButton" name="choldButton">
          <property name="text">
           <string>Cancel hold</string>
          </property>

@@ -1,6 +1,6 @@
 #include "patronwindow.h"
 #include "ui_patronwindow.h"
-
+#include "QMessageBox"
 #include "QString"
 
 PatronWindow::PatronWindow(QWidget *parent) :
@@ -50,6 +50,7 @@ PatronWindow::PatronWindow(QWidget *parent) :
 
     });
 
+    QObject::connect(ui->checkoutButton, &QPushButton::clicked, this, &PatronWindow::checkOut);
 
 
 
@@ -83,13 +84,14 @@ void PatronWindow::signOutRequest(){
 }
 
 void PatronWindow::checkOut(){
-    const string item;
+    //const string item;
     //item = grabbing the string from catalogue browse
-    bool success = controller->checkOut(item);
+    //bool success = controller->checkOut(item);
+    bool success = true;
     if(success){
-        //display notification
+        QMessageBox::information(this, "Checked Out Succeed", "Successfully checked the item out");
     }else{
-        //display notification
+        QMessageBox::information(this, "Checked Out Fail", "Failed to check the item out");
     }
 }
 
@@ -133,6 +135,16 @@ void PatronWindow::refreshCatalogueContents()
 
 }
 
+void PatronWindow::placeHold(){
+    const string item;
+    //item = grabbing the string from catalogue browse
+    bool success = controller->placeHold(item);
+    if(success){
+        //display notification
+    }else{
+        //display notification
+    }
+}
 
 
 

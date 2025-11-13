@@ -34,8 +34,9 @@ signals:
 private slots:
     void signOutRequest();
     void checkOut();
+    void placeHold();
     //void checkIn();
-    //void placeHold();
+
     //void cancelHold();
 
 };

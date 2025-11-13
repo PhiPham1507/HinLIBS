@@ -19,3 +19,10 @@ string Item::available(bool avail) const{
 bool Item::getAvailability() const{
     return availability;
 }
+
+bool Item::placeHold(Patron *patron){
+    queue.push_back(patron);
+    this->availability = false;
+    return true;
+}
+
