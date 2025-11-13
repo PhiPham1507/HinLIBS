@@ -49,12 +49,11 @@ public:
     QStackedWidget *smallWidget;
     QWidget *infoPage;
     QLabel *label;
-    QLabel *label_1;
     QLabel *label_2;
     QLabel *usernameLabel;
-    QLabel *passwordLabel;
     QLabel *accountTypeLabel;
     QLabel *label_3;
+    QLabel *loansLabel;
     QWidget *loanPage;
     QTableWidget *tableWidget;
     QLabel *swL;
@@ -148,24 +147,21 @@ public:
         label = new QLabel(infoPage);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(60, 40, 81, 21));
-        label_1 = new QLabel(infoPage);
-        label_1->setObjectName(QString::fromUtf8("label_1"));
-        label_1->setGeometry(QRect(60, 70, 81, 21));
         label_2 = new QLabel(infoPage);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(60, 100, 111, 21));
+        label_2->setGeometry(QRect(60, 70, 111, 21));
         usernameLabel = new QLabel(infoPage);
         usernameLabel->setObjectName(QString::fromUtf8("usernameLabel"));
         usernameLabel->setGeometry(QRect(170, 40, 241, 21));
-        passwordLabel = new QLabel(infoPage);
-        passwordLabel->setObjectName(QString::fromUtf8("passwordLabel"));
-        passwordLabel->setGeometry(QRect(170, 70, 241, 21));
         accountTypeLabel = new QLabel(infoPage);
         accountTypeLabel->setObjectName(QString::fromUtf8("accountTypeLabel"));
-        accountTypeLabel->setGeometry(QRect(170, 100, 241, 21));
+        accountTypeLabel->setGeometry(QRect(170, 70, 241, 21));
         label_3 = new QLabel(infoPage);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(60, 170, 111, 21));
+        label_3->setGeometry(QRect(60, 140, 111, 21));
+        loansLabel = new QLabel(infoPage);
+        loansLabel->setObjectName(QString::fromUtf8("loansLabel"));
+        loansLabel->setGeometry(QRect(170, 140, 241, 21));
         smallWidget->addWidget(infoPage);
         loanPage = new QWidget();
         loanPage->setObjectName(QString::fromUtf8("loanPage"));
@@ -254,7 +250,7 @@ public:
 
         retranslateUi(PatronWindow);
 
-        bigWidget->setCurrentIndex(2);
+        bigWidget->setCurrentIndex(1);
         smallWidget->setCurrentIndex(0);
 
 
@@ -273,12 +269,11 @@ public:
         loanButton->setText(QCoreApplication::translate("PatronWindow", "View Loans", nullptr));
         holdButton->setText(QCoreApplication::translate("PatronWindow", "View Holds", nullptr));
         label->setText(QCoreApplication::translate("PatronWindow", "Username:", nullptr));
-        label_1->setText(QCoreApplication::translate("PatronWindow", "Password: ", nullptr));
         label_2->setText(QCoreApplication::translate("PatronWindow", "Account type: ", nullptr));
         usernameLabel->setText(QCoreApplication::translate("PatronWindow", "USERNAME_HERE", nullptr));
-        passwordLabel->setText(QCoreApplication::translate("PatronWindow", "PASSWORD_HERE", nullptr));
         accountTypeLabel->setText(QCoreApplication::translate("PatronWindow", "ACCOUNT_TYPE_HERE", nullptr));
         label_3->setText(QCoreApplication::translate("PatronWindow", "Active loans: ", nullptr));
+        loansLabel->setText(QCoreApplication::translate("PatronWindow", "ACTIVE_LOANS_HERE", nullptr));
         swL->setText(QCoreApplication::translate("PatronWindow", "LOAN PAGE HERE", nullptr));
         swH->setText(QCoreApplication::translate("PatronWindow", "HOLDS PAGE HERE", nullptr));
         checkoutButton->setText(QCoreApplication::translate("PatronWindow", "Check out", nullptr));

@@ -98,7 +98,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="accountPage">
@@ -164,24 +164,11 @@
          <string>Username:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_1">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>70</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Password: </string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_2">
         <property name="geometry">
          <rect>
           <x>60</x>
-          <y>100</y>
+          <y>70</y>
           <width>111</width>
           <height>21</height>
          </rect>
@@ -203,24 +190,11 @@
          <string>USERNAME_HERE</string>
         </property>
        </widget>
-       <widget class="QLabel" name="passwordLabel">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>70</y>
-          <width>241</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>PASSWORD_HERE</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="accountTypeLabel">
         <property name="geometry">
          <rect>
           <x>170</x>
-          <y>100</y>
+          <y>70</y>
           <width>241</width>
           <height>21</height>
          </rect>
@@ -233,13 +207,26 @@
         <property name="geometry">
          <rect>
           <x>60</x>
-          <y>170</y>
+          <y>140</y>
           <width>111</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
          <string>Active loans: </string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="loansLabel">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>140</y>
+          <width>241</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ACTIVE_LOANS_HERE</string>
         </property>
        </widget>
       </widget>

@@ -10,6 +10,7 @@ class Loan
         Loan();
         Loan(Item*, Date, Date);
 
+        string display();
 
    private:
 

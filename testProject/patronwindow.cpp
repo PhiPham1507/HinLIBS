@@ -119,9 +119,19 @@ void PatronWindow::viewAccountButtonSelected()
 
     // refresh the account status page
     PatronDetails patDetails = controller->getPatronDetails();
-    ui->usernameLabel->setText(QString::fromStdString(patDetails.username));
 
-    ui->accountTypeLabel->setText("PATRON");
+    ui->usernameLabel->setText(QString::fromStdString(patDetails.username));
+    ui->accountTypeLabel->setText("PATRON"); // should always display patron
+
+    QString loansText;
+
+    int size = patDetails.loans.size();
+    for (int i = 0; i < size; ++i)
+    {
+        loansText.append(QString::fromStdString(patDetails.loans[i].display()) + "\n");
+    }
+
+    ui->loansLabel->setText(loansText);
 
 }
 

@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
             pw.setController(&controller);
             pw.setname(user);
             pw.show();
+            pw.viewAccountButtonSelected(); // show account status by defaults
         }else{
             aw.setname(user);
             aw.show();

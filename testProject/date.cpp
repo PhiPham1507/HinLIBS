@@ -70,7 +70,8 @@ int Date::operator>=(Date d)
 
 ostream& operator<<(ostream& os, const Date& d)
 {
-    os << Date::monthNames[(d.month-1) % 12] << " " << d.day << ", " << d.year;
+    //os << Date::monthNames[(d.month-1) % 12] << " " << d.day << ", " << d.year;
+    os << d.getString();
     return os;
 }
 std::string Date::getString()const{
