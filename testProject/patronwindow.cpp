@@ -97,8 +97,7 @@ void PatronWindow::signOutRequest(){
 
 void PatronWindow::checkOut(){
     const string item;
-    //item = grabbing the string from catalogue browse
-    //bool success = controller->checkOut(item);
+    // Retrieve string from GUI. such that: item = ...
 
     bool success = controller->checkOut(item);
 
@@ -151,7 +150,7 @@ void PatronWindow::refreshCatalogueContents()
 
 void PatronWindow::placeHold(){
     const string item;
-
+    //Retrieve string from GUI. such that: item = ...
     bool success = false;
     int index = controller->placeHold(item, &success);
     if(success){
