@@ -2,6 +2,7 @@
 #define PATRONWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
 #include "datacontroller.h"
 
 namespace Ui {
@@ -21,11 +22,12 @@ public:
     void viewAccountButtonSelected();
     void catalogueButtonSelected();
     void refreshCatalogueContents();
-    void addEntryToCatalogue(const QString& name);
+    QPushButton* addEntryToCatalogue(const QString& name);
 
 private:
     Ui::PatronWindow *ui;
     DataController* controller;
+    vector<QPushButton*> catalogueEntries;
 
 
 signals:

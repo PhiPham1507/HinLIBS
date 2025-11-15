@@ -12,8 +12,6 @@ int main(int argc, char *argv[])
 
     DataController controller;
 
-
-
     QApplication a(argc, argv);
     MainWindow window;
     LibrarianWindow lw;
@@ -25,8 +23,6 @@ int main(int argc, char *argv[])
 
        Account* login = controller.authenticate(user.toStdString(), pass.toStdString());
        if (login == nullptr){
-
-
            return;
        }
        window.close();

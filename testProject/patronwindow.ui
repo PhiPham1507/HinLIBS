@@ -229,6 +229,32 @@
          <string>ACTIVE_LOANS_HERE</string>
         </property>
        </widget>
+       <widget class="QLabel" name="holdsLabel">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>230</y>
+          <width>241</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ACTIVE_HOLDS_HERE</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>230</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Active holds: </string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="loanPage">
        <widget class="QTableWidget" name="tableWidget">

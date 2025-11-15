@@ -16,16 +16,7 @@ void DataController::displayItems(){
     }
 }
 
-vector<string> DataController::getItemDetails()
-{
-    vector<string> itemDetails;
-    for (int i = 0; i < itemSize; ++i)
-    {
-        itemDetails.push_back(data.getItem(i)->display());
-    }
 
-    return itemDetails;
-}
 
 PatronDetails DataController::getPatronDetails()
 {

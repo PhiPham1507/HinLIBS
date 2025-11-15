@@ -1,8 +1,10 @@
 #include "patronwindow.h"
 #include "ui_patronwindow.h"
-#include "QMessageBox"
+
 #include "QString"
 #include <QMessageBox>
+
+
 PatronWindow::PatronWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PatronWindow)
@@ -124,6 +126,7 @@ void PatronWindow::viewAccountButtonSelected()
     ui->accountTypeLabel->setText("PATRON"); // should always display patron
 
     QString loansText;
+    QString holdsText;
 
     int size = patDetails.loans.size();
     for (int i = 0; i < size; ++i)
@@ -131,7 +134,14 @@ void PatronWindow::viewAccountButtonSelected()
         loansText.append(QString::fromStdString(patDetails.loans[i].display()) + "\n");
     }
 
+    size = patDetails.holds.size();
+    for (int i = 0; i < size; ++i)
+    {
+        holdsText.append(QString::fromStdString(patDetails.holds[i]->display()) + "\n");
+    }
+
     ui->loansLabel->setText(loansText);
+    ui->holdsLabel->setText(holdsText);
 
 }
 
@@ -143,17 +153,28 @@ void PatronWindow::catalogueButtonSelected()
     refreshCatalogueContents();
 }
 
-void PatronWindow::addEntryToCatalogue(const QString& name)
+QPushButton* PatronWindow::addEntryToCatalogue(const QString& name)
 {
-    QPushButton *newButton = new QPushButton(name, this);
+    QPushButton* newButton = new QPushButton(name, this);
     ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
-
+    return newButton;
 }
 
 
 void PatronWindow::refreshCatalogueContents()
 {
+    for (int i = 0; i < (int)catalogueEntries.size(); ++i)
+    {
+        delete catalogueEntries[i];
+    }
+    catalogueEntries.clear();
 
+    vector<string> itemDetails = controller->getItemDetails();
+    for (int i = 0; i < (int)itemDetails.size(); ++i)
+    {
+
+        catalogueEntries.push_back(addEntryToCatalogue(QString::fromStdString(itemDetails[i])));
+    }
 }
 
 void PatronWindow::placeHold(){
