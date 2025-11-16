@@ -51,4 +51,15 @@ int Item::findIndex(Patron *patron){
     }
     return i;
 }
+std::string& Item::getTitle(){
+    return title;
+}
+void Item::removeQueue(Patron *patron){
+    for(size_t i = 0; i < queue.size(); i++){
+        if(queue.at(i)->getAccountName() == patron->getAccountName()){
+            queue.erase(queue.begin() + i);
+            return;
+        }
+    }
+}
 

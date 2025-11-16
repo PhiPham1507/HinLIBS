@@ -2,7 +2,7 @@
 #define PATRONWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
+#include <QListWidget>
 #include "datacontroller.h"
 
 namespace Ui {
@@ -22,14 +22,14 @@ public:
     void viewAccountButtonSelected();
     void catalogueButtonSelected();
     void refreshCatalogueContents();
-    QPushButton* addEntryToCatalogue(const QString& text);
+    void refreshAccountContents();
 
 private:
     Ui::PatronWindow *ui;
     DataController* controller;
-    vector<QPushButton*> catalogueEntries;
-    vector<int> catalogueEntryIds;
-    int selectedIndex;
+    int selectedItemIndex;
+    int selectedLoanIndex;
+    int selectedHoldIndex;
 
 
 signals:
@@ -39,9 +39,8 @@ private slots:
     void signOutRequest();
     void checkOut();
     void placeHold();
-    //void checkIn();
-
-    //void cancelHold();
+    void checkIn();
+    void cancelHold();
 
 };
 

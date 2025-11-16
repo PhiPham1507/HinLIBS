@@ -1,5 +1,6 @@
 #include "patronwindow.h"
 #include "ui_patronwindow.h"
+#include <iostream>
 
 #include "QString"
 #include <QMessageBox>
@@ -10,7 +11,9 @@ PatronWindow::PatronWindow(QWidget *parent) :
     ui(new Ui::PatronWindow)
 {
 
-    selectedIndex = -1;
+    selectedItemIndex = -1;
+    selectedLoanIndex = -1;
+    selectedHoldIndex = -1;
 
     ui->setupUi(this);
     QObject::connect(ui->signoutButton,
@@ -30,45 +33,31 @@ PatronWindow::PatronWindow(QWidget *parent) :
                          &PatronWindow::catalogueButtonSelected
 
     );
-    QObject::connect(ui->checkoutButton,
-                         &QPushButton::clicked,
-                         this,
-                         &PatronWindow::checkOut
 
-    );
-    QObject::connect(ui->choldButton,
+    QObject::connect(ui->pholdButton,
                          &QPushButton::clicked,
                          this,
                          &PatronWindow::placeHold
 
     );
 
-    QObject::connect(ui->infoButton,
-                         &QPushButton::clicked,
-                         this,
-                     [&](){
-        ui->smallWidget->setCurrentIndex(0);
 
-    });
 
-    QObject::connect(ui->loanButton,
-                         &QPushButton::clicked,
-                         this,
-                     [&](){
-        ui->smallWidget->setCurrentIndex(1);
-
-    });
-
-    QObject::connect(ui->holdButton,
-                         &QPushButton::clicked,
-                         this,
-                     [&](){
-        ui->smallWidget->setCurrentIndex(2);
-
-    });
 
     QObject::connect(ui->checkoutButton, &QPushButton::clicked, this, &PatronWindow::checkOut);
+    QObject::connect(ui->returnButton, &QPushButton::clicked, this, &PatronWindow::checkIn);
+    QObject::connect(ui->choldButton, &QPushButton::clicked, this, &PatronWindow::cancelHold);
 
+
+    QObject::connect(ui->catalogueList, &QListWidget::itemClicked, this, [this](QListWidgetItem* item){
+        selectedItemIndex = item->data(Qt::UserRole).toInt();
+    });
+    QObject::connect(ui->holdList, &QListWidget::itemClicked, this, [this](QListWidgetItem* item){
+        selectedHoldIndex = item->data(Qt::UserRole).toInt();
+    });
+    QObject::connect(ui->loanList, &QListWidget::itemClicked, this, [this](QListWidgetItem* item){
+        selectedLoanIndex = item->data(Qt::UserRole).toInt();
+    });
 }
 
 PatronWindow::~PatronWindow()
@@ -91,53 +80,22 @@ void PatronWindow::signOutRequest(){
 
 void PatronWindow::checkOut(){
 
-    int id = catalogueEntryIds[selectedIndex];
-    if (id == -1) return;
+    if(selectedItemIndex == -1){
+        QMessageBox::information(this, "No Item Selected", "Choose an item to checkout");
+        return;
+    }
 
-    bool success = controller->checkOut(id);
+    bool success = controller->checkOut(selectedItemIndex);
 
     if(success){
         QMessageBox::information(this, "Success Checkout", "Successfully check out the item");
     }else{
         QMessageBox::information(this, "Failed Checkout", "Failed to check out the item");
     }
-}
-
-
-
-
-void PatronWindow::viewAccountButtonSelected()
-
-{
-
-    ui->bigWidget->setCurrentIndex(1);
-
-    // refresh the account status page
-    PatronDetails patDetails = controller->getPatronDetails();
-
-    ui->usernameLabel->setText(QString::fromStdString(patDetails.username));
-    ui->accountTypeLabel->setText("PATRON"); // should always display patron
-
-    QString loansText;
-    QString holdsText;
-
-    int size = patDetails.loans.size();
-    for (int i = 0; i < size; ++i)
-    {
-        loansText.append(QString::fromStdString(patDetails.loans[i].display()) + "\n");
-    }
-
-    size = patDetails.holds.size();
-    for (int i = 0; i < size; ++i)
-    {
-        holdsText.append(QString::fromStdString(patDetails.holds[i]->display()) + "\n");
-    }
-
-    ui->loansLabel->setText(loansText);
-    ui->holdsLabel->setText(holdsText);
+    refreshCatalogueContents();
+    selectedItemIndex = -1;
 
 }
-
 
 
 void PatronWindow::catalogueButtonSelected()
@@ -146,49 +104,90 @@ void PatronWindow::catalogueButtonSelected()
     refreshCatalogueContents();
 }
 
-QPushButton* PatronWindow::addEntryToCatalogue(const QString& text)
-{
-    QPushButton* newButton = new QPushButton(text, this);
-//    newButton->setText(text);
-    ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
-    return newButton;
-}
 
 
 void PatronWindow::refreshCatalogueContents()
 {
-    for (int i = 0; i < (int)catalogueEntries.size(); ++i)
-    {
-        delete catalogueEntries[i];
-    }
-    catalogueEntries.clear();
-    catalogueEntryIds.clear();
+    ui->catalogueList->clear();  // Delete old entries automatically
 
     vector<Item*> items = controller->getItems();
+
     for (int i = 0; i < (int)items.size(); ++i)
     {
-        QPushButton* newButton = addEntryToCatalogue(QString::fromStdString(items[i]->display()));
-        catalogueEntries.push_back(newButton);
-        catalogueEntryIds.push_back(items[i]->getId());
+        Item* item = items[i];
 
-        // surely this causes a memory leak, right?
-        connect(catalogueEntries[i],  &QPushButton::clicked, this, [&]() {
-            selectedIndex = i;
-        });
+        // Create a new QListWidgetItem
+        QListWidgetItem* entry = new QListWidgetItem(
+            QString::fromStdString(item->display()),
+            ui->catalogueList
+        );
+
+        // Store the index or ID inside the item
+        entry->setData(Qt::UserRole, item->getId());
     }
 }
 
 void PatronWindow::placeHold(){
 
-    int id = catalogueEntryIds[selectedIndex];
-    if (id == -1) return;
-
+    if (selectedItemIndex == -1){
+        QMessageBox::information(this, "No Item Selected", "Choose an item to place hold");
+        return;
+    }
     bool success = false;
-    int index = controller->placeHold(id, &success);
+    int index = controller->placeHold(selectedItemIndex, &success);
     if(success){
         QString display = QString("Successfully placed hold on the item. Your queue position is: %1").arg(index);
         QMessageBox::information(this, "Place Hold Succeed", display);
     }else{
         QMessageBox::information(this, "Place Hold Failed", "Failed to place hold on the item");
     }
+    ui->catalogueList->clearSelection();
 }
+
+void PatronWindow::viewAccountButtonSelected(){
+    ui->bigWidget->setCurrentIndex(1);
+    refreshAccountContents();
+
+}
+void PatronWindow::refreshAccountContents(){
+    ui->loanList->clear();
+    ui->holdList->clear();
+    vector<Loan> loans = controller->getCurrentAccount()->getLoans();
+    vector<Item*> holds = controller->getCurrentAccount()->getHolds();
+
+    for(int i = 0; i < (int)loans.size(); i++){
+        Loan &l = loans[i];
+        QListWidgetItem* entry = new QListWidgetItem(QString::fromStdString(l.display()), ui->loanList);
+        entry->setData(Qt::UserRole, l.getItem()->getId());
+
+    }
+
+    for(int i = 0; i < (int)holds.size(); i++){
+        Item* item = holds[i];
+        QListWidgetItem* entry = new QListWidgetItem(QString::fromStdString(item->getTitle()), ui->holdList);
+        entry->setData(Qt::UserRole, item->getId());
+    }
+}
+
+void PatronWindow::checkIn(){
+    if(selectedLoanIndex == -1){
+        QMessageBox::information(this, "No Item Selected", "Choose an item in the below list to return");
+        return;
+    }
+    controller->checkIn(selectedLoanIndex);
+    QMessageBox::information(this, "Item Returned", "The item was successfully returned");
+    refreshAccountContents();
+    selectedLoanIndex = -1;
+
+}
+
+void PatronWindow::cancelHold(){
+    if(selectedHoldIndex == -1){
+        QMessageBox::information(this, "No Item Selected", "Choose an item in the below list to cancel hold");
+        return;
+    }
+    controller->cancelHold(selectedHoldIndex);
+    refreshAccountContents();
+    selectedHoldIndex = -1;
+}
+

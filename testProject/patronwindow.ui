@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>821</width>
+    <width>826</width>
     <height>606</height>
    </rect>
   </property>
@@ -22,7 +22,7 @@
      <rect>
       <x>0</x>
       <y>40</y>
-      <width>801</width>
+      <width>821</width>
       <height>51</height>
      </rect>
     </property>
@@ -87,7 +87,7 @@
      <rect>
       <x>0</x>
       <y>100</y>
-      <width>811</width>
+      <width>831</width>
       <height>421</height>
      </rect>
     </property>
@@ -102,210 +102,77 @@
     </property>
     <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="accountPage">
-     <widget class="QWidget" name="horizontalLayoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>791</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="accountLayout">
-       <item>
-        <widget class="QPushButton" name="infoButton">
-         <property name="text">
-          <string>View Info</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="loanButton">
-         <property name="text">
-          <string>View Loans</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="holdButton">
-         <property name="text">
-          <string>View Holds</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QStackedWidget" name="smallWidget">
+     <widget class="QListWidget" name="loanList">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>60</y>
-        <width>801</width>
-        <height>351</height>
+        <y>50</y>
+        <width>401</width>
+        <height>221</height>
        </rect>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
+     </widget>
+     <widget class="QListWidget" name="holdList">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>50</y>
+        <width>411</width>
+        <height>221</height>
+       </rect>
       </property>
-      <property name="currentIndex">
-       <number>0</number>
+     </widget>
+     <widget class="QLabel" name="loanLabel">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>20</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
       </property>
-      <widget class="QWidget" name="infoPage">
-       <widget class="QLabel" name="label">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>40</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Username:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>70</y>
-          <width>111</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Account type: </string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="usernameLabel">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>40</y>
-          <width>241</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>USERNAME_HERE</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="accountTypeLabel">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>70</y>
-          <width>241</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>ACCOUNT_TYPE_HERE</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_3">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>140</y>
-          <width>111</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Active loans: </string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="loansLabel">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>140</y>
-          <width>241</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>ACTIVE_LOANS_HERE</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="holdsLabel">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>230</y>
-          <width>241</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>ACTIVE_HOLDS_HERE</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>230</y>
-          <width>111</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Active holds: </string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="loanPage">
-       <widget class="QTableWidget" name="tableWidget">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>781</width>
-          <height>321</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="swL">
-        <property name="geometry">
-         <rect>
-          <x>280</x>
-          <y>80</y>
-          <width>271</width>
-          <height>91</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>LOAN PAGE HERE</string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="holdPage">
-       <widget class="QTableWidget" name="tableWidget_3">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>781</width>
-          <height>321</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="swH">
-        <property name="geometry">
-         <rect>
-          <x>190</x>
-          <y>70</y>
-          <width>271</width>
-          <height>91</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>HOLDS PAGE HERE</string>
-        </property>
-       </widget>
-      </widget>
+      <property name="text">
+       <string>Loans</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="holdLabel">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>20</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Holds</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="returnButton">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>310</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Return Item</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="choldButton">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>310</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cancel Hold</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="cataloguePage">
@@ -314,7 +181,7 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>791</width>
+        <width>801</width>
         <height>27</height>
        </rect>
       </property>
@@ -333,69 +200,25 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="choldButton">
-         <property name="text">
-          <string>Cancel hold</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
-     <widget class="QScrollArea" name="catalogueScrollArea">
+     <widget class="QListWidget" name="catalogueList">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>60</y>
-        <width>770</width>
-        <height>330</height>
+        <width>811</width>
+        <height>351</height>
        </rect>
       </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOn</enum>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>754</width>
-         <height>328</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QTableView" name="tableView">
-          <property name="alternatingRowColors">
-           <bool>true</bool>
-          </property>
-          <property name="horizontalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="signoutButton">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>530</y>
+      <x>740</x>
+      <y>520</y>
       <width>83</width>
       <height>25</height>
      </rect>
@@ -416,7 +239,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>821</width>
+     <width>826</width>
      <height>22</height>
     </rect>
    </property>

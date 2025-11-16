@@ -23,6 +23,8 @@ class Item
         void addQueue(Patron* patron);
         void setAvailability(bool b);
         int findIndex(Patron* patron);
+        void removeQueue(Patron* patron);
+        string& getTitle();
         virtual string display() const = 0;
 
     protected:

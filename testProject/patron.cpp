@@ -14,6 +14,10 @@ int Patron::getNumLoan(){
     return loans.size();
 }
 
+int Patron::getNumHold(){
+    return holds.size();
+}
+
 vector<Loan> Patron::getLoans()
 {
     return loans;
@@ -31,12 +35,45 @@ bool Patron::checkOut(Item *item){
     return true;
 }
 
-bool Patron::placeHold(Item *item){
+
+
+
+bool Patron::addHold(Item *item){
+    for(Item* holded : holds){
+        if(holded->getId() == item->getId()){
+            return false;
+        }
+    }
+    for(Loan l : loans){
+        if(l.getItem()->getId() == item->getId()){
+            return false;
+        }
+    }
     holds.push_back(item);
-    return item->placeHold(this);
+    return true;
+}
+
+void Patron::checkIn(Item *item){
+    for(int i = 0; i < getNumLoan(); i++){
+        if(loans.at(i).getItem()->getId() == item->getId()){
+            loans.erase(loans.begin() + i);
+            return;
+        }
+    }
+}
+
+void Patron::removeHold(Item *item){
+    for(int i = 0; i < getNumHold(); i++){
+        if(holds.at(i)->getId() == item->getId()){
+            holds.erase(holds.begin() + i);
+            return;
+        }
+
+    }
 }
 
 
-void Patron::addHold(Item *item){
-    holds.push_back(item);
-}
+
+
+
+

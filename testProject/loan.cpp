@@ -11,5 +11,8 @@ Loan::Loan(){
 
 string Loan::display()
 {
-    return item->display() + "\tDue date: " + loanDueDate.getString();
+    return item->getTitle() + "\tLoan Date: " + loanIssueDate.getString() +  "\tDue date: " + loanDueDate.getString();
+}
+Item* Loan::getItem(){
+    return item;
 }

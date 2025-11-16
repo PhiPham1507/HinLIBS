@@ -9,7 +9,7 @@ class Loan
     public:
         Loan();
         Loan(Item*, Date, Date);
-
+        Item* getItem();
         string display();
 
    private:

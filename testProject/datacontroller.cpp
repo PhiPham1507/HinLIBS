@@ -39,17 +39,9 @@ Item* DataController::getItemById(int id)
     return data.findItem(id);
 }
 
-PatronDetails DataController::getPatronDetails()
-{
-    PatronDetails accDetails;
-    accDetails.username = currentAccount->getAccountName();
-    accDetails.loans = currentAccount->getLoans(); // shallow copy of loans
-    accDetails.holds = currentAccount->getHolds(); // shallow copy of holds
-    return accDetails;
-
-}
 
 Account* DataController::authenticate(const string &user, const string &pass){
+
     Account* findAcc = data.findUser(user);
     if(findAcc == nullptr) return nullptr;
     if(findAcc->getPassword() == pass){
@@ -75,21 +67,43 @@ bool DataController::checkOut(int id){
 
 }
 
-bool DataController::placeHold(int id){
-    Item* item = data.findItem(id);
-    if(item == nullptr) return false;
-    if(item->getAvailability()) return false;
-    return currentAccount->placeHold(item);
-}
+
 
 int DataController::placeHold(int id, bool* b){
     Item* item = data.findItem(id);
     if(item == nullptr) return false;
-    if(!item->getAvailability()) return false;
-    currentAccount->addHold(item);
+    if(item->getAvailability()) return false;
+    if(!currentAccount->addHold(item)) return false;
     item->addQueue(currentAccount);
     *b = true;
     return item->findIndex(currentAccount);
 }
+
+Patron* DataController::getCurrentAccount(){
+    return currentAccount;
+}
+
+void DataController::checkIn(int id){
+    Item* item = data.findItem(id);
+    currentAccount->checkIn(item);
+    item->setAvailability(true);
+
+}
+
+void DataController::cancelHold(int id){
+    Item* item = data.findItem(id);
+    item->removeQueue(currentAccount);
+    currentAccount->removeHold(item);
+}
+
+
+
+
+
+
+
+
+
+
 
 

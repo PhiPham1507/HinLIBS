@@ -19,12 +19,14 @@ public:
     Patron(const string& username, const string& password);
     virtual int getAccountType() const;
     int getNumLoan();
+    int getNumHold();
     vector<Loan> getLoans();
     vector<Item*> getHolds();
+    void checkIn(Item* item);
+    void removeHold(Item* item);
 
     bool checkOut(Item* item);
-    bool placeHold(Item* item);
-    void addHold(Item* item);
+    bool addHold(Item* item);
 
 
 

@@ -13,7 +13,7 @@ VideoGame::~VideoGame(){}
 
 string VideoGame::display()const{
     return "Title " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
-            + "Genre: " + genre + "Rating: " + std::to_string(rating) + "/10"
+            + " Genre: " + genre + " Rating: " + std::to_string(rating) + "/10"
             + "  .Availability: " + available(availability) + "\n";
 
 
