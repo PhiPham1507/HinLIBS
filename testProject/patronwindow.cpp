@@ -20,13 +20,13 @@ PatronWindow::PatronWindow(QWidget *parent) :
                          &QPushButton::clicked,
                          this,
                          &PatronWindow::signOutRequest);
-                         
+
     QObject::connect(ui->viewAccButton,
                          &QPushButton::clicked,
                          this,
                          &PatronWindow::viewAccountButtonSelected
     );
-    
+
     QObject::connect(ui->catalogButton,
                          &QPushButton::clicked,
                          this,
@@ -164,7 +164,7 @@ void PatronWindow::refreshAccountContents(){
 
     for(int i = 0; i < (int)holds.size(); i++){
         Item* item = holds[i];
-        QListWidgetItem* entry = new QListWidgetItem(QString::fromStdString(item->getTitle()), ui->holdList);
+        QListWidgetItem* entry = new QListWidgetItem(QString::fromStdString(item->getTitle() + "    Queue Position # " + std::to_string(item->findIndex(controller->getCurrentAccount()))), ui->holdList);
         entry->setData(Qt::UserRole, item->getId());
     }
 }
