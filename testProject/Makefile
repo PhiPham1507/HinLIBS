@@ -449,6 +449,13 @@ moc_mainwindow.cpp: mainwindow.h \
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/test/testProject/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/test/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
 moc_patronwindow.cpp: patronwindow.h \
+		datacontroller.h \
+		Database.h \
+		Account.h \
+		item.h \
+		date.h \
+		patron.h \
+		loan.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/test/testProject/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/test/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include patronwindow.h -o moc_patronwindow.cpp
@@ -522,7 +529,9 @@ datacontroller.o: datacontroller.cpp datacontroller.h \
 		Database.h \
 		Account.h \
 		item.h \
-		date.h
+		date.h \
+		patron.h \
+		loan.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datacontroller.o datacontroller.cpp
 
 date.o: date.cpp date.h
@@ -535,7 +544,10 @@ fictionBook.o: fictionBook.cpp book.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fictionBook.o fictionBook.cpp
 
 item.o: item.cpp item.h \
-		date.h
+		date.h \
+		patron.h \
+		Account.h \
+		loan.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o item.o item.cpp
 
 librarian.o: librarian.cpp librarian.h \
@@ -564,7 +576,9 @@ main.o: main.cpp mainwindow.h \
 		Database.h \
 		Account.h \
 		item.h \
-		date.h
+		date.h \
+		patron.h \
+		loan.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
@@ -590,6 +604,13 @@ patron.o: patron.cpp patron.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o patron.o patron.cpp
 
 patronwindow.o: patronwindow.cpp patronwindow.h \
+		datacontroller.h \
+		Database.h \
+		Account.h \
+		item.h \
+		date.h \
+		patron.h \
+		loan.h \
 		ui_patronwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o patronwindow.o patronwindow.cpp
 
