@@ -88,7 +88,7 @@ void PatronWindow::checkOut(){
     bool success = controller->checkOut(selectedItemIndex);
 
     if(success){
-        QMessageBox::information(this, "Success Checkout", "Successfully check out the item");
+        QMessageBox::information(this, "Success Checkout", "Successfully checked out the item");
     }else{
         QMessageBox::information(this, "Failed Checkout", "Failed to check out the item");
     }
@@ -130,7 +130,7 @@ void PatronWindow::refreshCatalogueContents()
 void PatronWindow::placeHold(){
 
     if (selectedItemIndex == -1){
-        QMessageBox::information(this, "No Item Selected", "Choose an item to place hold");
+        QMessageBox::information(this, "No Item Selected", "Choose an item to place hold on");
         return;
     }
     bool success = false;
@@ -171,7 +171,7 @@ void PatronWindow::refreshAccountContents(){
 
 void PatronWindow::checkIn(){
     if(selectedLoanIndex == -1){
-        QMessageBox::information(this, "No Item Selected", "Choose an item in the below list to return");
+        QMessageBox::information(this, "No Item Selected", "Choose an item in the list below to return");
         return;
     }
     controller->checkIn(selectedLoanIndex);
@@ -183,7 +183,7 @@ void PatronWindow::checkIn(){
 
 void PatronWindow::cancelHold(){
     if(selectedHoldIndex == -1){
-        QMessageBox::information(this, "No Item Selected", "Choose an item in the below list to cancel hold");
+        QMessageBox::information(this, "No Item Selected", "Choose an item in the list below to cancel it's hold");
         return;
     }
     controller->cancelHold(selectedHoldIndex);
