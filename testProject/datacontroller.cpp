@@ -16,15 +16,27 @@ void DataController::displayItems(){
     }
 }
 
-vector<string> DataController::getItemDetails()
+vector<Item*> DataController::getItems()
 {
-    vector<string> itemDetails;
+    vector<Item*> items;
     for (int i = 0; i < itemSize; ++i)
     {
-        itemDetails.push_back(data.getItem(i)->display());
+        items.push_back(data.getItem(i));
     }
 
-    return itemDetails;
+    return items;
+}
+
+bool DataController::getItemAvailability(int id)
+{
+    Item* item = data.findItem(id);
+    if(item == nullptr) return false;
+    return item->getAvailability();
+}
+
+Item* DataController::getItemById(int id)
+{
+    return data.findItem(id);
 }
 
 PatronDetails DataController::getPatronDetails()
@@ -52,8 +64,8 @@ void DataController::accLoggedOut(){
     currentAccount = nullptr;
 }
 
-bool DataController::checkOut(const string& str){
-    Item* item = data.findItem(str);
+bool DataController::checkOut(int id){
+    Item* item = data.findItem(id);
     if(item == nullptr) return false;
     if(!item->getAvailability()) return false;
     bool patronCO = currentAccount->checkOut(item);
@@ -63,15 +75,15 @@ bool DataController::checkOut(const string& str){
 
 }
 
-bool DataController::placeHold(const string &str){
-    Item* item = data.findItem(str);
+bool DataController::placeHold(int id){
+    Item* item = data.findItem(id);
     if(item == nullptr) return false;
     if(item->getAvailability()) return false;
     return currentAccount->placeHold(item);
 }
 
-int DataController::placeHold(const string& str, bool* b){
-    Item* item = data.findItem(str);
+int DataController::placeHold(int id, bool* b){
+    Item* item = data.findItem(id);
     if(item == nullptr) return false;
     if(!item->getAvailability()) return false;
     currentAccount->addHold(item);

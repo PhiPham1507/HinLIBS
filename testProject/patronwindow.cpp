@@ -9,6 +9,9 @@ PatronWindow::PatronWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PatronWindow)
 {
+
+    selectedIndex = -1;
+
     ui->setupUi(this);
     QObject::connect(ui->signoutButton,
                          &QPushButton::clicked,
@@ -66,17 +69,6 @@ PatronWindow::PatronWindow(QWidget *parent) :
 
     QObject::connect(ui->checkoutButton, &QPushButton::clicked, this, &PatronWindow::checkOut);
 
-
-
-//    addEntryToCatalogue("1");
-//    addEntryToCatalogue("2");
-//    addEntryToCatalogue("3");
-//    addEntryToCatalogue("4");
-//    addEntryToCatalogue("5");
-//    addEntryToCatalogue("6");
-//    addEntryToCatalogue("7");
-//    addEntryToCatalogue("8");
-//    addEntryToCatalogue("9");
 }
 
 PatronWindow::~PatronWindow()
@@ -98,10 +90,11 @@ void PatronWindow::signOutRequest(){
 }
 
 void PatronWindow::checkOut(){
-    const string item;
-    // Retrieve string from GUI. such that: item = ...
 
-    bool success = controller->checkOut(item);
+    int id = catalogueEntryIds[selectedIndex];
+    if (id == -1) return;
+
+    bool success = controller->checkOut(id);
 
     if(success){
         QMessageBox::information(this, "Success Checkout", "Successfully check out the item");
@@ -153,9 +146,10 @@ void PatronWindow::catalogueButtonSelected()
     refreshCatalogueContents();
 }
 
-QPushButton* PatronWindow::addEntryToCatalogue(const QString& name)
+QPushButton* PatronWindow::addEntryToCatalogue(const QString& text)
 {
-    QPushButton* newButton = new QPushButton(name, this);
+    QPushButton* newButton = new QPushButton(text, this);
+//    newButton->setText(text);
     ui->scrollAreaWidgetContents->layout()->addWidget(newButton);
     return newButton;
 }
@@ -168,20 +162,29 @@ void PatronWindow::refreshCatalogueContents()
         delete catalogueEntries[i];
     }
     catalogueEntries.clear();
+    catalogueEntryIds.clear();
 
-    vector<string> itemDetails = controller->getItemDetails();
-    for (int i = 0; i < (int)itemDetails.size(); ++i)
+    vector<Item*> items = controller->getItems();
+    for (int i = 0; i < (int)items.size(); ++i)
     {
+        QPushButton* newButton = addEntryToCatalogue(QString::fromStdString(items[i]->display()));
+        catalogueEntries.push_back(newButton);
+        catalogueEntryIds.push_back(items[i]->getId());
 
-        catalogueEntries.push_back(addEntryToCatalogue(QString::fromStdString(itemDetails[i])));
+        // surely this causes a memory leak, right?
+        connect(catalogueEntries[i],  &QPushButton::clicked, this, [&]() {
+            selectedIndex = i;
+        });
     }
 }
 
 void PatronWindow::placeHold(){
-    const string item;
-    //Retrieve string from GUI. such that: item = ...
+
+    int id = catalogueEntryIds[selectedIndex];
+    if (id == -1) return;
+
     bool success = false;
-    int index = controller->placeHold(item, &success);
+    int index = controller->placeHold(id, &success);
     if(success){
         QString display = QString("Successfully placed hold on the item. Your queue position is: %1").arg(index);
         QMessageBox::information(this, "Place Hold Succeed", display);

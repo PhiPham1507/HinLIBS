@@ -3,9 +3,12 @@
 #include <iostream>
 #include "patron.h"
 
+int Item::idCount = 0;
+
 Item::Item(const std::string& name, const std::string& author, int year, long isbn) : title(name), author(author), publicationYear(year), isbn(isbn), availability(true)
 {
-
+    Item::idCount++;
+    id = Item::idCount;
 }
 
 
@@ -13,6 +16,12 @@ Item::~Item(){
 
 
 }
+
+int Item::getId() const
+{
+    return id;
+}
+
 string Item::available(bool avail) const{
     return avail ? "Yes" : "No";
 }

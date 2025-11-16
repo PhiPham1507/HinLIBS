@@ -10,13 +10,15 @@ class DataController
         DataController();
         void displayItems();
         void setPatron(Patron* patron);
-        vector<string> getItemDetails();
+        vector<Item*> getItems();
+        bool getItemAvailability(int id);
+        Item* getItemById(int id);
         PatronDetails getPatronDetails();
         Account* authenticate(const string& user, const string& pass);
         void accLoggedOut();
-        bool checkOut(const string& str);
-        bool placeHold(const string& str);
-        int placeHold(const string& str, bool* b);
+        bool checkOut(int id);
+        bool placeHold(int id);
+        int placeHold(int id, bool* b);
 
     private:
         Patron* currentAccount;

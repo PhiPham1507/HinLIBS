@@ -8,10 +8,16 @@
 class Patron;
 class Item
 {
+
+
     public:
+
+        static int idCount;
+
         Item(const std::string& name, const std::string& author, int year, long isbn = 0);
         virtual ~Item();
         string available(bool avail) const;
+        int getId() const;
         bool getAvailability() const;
         bool placeHold(Patron* patron);
         void addQueue(Patron* patron);
@@ -27,6 +33,7 @@ class Item
         bool availability;
         Date dueDate;
         vector<Patron*> queue;
+        int id;
 
 };
 

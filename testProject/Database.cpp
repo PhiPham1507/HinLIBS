@@ -64,9 +64,9 @@ Account* Database::findUser(const string &username){
     return nullptr;
 }
 
-Item* Database::findItem(const string &str) const{
+Item* Database::findItem(int id) const{
     for(Item* item : items){
-        if(item->display() == str) return item;
+        if(item->getId() == id) return item;
     }
     return nullptr;
 }

@@ -22,12 +22,14 @@ public:
     void viewAccountButtonSelected();
     void catalogueButtonSelected();
     void refreshCatalogueContents();
-    QPushButton* addEntryToCatalogue(const QString& name);
+    QPushButton* addEntryToCatalogue(const QString& text);
 
 private:
     Ui::PatronWindow *ui;
     DataController* controller;
     vector<QPushButton*> catalogueEntries;
+    vector<int> catalogueEntryIds;
+    int selectedIndex;
 
 
 signals:
