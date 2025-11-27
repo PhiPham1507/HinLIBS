@@ -20,7 +20,7 @@ This program is a partial implementation of the HinLibs Library System. It mainl
 How to Build and Run
 
     1.    Extract the ZIP:
-            Deliverable1.zip
+            type: "unzip team_22_D1.zip" in the terminal
             
     2.    Open Qt Creator → File → Open File or Project
             Select testProject.pro file.

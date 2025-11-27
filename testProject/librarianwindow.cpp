@@ -23,5 +23,5 @@ void LibrarianWindow::signOutRequest(){
 }
 void LibrarianWindow::setname(const QString &user){
 
-    ui->nameDisplay->setText(user);
+    ui->userOutput->setText(user);
 }
