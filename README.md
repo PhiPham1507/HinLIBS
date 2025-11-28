@@ -1,8 +1,12 @@
 HinLIBS – Deliverable 1 (D1)
 
 COMP 3004 – Fall 2025
-Team #: 
+
+
+Team #22: 
+
 Members:
+
     Van Tien Phi Pham
     Mohammad Makkawi
     Zachary Kushner
@@ -11,6 +15,7 @@ Members:
 -------------
 
 How to Build and Run
+
     1.    Extract the ZIP:
             Deliverable1.zip
             
@@ -25,15 +30,16 @@ No additional setup or libraries required.
 ------------
 
 Patron Account Names and Passwords
-Name: john323, Password: littlejohn
-Name: dane dane113, Password: dane
-Name: littlehenry, Password: henry16
-Name: john323, Password: littlejohn
-Name: Harry9, Password: hair
-Name: moneylover, Password: $$
 
-Librarian name: lib1, Password: lib1
-Admin name: admin1, admin1
+    Name: john323, Password: littlejohn
+    Name: dane dane113, Password: dane
+    Name: littlehenry, Password: henry16
+    Name: john323, Password: littlejohn
+    Name: Harry9, Password: hair
+    Name: moneylover, Password: $$
+
+    Librarian name: lib1, Password: lib1
+    Admin name: admin1, admin1
 
 
 Implemented Patron Features
@@ -62,6 +68,7 @@ Implemented Patron Features
     •    Queue positions updated.
 
 6. View Account Status
+
 
 Shows:
     •    Active Loans
