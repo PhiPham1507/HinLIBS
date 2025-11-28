@@ -9,10 +9,11 @@
 
 int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
 
     DataController controller;
+    controller.getDatabase().printDatabase();  // ← Add this (you may need getDatabase())
 
-    QApplication a(argc, argv);
     MainWindow window;
     LibrarianWindow lw;
     AdminWindow aw;
@@ -59,6 +60,7 @@ int main(int argc, char *argv[])
     });
 
     window.show();
+
 
     return a.exec();
 

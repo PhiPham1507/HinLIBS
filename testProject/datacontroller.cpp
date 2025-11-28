@@ -1,4 +1,5 @@
-#include "datacontroller.h"
+ #include "datacontroller.h"
+#include <QtSql/qsqlquery.h>
 #include <iostream>
 
 
@@ -64,7 +65,6 @@ bool DataController::checkOut(int id){
     if(!patronCO) return false;
     item->setAvailability(false);
     return true;
-
 }
 
 
@@ -83,11 +83,27 @@ Patron* DataController::getCurrentAccount(){
     return currentAccount;
 }
 
-void DataController::checkIn(int id){
+void DataController::checkIn(int id) {
     Item* item = data.findItem(id);
-    currentAccount->checkIn(item);
+    Patron* p = currentAccount; // cast to Patron
+
+    if (!item || !p) return;
+    p->checkIn(item);
     item->setAvailability(true);
 
+    QSqlQuery q;
+    q.prepare("UPDATE Loans "
+              "SET returned_date = ? "
+              "WHERE item_id = ? AND user_id = ? AND returned_date IS NULL");
+    //q.addBindValue(QString::fromStdString(today.toString()));
+    q.addBindValue(item->getId());
+    q.addBindValue(p->getDbId());
+    q.exec();
+
+    QSqlQuery q2;
+    q2.prepare("UPDATE Catalogue SET available = 1 WHERE id = ?");
+    q2.addBindValue(item->getId());
+    q2.exec();
 }
 
 void DataController::cancelHold(int id){

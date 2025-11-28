@@ -27,6 +27,8 @@ class Item
         string& getTitle();
         virtual string display() const = 0;
 
+        void setId(int newId) {id = newId; }
+
     protected:
         std::string title;
         std::string author;

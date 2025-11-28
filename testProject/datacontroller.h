@@ -22,6 +22,8 @@ class DataController
         int placeHold(int id, bool* b);
         Patron* getCurrentAccount();
 
+        Database& getDatabase() {return data;}
+
 
     private:
         Patron* currentAccount;
