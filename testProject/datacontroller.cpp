@@ -2,6 +2,9 @@
 #include <QtSql/qsqlquery.h>
 #include <iostream>
 
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QVariant>
 
 DataController::DataController() : currentAccount(nullptr){
     itemSize = data.itemSize();
@@ -96,7 +99,8 @@ void DataController::checkIn(int id) {
               "SET returned_date = ? "
               "WHERE item_id = ? AND user_id = ? AND returned_date IS NULL");
     //q.addBindValue(QString::fromStdString(today.toString()));
-    q.addBindValue(item->getId());
+    //q.addBindValue(item->getId());
+    q.addBindValue(QVariant(item->getId()));
     q.addBindValue(p->getDbId());
     q.exec();
 
