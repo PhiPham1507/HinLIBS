@@ -15,6 +15,9 @@ public:
     explicit LibrarianWindow(QWidget *parent = nullptr);
     ~LibrarianWindow();
     void setname(const QString& user);
+    void hideWhenDefault();
+    void showWhenChosen();
+    void clearInputs();
 
 private:
     Ui::LibrarianWindow *ui;
@@ -24,6 +27,7 @@ signals:
 
 private slots:
     void signOutRequest();
+    void chooseAccordingForm(int index);
 
 };
 
