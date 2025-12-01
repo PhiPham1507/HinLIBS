@@ -29,7 +29,12 @@ int main(int argc, char *argv[])
        window.close();
         if(login->getAccountType() == LIBRARIAN){
            lw.setname(user);
+           Librarian* lib = static_cast<Librarian*>(login);
+           controller.setLibrarian(lib);
+           lw.setController(&controller);
            lw.show();
+
+
         }else if (login->getAccountType() == PATRON){
             Patron* patron = static_cast<Patron*>(login);
             controller.setPatron(patron);
@@ -46,6 +51,7 @@ int main(int argc, char *argv[])
     QObject::connect(&lw, &LibrarianWindow::signOut,[&](){
         lw.close();
         window.show();
+        controller.accLoggedOut();
     });
     QObject::connect(&aw, &AdminWindow::signOut,[&](){
         aw.close();

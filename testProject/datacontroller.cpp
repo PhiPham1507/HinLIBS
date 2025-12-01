@@ -6,12 +6,15 @@
 #include <QSqlError>
 #include <QVariant>
 
-DataController::DataController() : currentAccount(nullptr){
+DataController::DataController() : patronAcc(nullptr), libAcc(nullptr){
     itemSize = data.itemSize();
 }
 
 void DataController::setPatron(Patron *patron){
-    currentAccount = patron;
+    patronAcc = patron;
+}
+void DataController::setLibrarian(Librarian *lib){
+    libAcc = lib;
 }
 
 void DataController::displayItems(){
@@ -19,16 +22,19 @@ void DataController::displayItems(){
         cout << data.getItem(i)->display();
     }
 }
-
+void DataController::removeItem(int index){
+    data.removeItem(index);
+}
 vector<Item*> DataController::getItems()
 {
+    /*
     vector<Item*> items;
     for (int i = 0; i < itemSize; ++i)
     {
         items.push_back(data.getItem(i));
     }
-
-    return items;
+*/
+    return data.getItems();
 }
 
 bool DataController::getItemAvailability(int id)
@@ -57,14 +63,15 @@ Account* DataController::authenticate(const string &user, const string &pass){
 }
 
 void DataController::accLoggedOut(){
-    currentAccount = nullptr;
+    patronAcc = nullptr;
+    libAcc = nullptr;
 }
 
 bool DataController::checkOut(int id){
     Item* item = data.findItem(id);
     if(item == nullptr) return false;
     if(!item->getAvailability()) return false;
-    bool patronCO = currentAccount->checkOut(item);
+    bool patronCO = patronAcc->checkOut(item);
     if(!patronCO) return false;
     item->setAvailability(false);
     return true;
@@ -76,19 +83,19 @@ int DataController::placeHold(int id, bool* b){
     Item* item = data.findItem(id);
     if(item == nullptr) return false;
     if(item->getAvailability()) return false;
-    if(!currentAccount->addHold(item)) return false;
-    item->addQueue(currentAccount);
+    if(!patronAcc->addHold(item)) return false;
+    item->addQueue(patronAcc);
     *b = true;
-    return item->findIndex(currentAccount);
+    return item->findIndex(patronAcc);
 }
 
 Patron* DataController::getCurrentAccount(){
-    return currentAccount;
+    return patronAcc;
 }
 
 void DataController::checkIn(int id) {
     Item* item = data.findItem(id);
-    Patron* p = currentAccount; // cast to Patron
+    Patron* p = patronAcc; // cast to Patron
 
     if (!item || !p) return;
     p->checkIn(item);
@@ -112,8 +119,8 @@ void DataController::checkIn(int id) {
 
 void DataController::cancelHold(int id){
     Item* item = data.findItem(id);
-    item->removeQueue(currentAccount);
-    currentAccount->removeHold(item);
+    item->removeQueue(patronAcc);
+    patronAcc->removeHold(item);
 }
 
 

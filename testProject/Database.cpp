@@ -17,16 +17,17 @@
 #include "patron.h"
 #include "librarian.h"
 #include "admin.h"
-
+#include <iostream>
 
 Database::Database(){
+
     openConnection();
     initializeSchemaIfNeeded();
     loadUsers();
     loadItems();
     loadLoansAndHolds();
+/*
 
-    /*
     items.push_back(new FictionBook("Catcher in the Rye", "J.D. Salinger", 1951, 9780316769488));
     items.push_back(new FictionBook("To Kill a Mockingbird", "Harper Lee", 1960, 9780061120084));
     items.push_back(new FictionBook("1984", "George Orwell", 1949, 9780451524935));
@@ -55,8 +56,8 @@ Database::Database(){
     accounts.push_back(new Patron("moneylover", "$$"));
     accounts.push_back(new Librarian("lib1", "lib1"));
     accounts.push_back(new Admin("admin1", "admin1"));
-    */
 
+*/
 }
 Database::~Database(){
     if(db.isOpen()) db.close();
@@ -68,6 +69,9 @@ Item* Database::getItem(int i){
 int Database::itemSize(){
     return items.size();
 }
+vector<Item*> Database::getItems(){
+    return items;
+}
 
 Account* Database::findUser(const string &username){
     for(Account* acc: accounts){
@@ -77,7 +81,16 @@ Account* Database::findUser(const string &username){
     }
     return nullptr;
 }
-
+void Database::removeItem(int id){
+    for(unsigned long i = 0; i < items.size(); i++){
+        if(items.at(i)->getId() == id){
+            items.erase(items.begin() + i);
+            cout << "Found" << endl;
+            //remove from the database
+            return;
+        }
+    }
+}
 Item* Database::findItem(int id) const{
     for(Item* item : items){
         if(item->getId() == id) return item;

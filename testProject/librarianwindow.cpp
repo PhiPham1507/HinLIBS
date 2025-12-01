@@ -1,10 +1,14 @@
 #include "librarianwindow.h"
 #include "ui_librarianwindow.h"
+#include <QMessageBox>
 void hideWhenDefault();
+void refreshCatalogueContents();
+
 LibrarianWindow::LibrarianWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LibrarianWindow)
 {
+    selectedItemIndex = -1;
     ui->setupUi(this);
     QObject::connect(ui->signoutButton,
                          &QPushButton::clicked,
@@ -18,6 +22,27 @@ LibrarianWindow::LibrarianWindow(QWidget *parent) :
         ui->stackedWidget->setCurrentIndex(0);
     });
     QObject::connect(ui->chooseItem, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LibrarianWindow::chooseAccordingForm);
+
+    QObject::connect(ui->removeItemButton, &QPushButton::clicked, this, [this](){
+        if(ui->stackedWidget->isHidden()) ui->stackedWidget->show();
+        ui->stackedWidget->setCurrentIndex(1);
+        ui->removeItemButton_2->setEnabled(false);
+        refreshCatalogueContents();
+
+    });
+
+    QObject::connect(ui->catalogueDisplay, &QListWidget::itemClicked, this, [this](QListWidgetItem* item){
+        selectedItemIndex = item->data(Qt::UserRole).toInt();
+        if(controller->getItemAvailability(selectedItemIndex)){
+            ui->removeItemButton_2->setEnabled(true);
+        }else{
+            ui->removeItemButton_2->setEnabled(false);
+        }
+    });
+
+    QObject::connect(ui->removeItemButton_2, &QPushButton::clicked, this, &LibrarianWindow::removeItem);
+
+
 }
 
 LibrarianWindow::~LibrarianWindow()
@@ -76,7 +101,32 @@ void LibrarianWindow::setname(const QString &user){
 
     ui->userOutput->setText(user);
 }
+void LibrarianWindow::refreshCatalogueContents(){
+    ui->catalogueDisplay->clear();  // Delete old entries automatically
 
+    vector<Item*> items = controller->getItems();
+
+    for (int i = 0; i < (int)items.size(); ++i)
+    {
+        Item* item = items[i];
+
+        // Create a new QListWidgetItem
+        QListWidgetItem* entry = new QListWidgetItem(
+            QString::fromStdString(item->display()),
+            ui->catalogueDisplay
+        );
+
+        // Store the index or ID inside the item
+        entry->setData(Qt::UserRole, item->getId());
+    }
+}
+void LibrarianWindow::removeItem(){
+    controller->removeItem(selectedItemIndex);
+    QMessageBox::information(this, "Success Checkout", "Successfully checked out the item");
+    refreshCatalogueContents();
+    selectedItemIndex = -1;
+    ui->removeItemButton_2->setEnabled(false);
+}
 void LibrarianWindow::hideWhenDefault(){
     ui->itemFormsWidget->hide();
     ui->authorInput->hide();
@@ -99,5 +149,7 @@ void LibrarianWindow::showWhenChosen(){
     ui->addButton->show();
 
 }
-
+void LibrarianWindow::setController(DataController *con){
+    controller = con;
+}
 

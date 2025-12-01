@@ -12,8 +12,6 @@ class Item
 
     public:
 
-        static int idCount;
-
         Item(const std::string& name, const std::string& author, int year, long isbn = 0);
         virtual ~Item();
         string available(bool avail) const;

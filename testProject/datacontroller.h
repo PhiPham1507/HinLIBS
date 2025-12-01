@@ -3,6 +3,7 @@
 
 #include "Database.h"
 #include "patron.h"
+#include "librarian.h"
 
 class DataController
 {
@@ -10,7 +11,8 @@ class DataController
         DataController();
         void displayItems();
         void setPatron(Patron* patron);
-        vector<Item*> getItems();
+        void setLibrarian(Librarian* lib);
+        vector<Item*> getItems(); //Temporary
         bool getItemAvailability(int id);
         Item* getItemById(int id);
         //PatronDetails getPatronDetails();
@@ -21,12 +23,13 @@ class DataController
         void cancelHold(int id);
         int placeHold(int id, bool* b);
         Patron* getCurrentAccount();
-
+        void removeItem(int index);
         Database& getDatabase() {return data;}
 
 
     private:
-        Patron* currentAccount;
+        Patron* patronAcc;
+        Librarian* libAcc;
         int itemSize;
         Database data;
 };

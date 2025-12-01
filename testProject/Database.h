@@ -16,8 +16,9 @@ public:
     Item* getItem(int i);
     Item* findItem(int id) const;
     Account* findUser(const string& username);
-
+    void removeItem(int id);
     void printDatabase();
+    vector<Item*> getItems();
 
 private:
     void openConnection();

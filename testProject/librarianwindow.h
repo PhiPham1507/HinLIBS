@@ -2,7 +2,7 @@
 #define LIBRARIANWINDOW_H
 
 #include <QMainWindow>
-
+#include "datacontroller.h"
 namespace Ui {
 class LibrarianWindow;
 }
@@ -15,12 +15,18 @@ public:
     explicit LibrarianWindow(QWidget *parent = nullptr);
     ~LibrarianWindow();
     void setname(const QString& user);
+    void setController(DataController* con);
     void hideWhenDefault();
     void showWhenChosen();
     void clearInputs();
+    void refreshCatalogueContents();
+
+
 
 private:
     Ui::LibrarianWindow *ui;
+    DataController* controller;
+    int selectedItemIndex;
 
 signals:
     void signOut();
@@ -28,7 +34,7 @@ signals:
 private slots:
     void signOutRequest();
     void chooseAccordingForm(int index);
-
+    void removeItem();
 };
 
 #endif // LIBRARIANWINDOW_H
