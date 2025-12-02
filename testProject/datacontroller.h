@@ -24,6 +24,7 @@ class DataController
         int placeHold(int id, bool* b);
         Patron* getCurrentAccount();
         void removeItem(int index);
+        Patron* getPatronByName(const string& name);
         Database& getDatabase() {return data;}
 
 

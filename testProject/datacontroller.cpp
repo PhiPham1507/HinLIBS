@@ -93,6 +93,15 @@ Patron* DataController::getCurrentAccount(){
     return patronAcc;
 }
 
+Patron* DataController::getPatronByName(const string& name)
+{
+    Account* target = data.findUser(name);
+    if (target != nullptr && target->getAccountType() == PATRON) {
+        // TODO: hmmm
+    }
+    return nullptr;
+}
+
 void DataController::checkIn(int id) {
     Item* item = data.findItem(id);
     Patron* p = patronAcc; // cast to Patron

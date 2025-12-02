@@ -72,7 +72,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="addItemPage">
      <widget class="QComboBox" name="chooseItem">
@@ -207,7 +207,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mAndGPage">
        <widget class="QLabel" name="genreLabel">
@@ -429,7 +429,54 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="pReturnPage"/>
+    <widget class="QWidget" name="pReturnPage">
+     <widget class="QListWidget" name="listWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>60</y>
+        <width>781</width>
+        <height>341</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="SearchPatronButton">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>20</y>
+        <width>171</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Search Patron name</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ReturnSelectedItems">
+      <property name="geometry">
+       <rect>
+        <x>632</x>
+        <y>20</y>
+        <width>121</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Return selected</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="PatronSearchField">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>20</y>
+        <width>291</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QPushButton" name="signoutButton">
     <property name="geometry">

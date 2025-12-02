@@ -42,6 +42,7 @@ LibrarianWindow::LibrarianWindow(QWidget *parent) :
 
     QObject::connect(ui->removeItemButton_2, &QPushButton::clicked, this, &LibrarianWindow::removeItem);
 
+    QObject::connect(ui->pReturnButton, &QPushButton::clicked, this, &LibrarianWindow::showReturnForPatron);
 
 }
 
@@ -153,3 +154,7 @@ void LibrarianWindow::setController(DataController *con){
     controller = con;
 }
 
+void LibrarianWindow::showReturnForPatron()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}

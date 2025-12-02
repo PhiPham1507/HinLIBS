@@ -20,6 +20,7 @@ public:
     void showWhenChosen();
     void clearInputs();
     void refreshCatalogueContents();
+    void showReturnForPatron();
 
 
 
