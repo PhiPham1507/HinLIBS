@@ -430,7 +430,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="pReturnPage">
-     <widget class="QListWidget" name="listWidget">
+     <widget class="QListWidget" name="LoansList">
       <property name="geometry">
        <rect>
         <x>0</x>

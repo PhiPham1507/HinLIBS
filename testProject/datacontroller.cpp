@@ -97,7 +97,7 @@ Patron* DataController::getPatronByName(const string& name)
 {
     Account* target = data.findUser(name);
     if (target != nullptr && target->getAccountType() == PATRON) {
-        // TODO: hmmm
+        // TODO: hmmm, i need type Patron, not Account...
     }
     return nullptr;
 }
