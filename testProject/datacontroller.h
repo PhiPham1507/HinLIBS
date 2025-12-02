@@ -19,7 +19,7 @@ class DataController
         Account* authenticate(const string& user, const string& pass);
         void accLoggedOut();
         bool checkOut(int id);
-        bool checkIn(int id);
+        void checkIn(int id);
         void cancelHold(int id);
         bool placeHold(int id);
         Patron* getCurrentAccount();

@@ -61,3 +61,15 @@ void Item::removeQueue(Patron *patron){
     }
 }
 
+
+Patron* Item::getNextInQueue() const {
+    if (queue.empty()) return nullptr;
+    return queue.front();
+}
+
+void Item::popNextInQueue() {
+    if (!queue.empty()) {
+        queue.erase(queue.begin());
+    }
+}
+
