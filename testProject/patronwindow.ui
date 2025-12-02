@@ -101,10 +101,10 @@
      <bool>false</bool>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::Shape::Box</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="accountPage">
@@ -188,7 +188,7 @@
         <x>10</x>
         <y>20</y>
         <width>801</width>
-        <height>27</height>
+        <height>32</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="catalogueLayout">
@@ -246,7 +246,7 @@
      <x>0</x>
      <y>0</y>
      <width>826</width>
-     <height>22</height>
+     <height>37</height>
     </rect>
    </property>
   </widget>

@@ -86,31 +86,58 @@ bool DataController::checkOut(int id) {
     Item* item = data.findItem(id);
     if (!item) return false;
 
-    // must be a patron
-    Account *acc = getCurrentAccount();
+    Account* acc = getCurrentAccount();
     Patron* patron = dynamic_cast<Patron*>(acc);
     if (!patron) return false;
 
+    // If item is currently marked unavailable, bail out
     if (!item->getAvailability()) return false;
 
-    // In-memory checkout
+    // ==== HOLDS RULE ====
+    Patron* head = item->getNextInQueue();
+
+    if (head != nullptr) {
+        // There IS a queue; only the first in line can check out
+        if (head != patron) {
+            // Not your turn → cannot check out even though 'available' is 1
+            return false;
+        }
+
+        // It IS this patron's turn:
+        //  - remove their hold in memory
+        //  - remove from item's queue
+        patron->removeHold(item);
+        item->popNextInQueue();
+
+        //  - remove their hold in DB
+        QSqlQuery delHold;
+        delHold.prepare("DELETE FROM Holds WHERE user_id = ? AND item_id = ?");
+        delHold.addBindValue(QVariant(patron->getDbId()));
+        delHold.addBindValue(QVariant(item->getId()));
+        if (!delHold.exec()) {
+            qDebug() << "Failed to delete hold for patron on checkout:"
+                     << delHold.lastError().text();
+        }
+
+        //  - renumber remaining positions for this item
+        data.renumberHoldsForItem(item->getId());
+    }
+
+    // ==== NORMAL CHECKOUT LOGIC ====
     if (!patron->checkOut(item)) return false;
     item->setAvailability(false);
 
-    // === Persist to DB ===
+    QString today = "2025-01-01";   // TODO: real date
+    QString due   = "2025-01-15";   // today + 14
+
     QSqlQuery q;
-
-    // Simple date strings – you can improve later if needed
-    QString today = "2025-01-01"; // placeholder or build from your Date class
-    QString due   = "2025-01-15"; // placeholder (today + 14 days)
-
     q.prepare("INSERT INTO Loans (user_id, item_id, issue_date, due_date, returned_date) "
               "VALUES (?, ?, ?, ?, NULL)");
 
-    q.addBindValue(QVariant(patron->getDbId()));   // user_id
-    q.addBindValue(QVariant(item->getId()));       // item_id
-    q.addBindValue(today);                        // issue_date
-    q.addBindValue(due);                          // due_date
+    q.addBindValue(QVariant(patron->getDbId()));
+    q.addBindValue(QVariant(item->getId()));
+    q.addBindValue(today);
+    q.addBindValue(due);
 
     if (!q.exec()) {
         qDebug() << "Failed to insert loan:" << q.lastError().text();
@@ -120,7 +147,8 @@ bool DataController::checkOut(int id) {
     q2.prepare("UPDATE Catalogue SET available = 0 WHERE id = ?");
     q2.addBindValue(QVariant(item->getId()));
     if (!q2.exec()) {
-        qDebug() << "Failed to update availability:" << q2.lastError().text();
+        qDebug() << "Failed to update availability on checkout:"
+                 << q2.lastError().text();
     }
 
     return true;
@@ -237,7 +265,8 @@ void DataController::checkIn(int id) {
     item->setAvailability(true);
 
     // ==== 2) Mark the loan as returned in DB ====
-    QString today = "2025-01-01";   // TODO: replace with real date string if you want
+    QString today = "2025-01-01";   // TODO: plug in real date
+
     QSqlQuery q;
     q.prepare("UPDATE Loans "
               "SET returned_date = ? "
@@ -258,59 +287,12 @@ void DataController::checkIn(int id) {
         qDebug() << "Failed to update availability:" << q2.lastError().text();
     }
 
-    // ==== 3) CHECK IF SOMEONE IS WAITING FOR THIS ITEM ====
-    Patron* next = item->getNextInQueue();
-    if (!next) {
-        // nobody waiting → item simply becomes available
-        return;
-    }
-
-    // ==== 4) REMOVE THEIR HOLD (in memory) ====
-    next->removeHold(item);
-    item->popNextInQueue();    // or item->removeQueue(next);
-
-    // ==== 5) REMOVE THEIR HOLD FROM DB ====
-    QSqlQuery delHold;
-    delHold.prepare("DELETE FROM Holds WHERE user_id = ? AND item_id = ?");
-    delHold.addBindValue(QVariant(next->getDbId()));
-    delHold.addBindValue(QVariant(item->getId()));
-    if (!delHold.exec()) {
-        qDebug() << "Failed to delete hold for next patron:" << delHold.lastError().text();
-    }
-
-    // Renumber remaining holds for this item (clean positions 1..n)
-    data.renumberHoldsForItem(item->getId());
-
-    // ==== 6) AUTO-CHECKOUT TO NEXT PATRON (in memory) ====
-    // We reuse the same date placeholders; you can compute real dates if you like.
-    QString issueDate = today;
-    QString dueDate   = "2025-01-15";   // TODO: today + 14 days
-
-    // patron gets the book now
-    next->checkOut(item);
-    item->setAvailability(false);
-
-    // ==== 7) INSERT NEW LOAN FOR NEXT PATRON IN DB ====
-    QSqlQuery q3;
-    q3.prepare("INSERT INTO Loans (user_id, item_id, issue_date, due_date, returned_date) "
-               "VALUES (?, ?, ?, ?, NULL)");
-    q3.addBindValue(QVariant(next->getDbId()));
-    q3.addBindValue(QVariant(item->getId()));
-    q3.addBindValue(issueDate);
-    q3.addBindValue(dueDate);
-
-    if (!q3.exec()) {
-        qDebug() << "Failed to insert new loan for next patron:" << q3.lastError().text();
-    }
-
-    QSqlQuery q4;
-    q4.prepare("UPDATE Catalogue SET available = 0 WHERE id = ?");
-    q4.addBindValue(QVariant(item->getId()));
-    if (!q4.exec()) {
-        qDebug() << "Failed to mark item unavailable for next patron:" << q4.lastError().text();
-    }
 }
+<<<<<<< HEAD
 
+=======
+/*
+>>>>>>> 9c47adc (D1 issue fixed)
 
 /*
 void DataController::cancelHold(int id){

@@ -164,7 +164,12 @@ void PatronWindow::refreshAccountContents(){
 
     for(int i = 0; i < (int)holds.size(); i++){
         Item* item = holds[i];
-        QListWidgetItem* entry = new QListWidgetItem(QString::fromStdString(item->getTitle() + "    Queue Position # " + std::to_string(item->findIndex(controller->getCurrentAccount()))), ui->holdList);
+
+        QListWidgetItem* entry;
+        if(item->getAvailability())
+            entry = new QListWidgetItem(QString::fromStdString(item->getTitle() + "    Queue Position # " + std::to_string(item->findIndex(controller->getCurrentAccount()) -1)+ " - Available!"), ui->holdList);
+        else
+            entry = new QListWidgetItem(QString::fromStdString(item->getTitle() + "    Queue Position # " + std::to_string(item->findIndex(controller->getCurrentAccount()))), ui->holdList);
         entry->setData(Qt::UserRole, item->getId());
     }
 }
