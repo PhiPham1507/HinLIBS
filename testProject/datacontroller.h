@@ -25,6 +25,8 @@ class DataController
         Patron* getCurrentAccount();
         void removeItem(int index);
         Database& getDatabase() {return data;}
+        bool validateDate(int year, int month, int day);
+        void addItem(const string& title, const string& author, int pub, long isbn, const string& type,const string& dewy, int issueNumber, const string& pubDate, const string& genre, int rating);
 
 
     private:

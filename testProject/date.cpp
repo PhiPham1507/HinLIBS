@@ -1,5 +1,10 @@
 #include "date.h"
 
+Date::Date(const string& date){
+    std::string s = date;
+    sscanf(s.c_str(), "%d-%d-%d", &this->year, &this->month, &this->day);
+}
+
 const std::string Date::monthNames[12] = {
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"

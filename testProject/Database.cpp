@@ -338,8 +338,8 @@ void Database::loadItems() {
             item = new NonFictionBook(title, author, dewey, year, isbn);
         } else if (type == "magazine") {
             // Convert pubDateStr ("YYYY-MM-DD") into your Date class
-            Date pubDate;  // TODO: parse string into Date
-            item = new Magazine(title, author, year, issueNumber, pubDate, isbn);
+            //Date pubDate;  // TODO: parse string into Date
+            item = new Magazine(title, author, year, issueNumber, Date(pubDateStr.toStdString()), isbn);
         } else if (type == "movie") {
             item = new Movie(title, author, year, genre, rating, isbn);
         } else if (type == "videogame") {
@@ -417,4 +417,28 @@ void Database::printDatabase() {
     printTable("Loans");
     printTable("Holds");
 }
-
+void Database::addItem(const string &title, const string &author, int pub, long isbn, const string &type, const string &dewy,
+                       int issueNumber, const string &pubDate, const string &genre, int rating){
+    if(type == "fiction"){
+        //Add to database directly instead of creating the item and push to vector. This is temporary for testing
+        Item* item = new FictionBook(title, author, pub, isbn);
+        item->setId(items.at(items.size() - 1)->getId() + 1);
+        items.push_back(item);
+    }else if(type == "nonfiction"){
+        Item* item = new NonFictionBook(title, author, dewy, pub, isbn);
+        item->setId(items.at(items.size() - 1)->getId() + 1);
+        items.push_back(item);
+    }else if(type == "videogame"){
+        Item* item = new VideoGame(title,author,pub,genre, rating, isbn);
+        item->setId(items.at(items.size() - 1)->getId() + 1);
+        items.push_back(item);
+    }else if(type == "movie"){
+        Item* item = new Movie(title,author,pub, genre, rating, isbn);
+        item->setId(items.at(items.size() - 1)->getId() + 1);
+        items.push_back(item);
+    }else{
+        Item* item = new Magazine(title,author,pub,issueNumber,Date(pubDate), isbn);
+        item->setId(items.at(items.size() - 1)->getId() + 1);
+        items.push_back(item);
+    }
+}

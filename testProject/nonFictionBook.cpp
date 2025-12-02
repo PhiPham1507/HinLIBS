@@ -12,4 +12,4 @@ NonFictionBook::~NonFictionBook(){}
 
 string NonFictionBook::display()const{
     return "Title " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
-            + ". Dewy Decimal: " + " .Availability: " + available(availability) + "\n";}
+            + ". Dewy Decimal: " + dewy + " .Availability: " + available(availability) + "\n";}

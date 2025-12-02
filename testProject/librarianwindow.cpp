@@ -1,6 +1,7 @@
 #include "librarianwindow.h"
 #include "ui_librarianwindow.h"
 #include <QMessageBox>
+#include <iostream>
 void hideWhenDefault();
 void refreshCatalogueContents();
 
@@ -41,7 +42,7 @@ LibrarianWindow::LibrarianWindow(QWidget *parent) :
     });
 
     QObject::connect(ui->removeItemButton_2, &QPushButton::clicked, this, &LibrarianWindow::removeItem);
-
+    QObject::connect(ui->addButton, &QPushButton::clicked, this, &LibrarianWindow::addItem);
 
 }
 
@@ -49,11 +50,113 @@ LibrarianWindow::~LibrarianWindow()
 {
     delete ui;
 }
+void LibrarianWindow::addItem(){
+    bool pass;
+    const string& title = ui->titleInput->text().toStdString();
+    const string& author = ui->authorInput->text().toStdString();
+    long isbn = ui->isbnInput->text().toLong(&pass);
+    if(!pass){
+        isbn = 0;
+    }
+    int pub = ui->publicationInput->text().toInt(&pass);
+    if(!pass){
+        QMessageBox::information(this, "Invalid Input", "Failed on adding item");
+        ui->chooseItem->setCurrentIndex(0);
+        clearInputs();
+        return;
+    }
+    if(title == "" || author == ""){
+        QMessageBox::information(this, "Invalid Input", "Failed on adding item");
+        ui->chooseItem->setCurrentIndex(0);
+        clearInputs();
+        return;
+    }
+    int index = ui->chooseItem->currentIndex();
+    string type;
+    string dewy;
+    string genre;
+    int rating = 0;
+    int issueNumber = 0;
+    string pubDate;
 
+
+    switch (index){
+    case 1:
+        type = "fiction";
+        break;
+    case 2:
+        type = "nonfiction";
+        dewy = ui->dewyInput->text().toStdString();
+        if(dewy == ""){
+            QMessageBox::information(this, "Invalid Input", "Failed on adding item");
+            ui->chooseItem->setCurrentIndex(0);
+            clearInputs();
+            return;
+        }
+        break;
+    case 3:
+        type = "videogame";
+        genre = ui->genreInput->text().toStdString();
+        if(genre == ""){
+            QMessageBox::information(this, "Invalid Input", "Failed on adding item");
+            ui->chooseItem->setCurrentIndex(0);
+            clearInputs();
+            return;
+        }
+        rating = ui->ratingInput->text().toInt(&pass);
+        if(!pass) rating = -1;
+        break;
+    case 4:
+        type = "movie";
+        genre = ui->genreInput->text().toStdString();
+        if(genre == ""){
+            QMessageBox::information(this, "Invalid Input", "Failed on adding item");
+            ui->chooseItem->setCurrentIndex(0);
+            clearInputs();
+            return;
+        }
+        rating = ui->ratingInput->text().toInt(&pass);
+        if(!pass) rating = -1;
+        break;
+    case 5:
+        bool day, month, year;
+        type = "magazine";
+        issueNumber = ui->issueInput->text().toInt(&pass);
+        int dayI = ui->dayPubInput->text().toInt(&day);
+        int monthI = ui->monthPubInput->text().toInt(&month);
+        int yearI = ui->yearPubInput->text().toInt(&year);
+        if(!pass || !day || !month || !year){
+            QMessageBox::information(this, "Invalid Input", "Failed on adding item");
+            ui->chooseItem->setCurrentIndex(0);
+            clearInputs();
+            return;
+        }
+        bool valid = controller->validateDate(yearI, monthI, dayI);
+        if(!valid){
+            QMessageBox::information(this, "Invalid Input", "Failed on adding item");
+            ui->chooseItem->setCurrentIndex(0);
+            clearInputs();
+            return;
+        }
+        pubDate = (QString("%1-%2-%3")
+                .arg(ui->yearPubInput->text())
+                .arg(ui->monthPubInput->text())
+                .arg(ui->dayPubInput->text())).toStdString();
+        cout << pubDate << endl;
+        break;
+    }
+
+    controller->addItem(title, author, pub, isbn, type, dewy, issueNumber, pubDate, genre, rating);
+    QMessageBox::information(this, "Success Adding Item", "Successfully added the item");
+
+    ui->chooseItem->setCurrentIndex(0);
+    clearInputs();
+}
 void LibrarianWindow::signOutRequest(){
     emit signOut();
 }
 void LibrarianWindow::clearInputs(){
+    ui->titleInput->clear();
     ui->authorInput->clear();
     ui->publicationInput->clear();
     ui->isbnInput->clear();
@@ -121,14 +224,17 @@ void LibrarianWindow::refreshCatalogueContents(){
     }
 }
 void LibrarianWindow::removeItem(){
+    refreshCatalogueContents();
     controller->removeItem(selectedItemIndex);
-    QMessageBox::information(this, "Success Checkout", "Successfully checked out the item");
+    QMessageBox::information(this, "Success Removal", "Successfully removed the item");
     refreshCatalogueContents();
     selectedItemIndex = -1;
     ui->removeItemButton_2->setEnabled(false);
 }
 void LibrarianWindow::hideWhenDefault(){
     ui->itemFormsWidget->hide();
+    ui->titleLabel->hide();
+    ui->titleInput->hide();
     ui->authorInput->hide();
     ui->authorLabel->hide();
     ui->isbnInput->hide();
@@ -140,6 +246,8 @@ void LibrarianWindow::hideWhenDefault(){
 }
 
 void LibrarianWindow::showWhenChosen(){
+    ui->titleLabel->show();
+    ui->titleInput->show();
     ui->authorInput->show();
     ui->authorLabel->show();
     ui->isbnInput->show();

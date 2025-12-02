@@ -123,8 +123,34 @@ void DataController::cancelHold(int id){
     patronAcc->removeHold(item);
 }
 
+bool DataController::validateDate(int year, int month, int day){
+    if (month < 1 || month > 12) {
+        return false;
+    }
 
+    if (day < 1) {
+        return false;
+    }
 
+    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+
+    if (isLeap) {
+        daysInMonth[1] = 29;
+    }
+
+    if (day > daysInMonth[month - 1]) {
+        return false;
+    }
+
+    return true;
+}
+
+void DataController::addItem(const string &title, const string &author, int pub, long isbn,
+                             const string &type, const string &dewy, int issueNumber, const string &pubDate, const string &genre, int rating){
+    data.addItem(title, author, pub, isbn, type, dewy, issueNumber, pubDate, genre, rating);
+}
 
 
 

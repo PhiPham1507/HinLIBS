@@ -15,6 +15,7 @@ class Date {
 
         Date(int day, int month, int year) : day(day), month(month), year(year) {};
         Date() : day(1), month(1), year(1970) {};
+        Date(const string& date);
 
         int operator==(Date d);
         int operator!=(Date d);

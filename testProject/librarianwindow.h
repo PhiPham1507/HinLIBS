@@ -35,6 +35,7 @@ private slots:
     void signOutRequest();
     void chooseAccordingForm(int index);
     void removeItem();
+    void addItem();
 };
 
 #endif // LIBRARIANWINDOW_H
