@@ -133,8 +133,8 @@ void PatronWindow::placeHold(){
         QMessageBox::information(this, "No Item Selected", "Choose an item to place hold on");
         return;
     }
-    bool success = false;
-    int index = controller->placeHold(selectedItemIndex, &success);
+    bool success = true;
+    int index = controller->placeHold(selectedItemIndex);
     if(success){
         QString display = QString("Successfully placed hold on the item. Your queue position is: %1").arg(index);
         QMessageBox::information(this, "Place Hold Succeed", display);

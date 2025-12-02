@@ -44,6 +44,9 @@ LibrarianWindow::LibrarianWindow(QWidget *parent) :
     QObject::connect(ui->removeItemButton_2, &QPushButton::clicked, this, &LibrarianWindow::removeItem);
     QObject::connect(ui->addButton, &QPushButton::clicked, this, &LibrarianWindow::addItem);
 
+
+    QObject::connect(ui->pReturnButton, &QPushButton::clicked, this, &LibrarianWindow::showReturnForPatron);
+
 }
 
 LibrarianWindow::~LibrarianWindow()
@@ -261,3 +264,40 @@ void LibrarianWindow::setController(DataController *con){
     controller = con;
 }
 
+void LibrarianWindow::showReturnForPatron()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void LibrarianWindow::searchForPatronButtonClicked()
+{
+    QString input = ui->PatronSearchField->text();
+    currentPatronTarget = controller->getPatronByName(input.toStdString());
+    if (currentPatronTarget == nullptr) {
+        return;
+    }
+    displayPatronTargetLoans();
+}
+
+void LibrarianWindow::displayPatronTargetLoans()
+{
+    ui->LoansList->clear();  // Delete old entries automatically
+
+    if (currentPatronTarget == nullptr) return;
+
+    vector<Loan> loans = currentPatronTarget->getLoans();
+
+    for (int i = 0; i < (int)loans.size(); ++i)
+    {
+        Item* item = loans[i].getItem();
+
+        // Create a new QListWidgetItem
+        QListWidgetItem* entry = new QListWidgetItem(
+            QString::fromStdString(item->display()),
+            ui->LoansList
+        );
+
+        // Store the index or ID inside the item
+        entry->setData(Qt::UserRole, item->getId());
+    }
+}

@@ -20,13 +20,16 @@ public:
     void showWhenChosen();
     void clearInputs();
     void refreshCatalogueContents();
+    void showReturnForPatron();
 
-
+    void searchForPatronButtonClicked();
+    void displayPatronTargetLoans();
 
 private:
     Ui::LibrarianWindow *ui;
     DataController* controller;
     int selectedItemIndex;
+    Patron* currentPatronTarget;
 
 signals:
     void signOut();

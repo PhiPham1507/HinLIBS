@@ -21,9 +21,10 @@ class DataController
         bool checkOut(int id);
         void checkIn(int id);
         void cancelHold(int id);
-        int placeHold(int id, bool* b);
+        bool placeHold(int id);
         Patron* getCurrentAccount();
         void removeItem(int index);
+        Patron* getPatronByName(const string& name);
         Database& getDatabase() {return data;}
         bool validateDate(int year, int month, int day);
         void addItem(const string& title, const string& author, int pub, long isbn, const string& type,const string& dewy, int issueNumber, const string& pubDate, const string& genre, int rating);

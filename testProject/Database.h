@@ -21,6 +21,9 @@ public:
     vector<Item*> getItems();
     void addItem(const string& title, const string& author, int pub, long isbn, const string& type,const string& dewy, int issueNumber,
                  const string& pubDate, const string& genre, int rating);
+    Account* findUserByDbId(int id);
+
+    void renumberHoldsForItem(int itemId);
 
 private:
     void openConnection();

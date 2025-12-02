@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../testProject -I. -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
+INCPATH       = -I../testProject -I. -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = testProject1.0.0
 DISTDIR = /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/.tmp/testProject1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Sql.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -431,7 +431,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
-	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
+	g++ -pipe -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_adminwindow.cpp moc_librarianwindow.cpp moc_mainwindow.cpp moc_patronwindow.cpp
 compiler_moc_header_clean:
@@ -439,17 +439,25 @@ compiler_moc_header_clean:
 moc_adminwindow.cpp: ../testProject/adminwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Deliverable1/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/adminwindow.h -o moc_adminwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Deliverable1/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/adminwindow.h -o moc_adminwindow.cpp
 
 moc_librarianwindow.cpp: ../testProject/librarianwindow.h \
+		../testProject/datacontroller.h \
+		../testProject/Database.h \
+		../testProject/Account.h \
+		../testProject/item.h \
+		../testProject/date.h \
+		../testProject/patron.h \
+		../testProject/loan.h \
+		../testProject/librarian.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Deliverable1/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/librarianwindow.h -o moc_librarianwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Deliverable1/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/librarianwindow.h -o moc_librarianwindow.cpp
 
 moc_mainwindow.cpp: ../testProject/mainwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Deliverable1/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Deliverable1/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/mainwindow.h -o moc_mainwindow.cpp
 
 moc_patronwindow.cpp: ../testProject/patronwindow.h \
 		../testProject/datacontroller.h \
@@ -459,9 +467,10 @@ moc_patronwindow.cpp: ../testProject/patronwindow.h \
 		../testProject/date.h \
 		../testProject/patron.h \
 		../testProject/loan.h \
+		../testProject/librarian.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Deliverable1/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/patronwindow.h -o moc_patronwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/Deliverable1/build-testProject-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/Deliverable1/testProject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../testProject/patronwindow.h -o moc_patronwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -534,7 +543,8 @@ datacontroller.o: ../testProject/datacontroller.cpp ../testProject/datacontrolle
 		../testProject/item.h \
 		../testProject/date.h \
 		../testProject/patron.h \
-		../testProject/loan.h
+		../testProject/loan.h \
+		../testProject/librarian.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datacontroller.o ../testProject/datacontroller.cpp
 
 date.o: ../testProject/date.cpp ../testProject/date.h
@@ -558,6 +568,14 @@ librarian.o: ../testProject/librarian.cpp ../testProject/librarian.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o librarian.o ../testProject/librarian.cpp
 
 librarianwindow.o: ../testProject/librarianwindow.cpp ../testProject/librarianwindow.h \
+		../testProject/datacontroller.h \
+		../testProject/Database.h \
+		../testProject/Account.h \
+		../testProject/item.h \
+		../testProject/date.h \
+		../testProject/patron.h \
+		../testProject/loan.h \
+		../testProject/librarian.h \
 		ui_librarianwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o librarianwindow.o ../testProject/librarianwindow.cpp
 
@@ -573,15 +591,16 @@ magazine.o: ../testProject/magazine.cpp ../testProject/item.h \
 
 main.o: ../testProject/main.cpp ../testProject/mainwindow.h \
 		../testProject/librarianwindow.h \
-		../testProject/adminwindow.h \
-		../testProject/patronwindow.h \
 		../testProject/datacontroller.h \
 		../testProject/Database.h \
 		../testProject/Account.h \
 		../testProject/item.h \
 		../testProject/date.h \
 		../testProject/patron.h \
-		../testProject/loan.h
+		../testProject/loan.h \
+		../testProject/librarian.h \
+		../testProject/adminwindow.h \
+		../testProject/patronwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../testProject/main.cpp
 
 mainwindow.o: ../testProject/mainwindow.cpp ../testProject/mainwindow.h \
@@ -614,6 +633,7 @@ patronwindow.o: ../testProject/patronwindow.cpp ../testProject/patronwindow.h \
 		../testProject/date.h \
 		../testProject/patron.h \
 		../testProject/loan.h \
+		../testProject/librarian.h \
 		ui_patronwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o patronwindow.o ../testProject/patronwindow.cpp
 

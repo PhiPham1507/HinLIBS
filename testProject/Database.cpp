@@ -303,7 +303,7 @@ void Database::loadUsers() {
         }
 
         if (acc) {
-            // If you want to store DB id inside Account, add a field + setter.
+            acc->setDbId(id);
             accounts.push_back(acc);
         }
     }
@@ -354,7 +354,7 @@ void Database::loadItems() {
     }
 }
 
-
+/*
 void Database::loadLoansAndHolds() {
     // 1) Loans
     QSqlQuery q1("SELECT user_id, item_id, issue_date, due_date "
@@ -380,6 +380,99 @@ void Database::loadLoansAndHolds() {
         int pos    = q2.value(2).toInt();
 
         // Find Patron* and Item* and reconstruct Item::queue and Patron.holds
+    }
+}
+*/
+void Database::loadLoansAndHolds() {
+    // === 1) Loans ===
+    QSqlQuery q1("SELECT user_id, item_id FROM Loans WHERE returned_date IS NULL");
+
+    while (q1.next()) {
+        int userId = q1.value(0).toInt();
+        int itemId = q1.value(1).toInt();
+
+        Account* acc = findUserByDbId(userId);
+        Patron* patron = dynamic_cast<Patron*>(acc);
+        Item* item = findItem(itemId);
+
+        if (!patron || !item) continue;
+
+        // Rebuild in-memory structures
+        patron->addExistingLoan(item);
+        item->setAvailability(false);
+    }
+
+    // === 2) Holds ===
+    // We order by item_id, position so queue order is preserved
+    QSqlQuery q2("SELECT user_id, item_id, position "
+                 "FROM Holds ORDER BY item_id, position ASC");
+
+    while (q2.next()) {
+        int userId = q2.value(0).toInt();
+        int itemId = q2.value(1).toInt();
+        // int pos    = q2.value(2).toInt();   // we don't actually need to use it in code
+
+        Account* acc = findUserByDbId(userId);
+        Patron* patron = dynamic_cast<Patron*>(acc);
+        Item* item = findItem(itemId);
+
+        if (!patron || !item) continue;
+
+        // Rebuild patron's holds list
+        patron->addExistingHold(item);
+
+        // Rebuild item's internal hold queue
+        // Depending on your Item API, either:
+        //  - item->addQueue(patron);
+        //  - or item->placeHold(patron);
+        item->addQueue(patron);   // <-- adjust to your real method name
+    }
+}
+
+
+// to fix database position issue
+void Database::renumberHoldsForItem(int itemId) {
+    // Optional but nice: wrap in a transaction
+    db.transaction();
+
+    // 1) Get all hold row IDs for this item, ordered by current position (then id)
+    QSqlQuery select;
+    select.prepare("SELECT id FROM Holds "
+                   "WHERE item_id = ? "
+                   "ORDER BY position ASC, id ASC");
+    select.addBindValue(QVariant(itemId));
+
+    if (!select.exec()) {
+        qDebug() << "Failed to select holds for renumbering:"
+                 << select.lastError().text();
+        db.rollback();
+        return;
+    }
+
+    // 2) Reassign positions 1..n
+    QSqlQuery update;
+    update.prepare("UPDATE Holds SET position = ? WHERE id = ?");
+
+    int newPos = 1;
+    while (select.next()) {
+        int holdId = select.value(0).toInt();
+
+        update.bindValue(0, QVariant(newPos));
+        update.bindValue(1, QVariant(holdId));
+
+        if (!update.exec()) {
+            qDebug() << "Failed to update hold position:"
+                     << update.lastError().text();
+            db.rollback();
+            return;
+        }
+
+        ++newPos;
+    }
+
+    if (!db.commit()) {
+        qDebug() << "Failed to commit renumbering transaction:"
+                 << db.lastError().text();
     }
 }
 
@@ -417,6 +510,7 @@ void Database::printDatabase() {
     printTable("Loans");
     printTable("Holds");
 }
+
 void Database::addItem(const string &title, const string &author, int pub, long isbn, const string &type, const string &dewy,
                        int issueNumber, const string &pubDate, const string &genre, int rating){
     if(type == "fiction"){
@@ -442,3 +536,13 @@ void Database::addItem(const string &title, const string &author, int pub, long 
         items.push_back(item);
     }
 }
+
+
+Account* Database::findUserByDbId(int id) {
+    for (Account* acc : accounts) {
+        if (acc->getDbId() == id) return acc;
+    }
+    return nullptr;
+}
+
+

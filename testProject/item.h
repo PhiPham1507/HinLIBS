@@ -27,6 +27,9 @@ class Item
 
         void setId(int newId) {id = newId; }
 
+        Patron* getNextInQueue() const;
+        void popNextInQueue();
+
     protected:
         std::string title;
         std::string author;
