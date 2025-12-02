@@ -168,7 +168,7 @@ int DataController::placeHold(int id, bool* b){
 
 */
 
-bool DataController::placeHold(int id) {
+int DataController::placeHold(int id) {
     Item* item = data.findItem(id);
     if (!item) return false;
 
@@ -207,7 +207,7 @@ bool DataController::placeHold(int id) {
         qDebug() << "Failed to insert hold:" << q.lastError().text();
     }
 
-    return true;
+    return position;
 }
 
 
