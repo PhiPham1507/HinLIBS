@@ -288,9 +288,9 @@ void DataController::checkIn(int id) {
     }
 
 }
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
-=======
+//=======
 /*
 >>>>>>> 9c47adc (D1 issue fixed)
 
