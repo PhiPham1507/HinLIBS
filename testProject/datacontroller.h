@@ -19,9 +19,9 @@ class DataController
         Account* authenticate(const string& user, const string& pass);
         void accLoggedOut();
         bool checkOut(int id);
-        void checkIn(int id);
+        bool checkIn(int id);
         void cancelHold(int id);
-        int placeHold(int id, bool* b);
+        bool placeHold(int id);
         Patron* getCurrentAccount();
         void removeItem(int index);
         Patron* getPatronByName(const string& name);

@@ -5,6 +5,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVariant>
+#include <QDebug>
 
 DataController::DataController() : patronAcc(nullptr), libAcc(nullptr){
     itemSize = data.itemSize();
@@ -67,6 +68,7 @@ void DataController::accLoggedOut(){
     libAcc = nullptr;
 }
 
+/*
 bool DataController::checkOut(int id){
     Item* item = data.findItem(id);
     if(item == nullptr) return false;
@@ -76,9 +78,54 @@ bool DataController::checkOut(int id){
     item->setAvailability(false);
     return true;
 }
+*/
+
+bool DataController::checkOut(int id) {
+    Item* item = data.findItem(id);
+    if (!item) return false;
+
+    // must be a patron
+    Account *acc = getCurrentAccount();
+    Patron* patron = dynamic_cast<Patron*>(acc);
+    if (!patron) return false;
+
+    if (!item->getAvailability()) return false;
+
+    // In-memory checkout
+    if (!patron->checkOut(item)) return false;
+    item->setAvailability(false);
+
+    // === Persist to DB ===
+    QSqlQuery q;
+
+    // Simple date strings – you can improve later if needed
+    QString today = "2025-01-01"; // placeholder or build from your Date class
+    QString due   = "2025-01-15"; // placeholder (today + 14 days)
+
+    q.prepare("INSERT INTO Loans (user_id, item_id, issue_date, due_date, returned_date) "
+              "VALUES (?, ?, ?, ?, NULL)");
+
+    q.addBindValue(QVariant(patron->getDbId()));   // user_id
+    q.addBindValue(QVariant(item->getId()));       // item_id
+    q.addBindValue(today);                        // issue_date
+    q.addBindValue(due);                          // due_date
+
+    if (!q.exec()) {
+        qDebug() << "Failed to insert loan:" << q.lastError().text();
+    }
+
+    QSqlQuery q2;
+    q2.prepare("UPDATE Catalogue SET available = 0 WHERE id = ?");
+    q2.addBindValue(QVariant(item->getId()));
+    if (!q2.exec()) {
+        qDebug() << "Failed to update availability:" << q2.lastError().text();
+    }
+
+    return true;
+}
 
 
-
+/*
 int DataController::placeHold(int id, bool* b){
     Item* item = data.findItem(id);
     if(item == nullptr) return false;
@@ -88,6 +135,52 @@ int DataController::placeHold(int id, bool* b){
     *b = true;
     return item->findIndex(patronAcc);
 }
+
+*/
+
+bool DataController::placeHold(int id) {
+    Item* item = data.findItem(id);
+    if (!item) return false;
+
+    Account* acc = getCurrentAccount();
+    Patron* patron = dynamic_cast<Patron*>(acc);
+    if (!patron) return false;
+
+    // In-memory logic: enforce your rules
+    if (!patron->addHold(item)) return false;
+    item->addQueue(patron);     // or item->placeHold(patron);
+
+    // === Persist to DB ===
+    QSqlQuery q;
+
+    // We can compute the position as current queue size.
+    // If your Item exposes queue size, use that; otherwise we can count in SQL.
+    int position = 1;
+
+    // Option A: compute via SQL count
+    QSqlQuery countQ;
+    countQ.prepare("SELECT COUNT(*) FROM Holds WHERE item_id = ?");
+    countQ.addBindValue(QVariant(item->getId()));
+    if (countQ.exec() && countQ.next()) {
+        position = countQ.value(0).toInt() + 1;
+    }
+
+    q.prepare("INSERT INTO Holds (user_id, item_id, position, created_at) "
+              "VALUES (?, ?, ?, ?)");
+
+    q.addBindValue(QVariant(patron->getDbId()));
+    q.addBindValue(QVariant(item->getId()));
+    q.addBindValue(QVariant(position));
+    q.addBindValue(QString("2025-01-01"));  // TODO: real date string if you want
+
+    if (!q.exec()) {
+        qDebug() << "Failed to insert hold:" << q.lastError().text();
+    }
+
+    return true;
+}
+
+
 
 Patron* DataController::getCurrentAccount(){
     return patronAcc;
@@ -102,6 +195,7 @@ Patron* DataController::getPatronByName(const string& name)
     return nullptr;
 }
 
+/*
 void DataController::checkIn(int id) {
     Item* item = data.findItem(id);
     Patron* p = patronAcc; // cast to Patron
@@ -126,16 +220,83 @@ void DataController::checkIn(int id) {
     q2.exec();
 }
 
+*/
+
+bool DataController::checkIn(int id) {
+    Item* item = data.findItem(id);
+    if (!item) return false;
+
+    Account* acc = getCurrentAccount();
+    Patron* patron = dynamic_cast<Patron*>(acc);
+    if (!patron) return false;
+
+    // In-memory return
+    patron->checkIn(item);
+    item->setAvailability(true);
+
+    // === Persist to DB ===
+    QSqlQuery q;
+    QString today = "2025-01-01"; // placeholder
+
+    q.prepare("UPDATE Loans "
+              "SET returned_date = ? "
+              "WHERE item_id = ? AND user_id = ? AND returned_date IS NULL");
+
+    q.addBindValue(today);
+    q.addBindValue(QVariant(item->getId()));
+    q.addBindValue(QVariant(patron->getDbId()));
+
+    if (!q.exec()) {
+        qDebug() << "Failed to mark loan returned:" << q.lastError().text();
+    }
+
+    QSqlQuery q2;
+    q2.prepare("UPDATE Catalogue SET available = 1 WHERE id = ?");
+    q2.addBindValue(QVariant(item->getId()));
+    if (!q2.exec()) {
+        qDebug() << "Failed to update availability:" << q2.lastError().text();
+    }
+
+    return true;
+}
+
+/*
+
 void DataController::cancelHold(int id){
     Item* item = data.findItem(id);
     item->removeQueue(patronAcc);
     patronAcc->removeHold(item);
 }
 
+*/
 
 
+void DataController::cancelHold(int id) {
+    Item* item = data.findItem(id);
+    if (!item) return;
 
+    Account* acc = getCurrentAccount();
+    Patron* patron = dynamic_cast<Patron*>(acc);
+    if (!patron) return;
 
+    // In-memory
+    patron->removeHold(item);
+    item->removeQueue(patron);   // or whatever your Item API uses
+
+    // === Persist to DB ===
+    QSqlQuery q;
+    q.prepare("DELETE FROM Holds WHERE user_id = ? AND item_id = ?");
+
+    q.addBindValue(QVariant(patron->getDbId()));
+    q.addBindValue(QVariant(item->getId()));
+
+    if (!q.exec()) {
+        qDebug() << "Failed to delete hold:" << q.lastError().text();
+    }
+
+    data.renumberHoldsForItem(item->getId());
+
+}
 
 
 

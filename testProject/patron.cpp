@@ -73,7 +73,13 @@ void Patron::removeHold(Item *item){
 }
 
 
+void Patron::addExistingLoan(Item* item) {
+    Date checkout = Date();           // you can get real dates later
+    loans.push_back(Loan(item, checkout, checkout + 14));
+}
 
-
+void Patron::addExistingHold(Item* item){
+    holds.push_back(item);
+}
 
 

@@ -19,6 +19,9 @@ public:
     void removeItem(int id);
     void printDatabase();
     vector<Item*> getItems();
+    Account* findUserByDbId(int id);
+
+    void renumberHoldsForItem(int itemId);
 
 private:
     void openConnection();

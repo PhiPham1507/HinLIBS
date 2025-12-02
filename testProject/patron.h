@@ -28,6 +28,9 @@ public:
     bool checkOut(Item* item);
     bool addHold(Item* item);
 
+    void addExistingLoan(Item* item);
+    void addExistingHold(Item* item);
+
 
 
 private:
