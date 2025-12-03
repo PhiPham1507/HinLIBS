@@ -72,7 +72,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="addItemPage">
      <widget class="QComboBox" name="chooseItem">
@@ -207,7 +207,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="mAndGPage">
        <widget class="QLabel" name="genreLabel">
@@ -477,6 +477,9 @@
       </property>
      </widget>
      <widget class="QPushButton" name="ReturnSelectedItems">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>632</x>

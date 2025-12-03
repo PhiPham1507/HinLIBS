@@ -2,6 +2,7 @@
 #include "ui_librarianwindow.h"
 #include <QMessageBox>
 #include <iostream>
+#include <QDebug>
 void hideWhenDefault();
 void refreshCatalogueContents();
 
@@ -46,6 +47,7 @@ LibrarianWindow::LibrarianWindow(QWidget *parent) :
 
 
     QObject::connect(ui->pReturnButton, &QPushButton::clicked, this, &LibrarianWindow::showReturnForPatron);
+    QObject::connect(ui->SearchPatronButton, &QPushButton::clicked, this, &LibrarianWindow::searchForPatronButtonClicked);
 
 }
 
@@ -273,19 +275,21 @@ void LibrarianWindow::searchForPatronButtonClicked()
 {
     QString input = ui->PatronSearchField->text();
     currentPatronTarget = controller->getPatronByName(input.toStdString());
-    if (currentPatronTarget == nullptr) {
-        return;
-    }
-    displayPatronTargetLoans();
+
+    refreshPatronTargetLoans();
 }
 
-void LibrarianWindow::displayPatronTargetLoans()
+void LibrarianWindow::refreshPatronTargetLoans()
 {
-    ui->LoansList->clear();  // Delete old entries automatically
-
     if (currentPatronTarget == nullptr) return;
 
+    qDebug() << QString::fromStdString(currentPatronTarget->getAccountName());
+
+    ui->LoansList->clear();  // Delete old entries automatically
+
     vector<Loan> loans = currentPatronTarget->getLoans();
+
+    qDebug() << loans.size();
 
     for (int i = 0; i < (int)loans.size(); ++i)
     {
@@ -300,4 +304,6 @@ void LibrarianWindow::displayPatronTargetLoans()
         // Store the index or ID inside the item
         entry->setData(Qt::UserRole, item->getId());
     }
+
+    ui->ReturnSelectedItems->setEnabled(true);
 }

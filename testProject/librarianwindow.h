@@ -23,7 +23,7 @@ public:
     void showReturnForPatron();
 
     void searchForPatronButtonClicked();
-    void displayPatronTargetLoans();
+    void refreshPatronTargetLoans();
 
 private:
     Ui::LibrarianWindow *ui;
