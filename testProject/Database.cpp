@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QDebug>
 #include <QSqlRecord>
+#include <QVariant>
 
 
 
@@ -82,14 +83,54 @@ Account* Database::findUser(const string &username){
     return nullptr;
 }
 void Database::removeItem(int id){
-    for(unsigned long i = 0; i < items.size(); i++){
+    /*for(unsigned long i = 0; i < items.size(); i++){
         if(items.at(i)->getId() == id){
             items.erase(items.begin() + i);
             cout << "Found" << endl;
             //remove from the database
             return;
         }
+    }*/
+
+
+    // 1) Remove from DB: first dependent rows (Loans, Holds), then Catalogue
+    {
+        QSqlQuery q;
+
+        // Delete related loans
+        q.prepare("DELETE FROM Loans WHERE item_id = ?");
+        q.addBindValue(QVariant(id));
+        if (!q.exec()) {
+            qDebug() << "Failed to delete Loans for item" << id << ":" << q.lastError().text();
+        }
+
+        // Delete related holds
+        q.prepare("DELETE FROM Holds WHERE item_id = ?");
+        q.addBindValue(QVariant(id));
+        if (!q.exec()) {
+            qDebug() << "Failed to delete Holds for item" << id << ":" << q.lastError().text();
+        }
+
+        // Finally delete from Catalogue
+        q.prepare("DELETE FROM Catalogue WHERE id = ?");
+        q.addBindValue(QVariant(id));
+        if (!q.exec()) {
+            qDebug() << "Failed to delete Catalogue row for item" << id << ":" << q.lastError().text();
+        }
     }
+
+    // 2) Remove from in-memory list
+    for (std::size_t i = 0; i < items.size(); ++i){
+        if (items.at(i)->getId() == id){
+            delete items[i];                  // free the object to avoid memory leak
+            items.erase(items.begin() + i);
+            std::cout << "Removed item with id " << id << " from memory and DB" << std::endl;
+            return;
+        }
+    }
+
+    std::cout << "Item with id " << id << " not found in memory, but deleted from DB if existed." << std::endl;
+
 }
 Item* Database::findItem(int id) const{
     for(Item* item : items){
@@ -513,28 +554,88 @@ void Database::printDatabase() {
 
 void Database::addItem(const string &title, const string &author, int pub, long isbn, const string &type, const string &dewy,
                        int issueNumber, const string &pubDate, const string &genre, int rating){
-    if(type == "fiction"){
-        //Add to database directly instead of creating the item and push to vector. This is temporary for testing
-        Item* item = new FictionBook(title, author, pub, isbn);
-        item->setId(items.at(items.size() - 1)->getId() + 1);
-        items.push_back(item);
-    }else if(type == "nonfiction"){
-        Item* item = new NonFictionBook(title, author, dewy, pub, isbn);
-        item->setId(items.at(items.size() - 1)->getId() + 1);
-        items.push_back(item);
-    }else if(type == "videogame"){
-        Item* item = new VideoGame(title,author,pub,genre, rating, isbn);
-        item->setId(items.at(items.size() - 1)->getId() + 1);
-        items.push_back(item);
-    }else if(type == "movie"){
-        Item* item = new Movie(title,author,pub, genre, rating, isbn);
-        item->setId(items.at(items.size() - 1)->getId() + 1);
-        items.push_back(item);
-    }else{
-        Item* item = new Magazine(title,author,pub,issueNumber,Date(pubDate), isbn);
-        item->setId(items.at(items.size() - 1)->getId() + 1);
-        items.push_back(item);
+
+    // 1) Insert into DB
+    QSqlQuery q;
+    q.prepare("INSERT INTO Catalogue "
+              "(title, author, publication_year, isbn, type, "
+              " dewey, issue_number, publication_date, genre, rating, available) "
+              "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
+
+    // Common fields
+    q.addBindValue(QString::fromStdString(title));
+    q.addBindValue(QString::fromStdString(author));
+    q.addBindValue(pub);
+    q.addBindValue(QString::number(isbn));
+    q.addBindValue(QString::fromStdString(type));
+
+    // Type-specific fields
+    QVariant deweyVar;
+    QVariant issueVar;
+    QVariant pubDateVar;
+    QVariant genreVar;
+    QVariant ratingVar;
+
+    if (type == "fiction") {
+        // fiction uses no dewey, issue, pubDate, genre, rating in your current model
+        // leave them NULL
     }
+    else if (type == "nonfiction") {
+        deweyVar = QString::fromStdString(dewy);
+    }
+    else if (type == "magazine") {
+        issueVar   = issueNumber;
+        pubDateVar = QString::fromStdString(pubDate);  // "YYYY-MM-DD"
+    }
+    else if (type == "movie" || type == "videogame") {
+        genreVar  = QString::fromStdString(genre);
+        ratingVar = rating;
+    }
+
+    q.addBindValue(deweyVar);
+    q.addBindValue(issueVar);
+    q.addBindValue(pubDateVar);
+    q.addBindValue(genreVar);
+    q.addBindValue(ratingVar);
+
+    if (!q.exec()) {
+        qDebug() << "Failed to insert new item into Catalogue:" << q.lastError().text();
+        return;
+    }
+
+    // 2) Get DB-assigned ID
+    int dbId = q.lastInsertId().toInt();
+
+    // 3) Create the in-memory Item subclass matching the row
+    Item* item = nullptr;
+    if (type == "fiction") {
+        item = new FictionBook(title, author, pub, isbn);
+    }
+    else if (type == "nonfiction") {
+        item = new NonFictionBook(title, author, dewy, pub, isbn);
+    }
+    else if (type == "videogame") {
+        item = new VideoGame(title, author, pub, genre, rating, isbn);
+    }
+    else if (type == "movie") {
+        item = new Movie(title, author, pub, genre, rating, isbn);
+    }
+    else if (type == "magazine") {
+        item = new Magazine(title, author, pub, issueNumber, Date(pubDate), isbn);
+    }
+
+    if (!item) {
+        qDebug() << "addItem: Unknown type" << QString::fromStdString(type)
+        << "– inserted into DB but not created in memory!";
+        return;
+    }
+
+    item->setId(dbId);
+    item->setAvailability(true);
+    items.push_back(item);
+
+    std::cout << "Added item '" << title << "' to DB with id " << dbId << " and to memory." << std::endl;
+
 }
 
 

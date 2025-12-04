@@ -11,6 +11,6 @@ Movie::Movie(const std::string& name, const std::string& author, int year, const
 Movie::~Movie(){}
 
 string Movie::display()const{
-    return "Title " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
+    return "Title: " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
             + " Genre: " + genre + " Rating: " + std::to_string(rating) + "/10"
-            + "  .Availability: " + available(availability) + "\n";}
+            + ". Availability: " + available(availability) + "\n";}

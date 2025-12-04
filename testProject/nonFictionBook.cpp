@@ -11,5 +11,5 @@ NonFictionBook::NonFictionBook(const std::string& name, const std::string& autho
 NonFictionBook::~NonFictionBook(){}
 
 string NonFictionBook::display()const{
-    return "Title " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
-            + ". Dewy Decimal: " + dewy + " .Availability: " + available(availability) + "\n";}
+    return "Title: " + title + ". Author: " + author + ". Publication Year: " + std::to_string(publicationYear)
+            + ". Dewy Decimal: " + dewy + ". Availability: " + available(availability) + "\n";}
