@@ -67,6 +67,11 @@ Patron* Item::getNextInQueue() const {
     return queue.front();
 }
 
+bool Item::noHolds() const{
+    if(queue.empty()) return true;
+    return false;
+}
+
 void Item::popNextInQueue() {
     if (!queue.empty()) {
         queue.erase(queue.begin());

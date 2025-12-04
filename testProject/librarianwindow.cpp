@@ -36,7 +36,7 @@ LibrarianWindow::LibrarianWindow(QWidget *parent) :
 
     QObject::connect(ui->catalogueDisplay, &QListWidget::itemClicked, this, [this](QListWidgetItem* item){
         selectedItemIndex = item->data(Qt::UserRole).toInt();
-        if(controller->getItemAvailability(selectedItemIndex)){
+        if(controller->getItemAvailability(selectedItemIndex && controller->getItemById(selectedItemIndex)->noHolds())){
             ui->removeItemButton_2->setEnabled(true);
         }else{
             ui->removeItemButton_2->setEnabled(false);

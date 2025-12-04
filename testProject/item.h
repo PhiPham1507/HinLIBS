@@ -24,6 +24,7 @@ class Item
         void removeQueue(Patron* patron);
         string& getTitle();
         virtual string display() const = 0;
+        bool noHolds() const;
 
         void setId(int newId) {id = newId; }
 

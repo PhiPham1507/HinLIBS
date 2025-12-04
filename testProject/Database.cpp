@@ -83,17 +83,8 @@ Account* Database::findUser(const string &username){
     return nullptr;
 }
 void Database::removeItem(int id){
-    /*for(unsigned long i = 0; i < items.size(); i++){
-        if(items.at(i)->getId() == id){
-            items.erase(items.begin() + i);
-            cout << "Found" << endl;
-            //remove from the database
-            return;
-        }
-    }*/
 
-
-    // 1) Remove from DB: first dependent rows (Loans, Holds), then Catalogue
+    // Remove from database
     {
         QSqlQuery q;
 
@@ -569,7 +560,6 @@ void Database::addItem(const string &title, const string &author, int pub, long 
     q.addBindValue(QString::number(isbn));
     q.addBindValue(QString::fromStdString(type));
 
-    // Type-specific fields
     QVariant deweyVar;
     QVariant issueVar;
     QVariant pubDateVar;
@@ -577,8 +567,7 @@ void Database::addItem(const string &title, const string &author, int pub, long 
     QVariant ratingVar;
 
     if (type == "fiction") {
-        // fiction uses no dewey, issue, pubDate, genre, rating in your current model
-        // leave them NULL
+        // fiction uses no dewey, issue, pubDate, genre or rating
     }
     else if (type == "nonfiction") {
         deweyVar = QString::fromStdString(dewy);

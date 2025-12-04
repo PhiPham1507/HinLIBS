@@ -70,7 +70,7 @@ public:
     QWidget *pReturnPage;
     QListWidget *LoansList;
     QPushButton *SearchPatronButton;
-    QPushButton *ReturnSelectedItems;
+    QPushButton *ReturnSelectedItem;
     QLineEdit *PatronSearchField;
     QPushButton *signoutButton;
     QWidget *horizontalLayoutWidget;
@@ -105,7 +105,7 @@ public:
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
         stackedWidget->setGeometry(QRect(10, 100, 781, 401));
-        stackedWidget->setFrameShape(QFrame::Box);
+        stackedWidget->setFrameShape(QFrame::Shape::Box);
         addItemPage = new QWidget();
         addItemPage->setObjectName("addItemPage");
         chooseItem = new QComboBox(addItemPage);
@@ -222,9 +222,10 @@ public:
         SearchPatronButton = new QPushButton(pReturnPage);
         SearchPatronButton->setObjectName("SearchPatronButton");
         SearchPatronButton->setGeometry(QRect(440, 20, 171, 25));
-        ReturnSelectedItems = new QPushButton(pReturnPage);
-        ReturnSelectedItems->setObjectName("ReturnSelectedItems");
-        ReturnSelectedItems->setGeometry(QRect(632, 20, 121, 25));
+        ReturnSelectedItem = new QPushButton(pReturnPage);
+        ReturnSelectedItem->setObjectName("ReturnSelectedItem");
+        ReturnSelectedItem->setEnabled(false);
+        ReturnSelectedItem->setGeometry(QRect(632, 20, 121, 25));
         PatronSearchField = new QLineEdit(pReturnPage);
         PatronSearchField->setObjectName("PatronSearchField");
         PatronSearchField->setGeometry(QRect(130, 20, 291, 25));
@@ -234,7 +235,7 @@ public:
         signoutButton->setGeometry(QRect(710, 520, 83, 25));
         horizontalLayoutWidget = new QWidget(centralwidget);
         horizontalLayoutWidget->setObjectName("horizontalLayoutWidget");
-        horizontalLayoutWidget->setGeometry(QRect(140, 50, 471, 31));
+        horizontalLayoutWidget->setGeometry(QRect(140, 50, 471, 32));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setObjectName("horizontalLayout");
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
@@ -256,7 +257,7 @@ public:
         LibrarianWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(LibrarianWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 800, 37));
         LibrarianWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(LibrarianWindow);
         statusbar->setObjectName("statusbar");
@@ -282,8 +283,8 @@ public:
 
         retranslateUi(LibrarianWindow);
 
-        stackedWidget->setCurrentIndex(0);
-        itemFormsWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(1);
+        itemFormsWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(LibrarianWindow);
@@ -318,7 +319,7 @@ public:
         titleLabel->setText(QCoreApplication::translate("LibrarianWindow", "Title:", nullptr));
         removeItemButton_2->setText(QCoreApplication::translate("LibrarianWindow", "Remove", nullptr));
         SearchPatronButton->setText(QCoreApplication::translate("LibrarianWindow", "Search Patron name", nullptr));
-        ReturnSelectedItems->setText(QCoreApplication::translate("LibrarianWindow", "Return selected", nullptr));
+        ReturnSelectedItem->setText(QCoreApplication::translate("LibrarianWindow", "Return selected", nullptr));
         signoutButton->setText(QCoreApplication::translate("LibrarianWindow", "Sign out", nullptr));
         addItemButton->setText(QCoreApplication::translate("LibrarianWindow", "Add item", nullptr));
         removeItemButton->setText(QCoreApplication::translate("LibrarianWindow", "Remove Item", nullptr));
