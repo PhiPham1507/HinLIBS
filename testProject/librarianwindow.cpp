@@ -308,14 +308,18 @@ void LibrarianWindow::returnForPatronClicked()
 
 void LibrarianWindow::refreshPatronTargetLoans()
 {
+
+    ui->LoansList->clear();  // Delete old entries automatically
+    
     if (currentPatronTarget == nullptr) {
         QMessageBox::information(this, "Error", "Unknown target patron");
+        ui->ReturnSelectedItem->setEnabled(false);
         return;
     }
 
     selectedPatronReturnId = -1;
 
-    ui->LoansList->clear();  // Delete old entries automatically
+    
 
     vector<Loan> loans = currentPatronTarget->getLoans();
 
