@@ -11,6 +11,7 @@ LibrarianWindow::LibrarianWindow(QWidget *parent) :
     ui(new Ui::LibrarianWindow)
 {
     selectedItemIndex = -1;
+    selectedPatronReturnId = -1;
     ui->setupUi(this);
     QObject::connect(ui->signoutButton,
                          &QPushButton::clicked,
@@ -48,6 +49,11 @@ LibrarianWindow::LibrarianWindow(QWidget *parent) :
 
     QObject::connect(ui->pReturnButton, &QPushButton::clicked, this, &LibrarianWindow::showReturnForPatron);
     QObject::connect(ui->SearchPatronButton, &QPushButton::clicked, this, &LibrarianWindow::searchForPatronButtonClicked);
+    QObject::connect(ui->ReturnSelectedItem, &QPushButton::clicked, this, &LibrarianWindow::returnForPatronClicked);
+
+    QObject::connect(ui->LoansList, &QListWidget::itemClicked, this, [this](QListWidgetItem* item){
+        selectedPatronReturnId = item->data(Qt::UserRole).toInt();
+    });
 
 }
 
@@ -279,11 +285,32 @@ void LibrarianWindow::searchForPatronButtonClicked()
     refreshPatronTargetLoans();
 }
 
+void LibrarianWindow::returnForPatronClicked()
+{
+    if (currentPatronTarget == nullptr)
+    {
+        QMessageBox::information(this, "Error", "Unknown target patron");
+        return;
+    }
+    else if (selectedPatronReturnId == -1)
+    {
+        QMessageBox::information(this, "Error", "No selected item");
+        return;
+    }
+
+    controller->setPatron(currentPatronTarget);
+    controller->checkIn(selectedPatronReturnId);
+    controller->setPatron(nullptr);
+
+    QMessageBox::information(this, "Success Returned", "Successfully return the item");
+    refreshPatronTargetLoans();
+}
+
 void LibrarianWindow::refreshPatronTargetLoans()
 {
     if (currentPatronTarget == nullptr) return;
 
-    qDebug() << QString::fromStdString(currentPatronTarget->getAccountName());
+    selectedPatronReturnId = -1;
 
     ui->LoansList->clear();  // Delete old entries automatically
 
@@ -303,7 +330,9 @@ void LibrarianWindow::refreshPatronTargetLoans()
 
         // Store the index or ID inside the item
         entry->setData(Qt::UserRole, item->getId());
+
+
     }
 
-    ui->ReturnSelectedItems->setEnabled(true);
+    ui->ReturnSelectedItem->setEnabled(true);
 }

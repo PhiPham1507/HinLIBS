@@ -21,6 +21,7 @@ public:
     void clearInputs();
     void refreshCatalogueContents();
     void showReturnForPatron();
+    void returnForPatronClicked();
 
     void searchForPatronButtonClicked();
     void refreshPatronTargetLoans();
@@ -28,7 +29,7 @@ public:
 private:
     Ui::LibrarianWindow *ui;
     DataController* controller;
-    int selectedItemIndex;
+    int selectedItemIndex, selectedPatronReturnId;
     Patron* currentPatronTarget;
 
 signals:

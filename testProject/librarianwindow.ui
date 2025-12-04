@@ -476,7 +476,7 @@
        <string>Search Patron name</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="ReturnSelectedItems">
+     <widget class="QPushButton" name="ReturnSelectedItem">
       <property name="enabled">
        <bool>false</bool>
       </property>
