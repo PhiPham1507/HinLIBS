@@ -308,7 +308,10 @@ void LibrarianWindow::returnForPatronClicked()
 
 void LibrarianWindow::refreshPatronTargetLoans()
 {
-    if (currentPatronTarget == nullptr) return;
+    if (currentPatronTarget == nullptr) {
+        QMessageBox::information(this, "Error", "Unknown target patron");
+        return;
+    }
 
     selectedPatronReturnId = -1;
 
