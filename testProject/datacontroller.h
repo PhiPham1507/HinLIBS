@@ -21,7 +21,7 @@ class DataController
         bool checkOut(int id);
         void checkIn(int id);
         void cancelHold(int id);
-        int placeHold(int id);
+        int placeHold(int id, bool* b);
         Patron* getCurrentAccount();
         void removeItem(int index);
         Patron* getPatronByName(const string& name);

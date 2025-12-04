@@ -134,7 +134,7 @@ void PatronWindow::placeHold(){
         return;
     }
     bool success = true;
-    int index = controller->placeHold(selectedItemIndex);
+    int index = controller->placeHold(selectedItemIndex, &success);
     if(success){
         QString display = QString("Successfully placed hold on the item. Your queue position is: %1").arg(index);
         QMessageBox::information(this, "Place Hold Succeed", display);
@@ -142,6 +142,8 @@ void PatronWindow::placeHold(){
         QMessageBox::information(this, "Place Hold Failed", "Failed to place hold on the item");
     }
     ui->catalogueList->clearSelection();
+    selectedItemIndex = -1;
+    refreshCatalogueContents();
 }
 
 void PatronWindow::viewAccountButtonSelected(){

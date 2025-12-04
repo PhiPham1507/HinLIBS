@@ -168,16 +168,29 @@ int DataController::placeHold(int id, bool* b){
 
 */
 
-int DataController::placeHold(int id) {
+int DataController::placeHold(int id, bool *b) {
     Item* item = data.findItem(id);
-    if (!item) return false;
+    if (!item){
+        *b = false;
+        return -1;
+    }
+    if(item->getAvailability()){
+        *b = false;
+        return -1;
+    }
 
     Account* acc = getCurrentAccount();
     Patron* patron = dynamic_cast<Patron*>(acc);
-    if (!patron) return false;
+    if (!patron){
+        *b = false;
+        return -1;
 
+    }
     // In-memory logic: enforce your rules
-    if (!patron->addHold(item)) return false;
+    if (!patron->addHold(item)){
+        *b = false;
+        return -1;
+    }
     item->addQueue(patron);     // or item->placeHold(patron);
 
     // === Persist to DB ===
