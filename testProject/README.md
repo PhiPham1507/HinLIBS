@@ -1,9 +1,4 @@
-HinLIBS – Deliverable 1 (D1)
-
-COMP 3004 – Fall 2025
-
-
-Team #22: 
+HinLIBS
 
 Members:
 
@@ -13,14 +8,14 @@ Members:
     Michael Boyer
 
 Program:
-This program is a partial implementation of the HinLibs Library System. It mainly supports patron's features. Full features are listed at the bottom of this README. 
+This program is the implementation of the HinLibs Library System. Full features are listed at the bottom of this README. 
 
 -------------
 
 How to Build and Run
 
     1.    Extract the ZIP:
-            type: "unzip team_22_D1.zip" in the terminal
+            type: "unzip file_name.zip" in the terminal
             
     2.    Open Qt Creator → File → Open File or Project
             Select testProject.pro file.
